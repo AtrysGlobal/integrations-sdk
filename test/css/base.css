@@ -1,0 +1,78 @@
+/* @import url("https://fonts.googleapis.com/css?family=Fira+Sans"); */
+
+@font-face {
+  font-family: 'avenir';
+  src: url('../fonts/AvenirLTStd-Book.otf');
+}
+
+html, body {
+  /* position: relative; */
+
+  /* background: rgb(243,146,0);
+  background: linear-gradient(180deg, rgba(243,146,0,1) 0%, rgba(230,0,126,1) 75%); */
+    
+  /* display: flex; */
+  /* flex-direction: column; */
+
+  /* align-items: center; */
+  /* justify-content: center; */
+  font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* height: 550px !important; */
+  /* width: 350px !important; */
+  font-family: 'avenir' !important;
+}
+
+/* * {
+  color: #ffffff;
+} */
+
+.spacer {
+  margin-top: 40px;
+}
+
+.spacer-mid {
+  margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+p { 
+  margin:0 
+}
+
+.iwantit{
+  background-color: #282828 !important; 
+  border-color: #282828 !important;
+}
+
+.input{
+  background-color: #666;
+  border: #666;
+  color: #666 !important;
+}
+
+.input:focus  {
+  background-color: #464545;
+  color: #ffffff;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+ -webkit-box-shadow: 0 0 0 30px #666 inset !important;
+ box-shadow: #666;
+ -webkit-text-fill-color: white !important;
+}
+
+.btn-google-login{
+  background: rgba(255,255,255,.3) !important;
+  border: 0px;
+  color: #ffffff;
+}

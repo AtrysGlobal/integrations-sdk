@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Timeo.digital">
+    <title>Atrys SDK</title>
+
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <link href="./css/base.css" rel="stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+
+    <script src="http://192.168.0.156:4200/dist/atrys-sdk.js"></script>
+
+    <script>
+      window.listSpecialties = async () =>{
+        const specialties = await mit.listSpecialties(_professionals.val())
+        console.log('list specialties', specialties.data);
+
+        const _specialties = specialties.data?.payload
+
+        $('#specialty_container').show()
+
+        _specialties.forEach((e, i) => {
+            _specialty.append('<option value="' + e._id + '">' + e.specialtyName + '</option>');
+        })
+      }
+    </script>
+
+    <script type="module">
+        $('#spinner').hide()
+        $('#professional_container').hide()
+        $('#specialty_container').hide()
+        $('#model_container').hide()
+
+        const _day = new Date().getDate()
+        const _month = new Date().getMonth() + 1
+        const _year  =new Date().getFullYear()
+
+        const publicKey = `-----BEGIN RSA PUBLIC KEY-----
+MIICCgKCAgEAlK3Ra1MiD2t4lxbzqt3UdNWZRBp0J1IlMWiWERqAOHbtA+MO2n/T
+zjHwwY5OHigutV62B0ztVIirAlop614oTenRmaOvbdTVAhi60LB7WiJ7DlNyDYsL
+1Y7qiHjqweBLHRpvE3r1XrObNwr4d5OxdcQ2yx7YKwRabdxMjjuE+bEjmesqSk99
+QDSim2V/0xMhU14rXi/f9ZHJ5WAGKmgZ8f03dNegjsK0slhH1iQOfwCLGIT8DyTm
+tOfTihb+f72b8oVvkTMhib2VAwaQ8Qh5HC2rHSyHSI4+zLyhb3lvPk2ke7nliauL
+1Jlx8E1htpAJqwe9yxClCf8jUYV+ReGRCwo47gueVksrcx3HCOVhZIk7s4o/WBPQ
+L2eYpGEtCdBPIouNxxlHXATd7WTME+a6vn2OSNoGbsXKXb+YgNxehHs+Z6AVX6dY
+fInWxEcQ9/54/XOhjDxMMBRlHm9ZeCx7QaJjAjLOdAYNB9JrTnB24rFlSX6Daurf
+0FBocMtwvW9e5ZIyz5PJim0tJ/YePEOjQjn0ZgDJ0rnLDkn3a9ye80hRMq1pva/j
+qdto/QWWUfRsBR6y5FBSo8XYKxT+R/QpjE38z5dDiydHziLvCaTga6my9NTbu7ji
+fjK8/jeRmqLVu07QeimRdD31cRscvQVa9W9bZLpa1Ky2t1Yci67E0AUCAwEAAQ==
+-----END RSA PUBLIC KEY-----`
+
+        const mit = new MIT('LOCAL', publicKey, 'SDK_PATIENT');
+        window.mit = mit
+        console.log('MIT', mit);
+
+        const session = await mit.session()
+        console.log('SESSION', session);
+
+        const req = await mit.normalizeModel({
+            from: 'zurich',
+                payload: {
+                "geolocationCountry": "CL",
+                "geolocationState": "RM",
+                "geolocationCity": "Stgo",
+                "country":"CL",
+                "state": "RM",
+                "city": "Stgo",
+                "address": "Calle 123",
+                "beneficiaryIdType": "run",
+                "beneficiaryIdNumber": "1-9",
+                "beneficiaryBirthDate": "01/01/1990",
+                "beneficiaryPhoneCode": "569",
+                "beneficiaryPhoneNumber": "77300000",
+                "beneficiaryEmail": "patient-sd2k@yopmail.com",
+                "beneficiaryName": "SDK",
+                "beneficiaryLastName": "Perez",
+                "beneficiarySecondLastName": "Perez",
+                "isForeign": false,
+                "passport": "",
+                "gender": "M",
+                "healthInsurance": "",
+                "regimen": "",
+                "cpf": ""
+            }    
+        })
+
+        console.log('patient normalized', req.data);
+
+        $('#interpolacion').append(`${JSON.stringify(req.data, null, 2)}`)
+        $('#spinner').show()
+
+        const newPatient = await mit.createPatient(req.data)
+        console.log('patient created', newPatient.data);
+
+        const login = await mit.login()
+        console.log('login', login.data);
+
+        $('#spinner').hide()
+
+        const listProfessionals = await mit.listProfessionals()
+        console.log('list profesionals', listProfessionals.data);
+
+        const prof = listProfessionals.data.payload
+
+        let _professionals = $('#professionals')
+        prof.forEach((e, i) => {
+            _professionals.append('<option value="' + e._id + '">' + e.name + '</option>');
+        })
+
+        let _specialty = $('#specialty')
+        let _specialtyId
+
+        _professionals.change(async () => {
+            const specialties = await mit.listSpecialties(_professionals.val())
+            console.log('list specialties', specialties.data);
+
+            const _specialties = specialties.data?.payload
+
+            $('#specialty_container').show()
+
+            _specialties.forEach((e, i) => {
+                _specialty.append('<option value="' + e._id + '">' + e.specialtyName + '</option>');
+            })
+        })
+
+        let _blocks
+
+        _specialty.change(async () => {
+            $('#listProfessionals').empty()
+
+            const blocks = await mit.listBlocks({
+                date: {
+                    month: _month,
+                    year: _year,
+                    day: _day
+                },
+                specialtyId: _specialty.val()
+            })
+
+            console.log('list blocks', blocks.data);
+
+            const _payload = blocks.data.payload
+            $('#professional_container').show()
+            
+            let cont = 0
+
+            _payload.forEach((e,i) => {
+                ++cont
+
+                $('#listProfessionals').append(`
+                    <div id="prof_${i}" style="margin-bottom: 20px">
+                        <label>${e.professionalDetails.userDetails[0].name} ${e.professionalDetails.userDetails[0].lastName}</label><br>
+                    </div>
+                `)
+
+                e.blocks.forEach((b,j) => {
+                    ++cont
+
+                    $('#prof_'+i).append(`
+                        <button id="btn_${cont}" aria-block="${b}">${b}</button>
+                    `)
+
+                    $(`#btn_${cont}`).click(async () => {
+                        $('#spinner').show()
+
+                        const reserve = await mit.reserveSheduledAppointment({
+                            appointmentType: "agendamiento",
+                            professionalDetails: {
+                                specialtyId: e.professionalDetails.specialtyId,
+                                userId: e.professionalDetails.userId,
+                                specialtyDetails: {
+                                    price: 0
+                                }
+                            },
+                            dateDetails: {
+                                date: {
+                                  month: _month,
+                                  year: _year,
+                                  day: _day
+                                },
+                                start: b
+                            }
+                        })
+                        
+                        console.log('reserve', reserve.data);
+                        $('#pagar').text('Agendar y Pagar')
+
+                        $('#spinner').hide()
+                        $('#pagar').prop('disabled', false)
+
+                    })
+                })
+            })
+
+        })
+
+        $('#pagar').click(async () => {
+            $('#spinner').show()
+
+            const consolidate = await mit.consolidateSheduledAppointment([])
+            console.log('consolidate', consolidate.data);
+
+            let url = consolidate.data.payload.paymentUrl
+            $('#spinner').hide()
+            $('#model_container').show()
+            window.open(url)
+        })
+    </script>
+
+  </head>
+
+  <body class="bg-light">
+    <div class="container">
+      <main>
+        <div class="py-4">
+          <div class="row spacer text-center">
+            <h1>Atrys SDK WEB / MIT</h1>
+          </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+          <div class="col col-lg-8">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Seleccione Especialista</label>
+                <select id="professionals" class="form-select">
+                </select>                  
+              </div>
+
+              <div id="specialty_container" class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Seleccione Especialidad</label>
+                  <select id="specialty" class="form-select">
+                  </select>                  
+              </div>
+
+              <div id="professional_container" class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Seleccione Profesional</label>
+
+                  <div id="listProfessionals"></div>
+              </div>
+
+              <button id="pagar" disabled class="btn btn-primary">Reservar</button>
+              <img id="spinner" src="images/spinner.gif" width="32" alt="">
+
+            <div id="model_container">
+              <hr>
+              <h4>Modelo de usuario de cliente</h4>
+              <pre>
+                {
+                    "geolocationCountry": "CL",
+                    "geolocationState": "RM",
+                    "geolocationCity": "Stgo",
+                    "country":"CL",
+                    "state": "RM",
+                    "city": "Stgo",
+                    "address": "Calle 123",
+                    "beneficiaryIdType": "run",
+                    "beneficiaryIdNumber": "1-9",
+                    "beneficiaryBirthDate": "01/01/1990",
+                    "beneficiaryPhoneCode": "569",
+                    "beneficiaryPhoneNumber": "77300000",
+                    "beneficiaryEmail": "patient-sd2k@yopmail.com",
+                    "beneficiaryName": "SDK",
+                    "beneficiaryLastName": "Perez",
+                    "beneficiarySecondLastName": "Perez",
+                    "isForeign": false,
+                    "passport": "",
+                    "gender": "M",
+                    "healthInsurance": "",
+                    "regimen": "",
+                    "cpf": ""
+                }  
+              </pre>
+
+              <h4>Modelo interpolado según RuleEngine</h4>
+
+              <pre id="interpolacion"></pre>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="form-validation.js"></script>
+  </body>
+</html>
