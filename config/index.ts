@@ -15,7 +15,8 @@ const config: any = {
     },
     MIT_URL: "",
     MIT_SESSION_SERVICE: "http://192.168.0.156:3100",
-    MIT_RULE_ENGINE_SERVICE: "http://192.168.0.156:3200"
+    MIT_RULE_ENGINE_SERVICE: "http://192.168.0.156:3200",
+    CRYPTO_SEED: "V-pQ%S+Pv8HE&8Ag"
 }
 
 export default config

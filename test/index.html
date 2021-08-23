@@ -79,30 +79,32 @@ fjK8/jeRmqLVu07QeimRdD31cRscvQVa9W9bZLpa1Ky2t1Yci67E0AUCAwEAAQ==
 
         const req = await mit.normalizeModel({
             from: 'zurich',
-                payload: {
-                "geolocationCountry": "CL",
-                "geolocationState": "RM",
-                "geolocationCity": "Stgo",
-                "country":"CL",
-                "state": "RM",
-                "city": "Stgo",
-                "address": "Calle 123",
-                "beneficiaryIdType": "run",
-                "beneficiaryIdNumber": "1-9",
-                "beneficiaryBirthDate": "01/01/1990",
-                "beneficiaryPhoneCode": "569",
-                "beneficiaryPhoneNumber": "77300000",
-                "beneficiaryEmail": "patient-sd2k@yopmail.com",
-                "beneficiaryName": "SDK",
-                "beneficiaryLastName": "Perez",
-                "beneficiarySecondLastName": "Perez",
-                "isForeign": false,
-                "passport": "",
-                "gender": "M",
-                "healthInsurance": "",
-                "regimen": "",
-                "cpf": ""
-            }    
+            payload:{
+                "GeolocationData":{
+                  "Country":"AR",
+                  "State":"CAPITAL FEDERAL",
+                  "City":"CAPITAL FEDERAL",
+                  "Latitude":"-34.64424",
+                  "Longitude":"-58.55662",
+                  "Address":"Calle prueba 1234",
+                  "Extra":"Piso 6"
+                },
+                  "BeneficiaryData":{
+                    "IdType":"DNI",
+                    "IdNumber":"33182287",
+                    "FirstName":"GONZALO EZEQUIEL",
+                    "LastName":"DAUD",
+                    "IntPhoneCode":"54",
+                    "PhoneNumber":"1161711401",
+                    "Email":"patient-sd2k@yopmail.com",
+                    "DateOfBirth":"1987-07-22",
+                    "Language":"ES"
+                },
+                  "CaseData":{
+                  "CaseId":"1-C6A0OUU",
+                  "CaseNum":"1-26501013462"
+                }
+            }
         })
 
         console.log('patient normalized', req.data);
@@ -223,7 +225,9 @@ fjK8/jeRmqLVu07QeimRdD31cRscvQVa9W9bZLpa1Ky2t1Yci67E0AUCAwEAAQ==
 
             let url = consolidate.data.payload.paymentUrl
             $('#spinner').hide()
-            $('#model_container').show()
+            $('#model_container').show()  
+
+            $('#magiclink').text(mit.magicLink())
             window.open(url)
         })
     </script>
@@ -264,6 +268,11 @@ fjK8/jeRmqLVu07QeimRdD31cRscvQVa9W9bZLpa1Ky2t1Yci67E0AUCAwEAAQ==
               <img id="spinner" src="images/spinner.gif" width="32" alt="">
 
             <div id="model_container">
+
+              <hr>
+              <h4>MagicLink</h4>
+              <p id="magiclink"></p>
+
               <hr>
               <h4>Modelo de usuario de cliente</h4>
               <pre>

@@ -1,12 +1,13 @@
 import config from './config'
 import { ClientRequest } from './helpers/request.helper'
 import { SharedData } from './helpers/shared_data.helper'
+import { Crypto } from './helpers/crypto.helper'
 import { MitInterface } from './interfaces/mit.interface'
 import { SessionInterface } from './interfaces/session.interface'
 
 import * as Auth from './helpers/auth.helper'
 import * as Specialty from './entities/specialty'
-import * as Appopintment from './entities/appointment'
+import appointment, * as Appopintment from './entities/appointment'
 import * as Patient from './entities/patient'
 import * as Professionals from './entities/professional'
 import * as Blocks from './entities/blocks'
@@ -134,10 +135,26 @@ export class MIT implements MitInterface{
 
     public async consolidateInmediateAppointment(symptoms: Array<string>): Promise<any>{
         try {
+            this.magicLink()
             return await Appopintment.consolidateInmediate(symptoms)
         } catch (error) {
             return error
         }
+    }
+
+    public magicLink(): string{
+        const crypto = new Crypto()
+
+        const patientData = {
+            email: this.sharedData.patientUsername,
+            password: this.sharedData.patientPassword,
+            appointmentId: this.sharedData.appopintmentReservedId
+        }
+
+        const dataEncrypted = crypto.encrypt(patientData)
+        let magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + dataEncrypted
+
+        return magicLink
     }
 }
 
