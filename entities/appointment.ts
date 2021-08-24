@@ -7,7 +7,6 @@ export async function reserveInmediate(): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS')
     const _req = await _request.post('/appointments/immediate/', {})
-    console.log('_req', _req);
     
     if(_req.data) sharedData.appopintmentReservedId = _req.data.payload._id
 
@@ -17,7 +16,7 @@ export async function reserveInmediate(): Promise<object> {
   }
 }
 
-export async function consolidateInmediate(symptoms: Array<string>): Promise<object> {
+export async function consolidateInmediate(symptoms: string[]): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS')
 
@@ -25,9 +24,7 @@ export async function consolidateInmediate(symptoms: Array<string>): Promise<obj
 
     const payload = {
       id: sharedData.appopintmentReservedId,
-      patientDetails: {
-        symptoms: symptoms
-      }
+      patientDetails: { symptoms }
     }
 
     const _req = await _request.post('/appointments/immediate/consolidate/', {...payload})
@@ -50,7 +47,7 @@ export async function reserveSheduled(reservePayload: any): Promise<object> {
   }
 }
 
-export async function consolidateSheduled(symptoms: Array<string>): Promise<object> {
+export async function consolidateSheduled(symptoms: string[]): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS')
 
@@ -58,9 +55,7 @@ export async function consolidateSheduled(symptoms: Array<string>): Promise<obje
 
     const payload = {
       id: sharedData.appopintmentReservedId,
-      patientDetails: {
-        symptoms: symptoms
-      }
+      patientDetails: { symptoms }
     }
 
     const _req = await _request.post('/appointments/consolidate/', {...payload})

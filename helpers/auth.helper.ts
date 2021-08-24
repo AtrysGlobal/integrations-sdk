@@ -25,8 +25,6 @@ export async function login(): Promise<any>{
           _req = await _request.post('/access/login-web', {...credentials})
 
           sharedData.patientId = _req.data.id
-          console.log('_req', _req);
-          
         }
 
         sharedData.tokens.atrysBackend = _req.data.access_token

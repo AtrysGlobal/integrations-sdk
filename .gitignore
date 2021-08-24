@@ -122,3 +122,4 @@ bin/ecosystem.json
 build_flavour.json
 
 .DS_Store
+lib

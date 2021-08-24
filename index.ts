@@ -54,7 +54,7 @@ export class MIT implements MitInterface{
         try {
             const req: any = await Patient.register(patientModel)
 
-            if(req.data.responseType == 'error' && req.data.httpCode == 422){
+            if(req.data.responseType === 'error' && req.data.httpCode === 422){
                 const reset = await this.resetCredentials(patientModel)
                 return reset
             }
@@ -117,7 +117,7 @@ export class MIT implements MitInterface{
         }    
     }
 
-    public async consolidateSheduledAppointment(symptoms: Array<string>): Promise<any>{
+    public async consolidateSheduledAppointment(symptoms: string[]): Promise<any>{
         try {
             return await Appopintment.consolidateSheduled(symptoms)
         } catch (error) {
@@ -133,7 +133,7 @@ export class MIT implements MitInterface{
         }
     }
 
-    public async consolidateInmediateAppointment(symptoms: Array<string>): Promise<any>{
+    public async consolidateInmediateAppointment(symptoms: string[]): Promise<any>{
         try {
             this.magicLink()
             return await Appopintment.consolidateInmediate(symptoms)
@@ -152,7 +152,7 @@ export class MIT implements MitInterface{
         }
 
         const dataEncrypted = crypto.encrypt(patientData)
-        let magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + dataEncrypted
+        const magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + dataEncrypted
 
         return magicLink
     }
