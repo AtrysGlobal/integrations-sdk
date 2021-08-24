@@ -5,7 +5,8 @@
     },
     "extends": [
         "prettier/@typescript-eslint",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "airbnb", "airbnb/hooks"
     ],
     "globals": {
         "Atomics": "readonly",
