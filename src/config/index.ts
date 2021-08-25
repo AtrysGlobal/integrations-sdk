@@ -5,6 +5,7 @@ const config: any = {
     CO: '',
     CL: '',
     LOCAL: 'http://caprica.com:3000/api/v1',
+    TEST: 'https://b1atrys-dev.telemedicina.com/api/v1'
   },
   frontend: {
     BR: '',
@@ -12,6 +13,7 @@ const config: any = {
     CO: '',
     CL: '',
     LOCAL: 'http://caprica.com',
+    TEST: 'http://atrys-dev.telemedicina.com'
   },
   MIT_URL: '',
   MIT_SESSION_SERVICE: 'http://192.168.0.156:3100',
