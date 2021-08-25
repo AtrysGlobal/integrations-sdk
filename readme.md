@@ -1,4 +1,4 @@
-# SDK for backend integrations
+# Atrys SDK for integrations
 
 ## Purpose
 ***
@@ -159,3 +159,21 @@ consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
 magicLink(): string;
 ```
 > Method for create the magic link for deliver to clients for no login acces to Atrys platform.
+
+
+## Build
+***
+
+The project can be built to run as SDK in the browser or to be used in BackEnd in a nodejs microservice for example.
+
+To build the SDK for the browser, after build the SDK is available in **dist** folder   
+
+```
+npm run build
+```
+
+To build the SDK for backend, after build the SDK is available in **lib** folder.   
+
+```
+npm run build-package
+```
