@@ -1,61 +1,97 @@
-[<img src="https://www.atryshealth.com/images/17241/default.jpg" width="250"/>](image.png)
-
-
 # SDK for backend integrations
 
 ## Purpose
+***
 The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
 
 ## Patient model
+***
 At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
 
 ## API
-> Create a new session in our session service ang get a MIT Token
->
->**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR
-
->**@publicKey**: String of the public key for validate the origin of the request
-
+***
 ```
 session(setup: string, publicKey: string): Promise<SessionInterface>;
 ```
+> Create a new session in our session service ang get a MIT Token
+>
+>**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR.  
+>**@publicKey**: String of the public key for validate the origin of the request
 
+
+```
+normalizeModel(clientPatientModel: any): Promise<any>;
+```
 > Method for normalize the patient model for work with Atrys Backend
 > 
 >**@clientPatientModel**: Object with the patient data
 
+**Atrys Patient Model.**
+
 ```
-  normalizeModel(clientPatientModel: any): Promise<any>;
+{
+    "clinicId": string",
+    "identificationData": {
+        "isForeign": boolean,
+        "passport": string,
+        "dni": string
+    },
+    "personalData": {
+        "name": string,
+        "lastName": string,
+        "secondLastName": string,
+        "phoneNumber": string,
+        "email": string,
+        "breed": string,
+        "gender": string,
+        "birthdate": string,
+        "nacionality": string,
+        "healthInsurance": string,
+    },
+    "addressData": {
+        "uf": string,
+        "city": string,
+        "neighborhood": string,
+        "street": string,
+        "complement": string,
+        "streetNumber": string,
+        "zipcode": string,
+    }
+}
 ```
-> Method for create a new patient in the Atrys Backend.
-> 
->**@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine
 
 ```
   createPatient(normalizedPatientModel: any): Promise<any>;
 ```
-
->Login method for authenticate the user in Atrys Backend
+> Method for create a new patient in the Atrys Backend.
+> 
+>**@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine. Normalized model must look like Atrys patient model exposed below.
 
 ```
-  login(): Promise<any>;
+login(): Promise<any>;
+```
+>Login method for authenticate the user in Atrys Backend
+
+
+```
+listProfessionals(): Promise<any>;
 ```
 
 >List all professional present in the selected backend by setup variable in session method.
 
-```
-  listProfessionals(): Promise<any>;
-```
 
+```
+listSpecialties(specialtyId: string): Promise<any>;
+```
 > Method for list the specialties derived by a main specialty id. Ex: In medicine have general, family, cardiology, etc
 > 
 >**@specialtyId**: id of the main medical specialty
 
-```
-  listSpecialties(specialtyId: string): Promise<any>;
-```
 
+```
+listBlocks(queryBlock: any): Promise<any>;
+```
 > Method for list all available blocks for the selected professional.
 > 
 >**@queryBlock**:
@@ -72,9 +108,8 @@ session(setup: string, publicKey: string): Promise<SessionInterface>;
 ```
 
 ```
-  listBlocks(queryBlock: any): Promise<any>;
+reserveSheduledAppointment(reservePayload: any): Promise<any>;
 ```
-
 > Method for reserve a new scheduled appointment.
 > 
 >**@reservePayload**:
@@ -100,32 +135,27 @@ session(setup: string, publicKey: string): Promise<SessionInterface>;
 }
 ```
 
-```
-  reserveSheduledAppointment(reservePayload: any): Promise<any>;
-```
 
+```
+consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
+```
 > Method for consolidate previous reserved appointment.
 > 
 >**@symptoms**: array of symptoms
 
-```
-  consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
-```
 
+```
+reserveInmediateAppointment(): Promise<any>;
+```
 > Method for reserve a new inmediate appointment.
 
-```
-  reserveInmediateAppointment(): Promise<any>;
-```
 
+```
+consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
+```
 > Method for consolidate previous inmediate appointment.
 
 ```
-  consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
+magicLink(): string;
 ```
-
 > Method for create the magic link for deliver to clients for no login acces to Atrys platform.
-
-```
-  magicLink(): string;
-```
