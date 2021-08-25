@@ -1,8 +1,5 @@
-<img align="right" width="200" src="https://www.atryshealth.com/images/17241/default.jpg">
+[<img src="https://www.atryshealth.com/images/17241/default.jpg" width="250"/>](image.png)
 
-<br />
-<br />
-<br />
 
 # SDK for backend integrations
 
@@ -16,8 +13,8 @@ At the moment of making an integration with the teleconsultation platform, the p
 ## API
 > Create a new session in our session service ang get a MIT Token
 >
-><span style="color:blue">@setup</span>: String identificator for country of origin. Ex: CO, ES, CL, BR <br>
-><span style="color:blue">@publicKey</span>: String of the public key for validate the origin of the request
+>**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR <br>
+>**@publicKey**: String of the public key for validate the origin of the request
 
 ```
 session(setup: string, publicKey: string): Promise<SessionInterface>;
@@ -25,14 +22,14 @@ session(setup: string, publicKey: string): Promise<SessionInterface>;
 
 > Method for normalize the patient model for work with Atrys Backend
 > 
-><span style="color:blue">@ clientPatientModel </span>: Object with the patient data
+>**@clientPatientModel**: Object with the patient data
 
 ```
   normalizeModel(clientPatientModel: any): Promise<any>;
 ```
 > Method for create a new patient in the Atrys Backend.
 > 
-><span style="color:blue">@ normalizedPatientModel </span>: Object with the patient data model normalized by our RuleEngine
+>**@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine
 
 ```
   createPatient(normalizedPatientModel: any): Promise<any>;
@@ -52,7 +49,7 @@ session(setup: string, publicKey: string): Promise<SessionInterface>;
 
 > Method for list the specialties derived by a main specialty id. Ex: In medicine have general, family, cardiology, etc
 > 
-><span style="color:blue">@ specialtyId </span>: id of the main medical specialty
+>**@specialtyId**: id of the main medical specialty
 
 ```
   listSpecialties(specialtyId: string): Promise<any>;
@@ -60,7 +57,7 @@ session(setup: string, publicKey: string): Promise<SessionInterface>;
 
 > Method for list all available blocks for the selected professional.
 > 
-><span style="color:blue">@ queryBlock </span>:
+>**@queryBlock**:
 
 ```
 {
@@ -79,7 +76,7 @@ session(setup: string, publicKey: string): Promise<SessionInterface>;
 
 > Method for reserve a new scheduled appointment.
 > 
-><span style="color:blue">@ reservePayload </span>:
+>**@reservePayload**:
 
 ```
 {
@@ -108,7 +105,7 @@ session(setup: string, publicKey: string): Promise<SessionInterface>;
 
 > Method for consolidate previous reserved appointment.
 > 
-><span style="color:blue">@ symptoms </span>: array of symptoms
+>**@symptoms**: array of symptoms
 
 ```
   consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
