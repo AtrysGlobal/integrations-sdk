@@ -14,8 +14,8 @@ import * as Blocks from './entities/blocks';
 
 export class MIT implements MitInterface {
   private setup: string = '';
-  private publicKey: string = '';
-  public sharedData: SharedData;
+  protected publicKey: string = '';
+  protected sharedData: SharedData;
 
   constructor(setup: string, publicKey: string, mode: string) {
     this.setup = setup;
@@ -134,7 +134,6 @@ export class MIT implements MitInterface {
 
   public async consolidateInmediateAppointment(symptoms: string[]): Promise<any> {
     try {
-      this.magicLink();
       return await Appopintment.consolidateInmediate(symptoms);
     } catch (error) {
       return error;

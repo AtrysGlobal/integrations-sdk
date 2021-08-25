@@ -12,4 +12,5 @@ export interface MitInterface {
   consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
   reserveInmediateAppointment(): Promise<any>;
   consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
+  magicLink(): string;
 }
