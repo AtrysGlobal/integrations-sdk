@@ -13,7 +13,8 @@ At the moment of making an integration with the teleconsultation platform, the p
 ## API
 > Create a new session in our session service ang get a MIT Token
 >
->**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR <br>
+>**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR
+
 >**@publicKey**: String of the public key for validate the origin of the request
 
 ```
