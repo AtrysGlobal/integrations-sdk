@@ -1,4 +1,4 @@
-[<img src="https://www.atryshealth.com/images/17241/default.jpg" width="250"/>](image.png)
+![logo](https://www.atryshealth.com/images/17241/default.jpg){width=30%}
 
 
 # SDK for backend integrations
