@@ -56,19 +56,7 @@
         const _month = new Date().getMonth() + 1
         const _year  =new Date().getFullYear()
 
-        const publicKey = `-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAlK3Ra1MiD2t4lxbzqt3UdNWZRBp0J1IlMWiWERqAOHbtA+MO2n/T
-zjHwwY5OHigutV62B0ztVIirAlop614oTenRmaOvbdTVAhi60LB7WiJ7DlNyDYsL
-1Y7qiHjqweBLHRpvE3r1XrObNwr4d5OxdcQ2yx7YKwRabdxMjjuE+bEjmesqSk99
-QDSim2V/0xMhU14rXi/f9ZHJ5WAGKmgZ8f03dNegjsK0slhH1iQOfwCLGIT8DyTm
-tOfTihb+f72b8oVvkTMhib2VAwaQ8Qh5HC2rHSyHSI4+zLyhb3lvPk2ke7nliauL
-1Jlx8E1htpAJqwe9yxClCf8jUYV+ReGRCwo47gueVksrcx3HCOVhZIk7s4o/WBPQ
-L2eYpGEtCdBPIouNxxlHXATd7WTME+a6vn2OSNoGbsXKXb+YgNxehHs+Z6AVX6dY
-fInWxEcQ9/54/XOhjDxMMBRlHm9ZeCx7QaJjAjLOdAYNB9JrTnB24rFlSX6Daurf
-0FBocMtwvW9e5ZIyz5PJim0tJ/YePEOjQjn0ZgDJ0rnLDkn3a9ye80hRMq1pva/j
-qdto/QWWUfRsBR6y5FBSo8XYKxT+R/QpjE38z5dDiydHziLvCaTga6my9NTbu7ji
-fjK8/jeRmqLVu07QeimRdD31cRscvQVa9W9bZLpa1Ky2t1Yci67E0AUCAwEAAQ==
------END RSA PUBLIC KEY-----`
+        const publicKey = `-----BEGIN RSA PUBLIC KEY-----MIIBCgKCAQEAmoUK20qcKBdALhiD9UFZIcKDaq5gixDKp8Pb4/QHKYOdceYoDe1QFzvvFXAUvoWArLr6/qkVkUE5sC/dU3TqJtMQd4AofpRY7HQmwAXcPb8CDufzVKL4GyTbHXPhvN6Vg7LrYXORYUjrAuAH1ybhGtCZIbpfzr0GgUZ+LqLBKPPXnFhQisFk1/kUan17lkP0b7vJg24nYmaSOn/4RNVBDq0/6E8VaGpzyMfY6/jOaC0wjmPmMrZPGGwwTI+CwiRilEehY9XzZrixvaNd8qL5MHkdfh5gzvMMpP2shXm4+l5bI+8L4B0rvDHI4AtNP8yDOsfju/y7ctWrnh9zl0+nLwIDAQAB-----END RSA PUBLIC KEY-----`
 
         const mit = new MIT('LOCAL', publicKey, 'SDK_PATIENT');
         window.mit = mit
