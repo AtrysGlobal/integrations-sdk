@@ -17,7 +17,7 @@ const config: any = {
   },
   MIT_URL: '',
   MIT_SESSION_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/auth/session',
-  MIT_RULE_ENGINE_SERVICE: 'http://192.168.0.156:3200',
+  MIT_RULE_ENGINE_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/rules',
   CRYPTO_SEED: 'V-pQ%S+Pv8HE&8Ag',
 };
 

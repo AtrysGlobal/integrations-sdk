@@ -42,7 +42,7 @@ export class MIT implements MitInterface {
   public async normalizeModel(clientPatientModel: any): Promise<any> {
     const _request = new ClientRequest('MIT_RULE_ENGINE');
 
-    const _req = await _request.post('/', clientPatientModel);
+    const _req = await _request.post('', clientPatientModel);
 
     this.sharedData.patientPassword = _req.data.password;
     this.sharedData.patientUsername = _req.data.personalData.email;
