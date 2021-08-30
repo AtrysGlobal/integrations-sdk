@@ -5,7 +5,7 @@ const config: any = {
     CO: '',
     CL: '',
     LOCAL: 'http://caprica.com:3000/api/v1',
-    TEST: 'https://b1atrys-dev.telemedicina.com/api/v1'
+    TEST: 'http://mit-env.eba-2czyhyfy.us-east-1.elasticbeanstalk.com/api/v1'
   },
   frontend: {
     BR: '',
