@@ -40,9 +40,20 @@ async function consolidateSheduledAppointment() {
     }
 }
 
+async function getMagicLink() { 
+    try {
+        const magicLink = mit.magicLink();
+        return magicLink;
+    } catch (error) {
+        console.log('error', error)
+        throw new Error(error.message)
+    }
+}
+
 module.exports = {
     reserveImmediateAppointment,
     consolidateInmediateAppointment,
     reserveSheduledAppointment,
-    consolidateSheduledAppointment
+    consolidateSheduledAppointment,
+    getMagicLink
 }

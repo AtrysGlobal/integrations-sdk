@@ -7,17 +7,19 @@ async function reserveImmediateAppointment(req, res) {
 
 async function consolidateInmediateAppointment(req, res) {
     const consolidateImmediateResponse = await appointmentService.consolidateInmediateAppointment();
-    res.send(consolidateImmediateResponse)
+    const magicLink = await appointmentService.getMagicLink();
+    res.send({ ...consolidateImmediateResponse, magicLink })
 }
 
 async function reserveSheduledAppointment(req, res) {
     const reservedSheduledResponse = await appointmentService.reserveSheduledAppointment(req.body);
-    res.send(reservedSheduledResponse)
+    res.send(reservedSheduledResponse);
 }
 
 async function consolidateSheduledAppointment(req, res) {
     const consolidateSheduledResponse = await appointmentService.consolidateSheduledAppointment();
-    res.send(consolidateSheduledResponse)
+    const magicLink = await appointmentService.getMagicLink();
+    res.send({ ...consolidateSheduledResponse, magicLink });
 }
 
 module.exports = {
