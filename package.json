@@ -1,9 +1,9 @@
 {
-  "name": "atrys_web_sdk",
-  "version": "1.0.0",
+  "name": "@atrysglobal/mit-sdk",
+  "version": "1.0.5",
   "description": "Web SDK for Atrys Integrations",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "dependencies": {
     "@vercel/ncc": "^0.29.0",
     "axios": "^0.21.1",
@@ -29,16 +29,31 @@
   },
   "scripts": {
     "build": "webpack",
-    "build-package": "tsc",
+    "build-package": "tsc && cp ./package.json ./lib",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-    "prepare" : "npm run build-package",
-    "prepublishOnly" : "npm run lint",
-    "preversion" : "npm run lint",
-    "version" : "npm run format && git add -A src",
-    "postversion" : "git push && git push --tags"
+    "prepare": "npm run build-package",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
-  "keywords": ["SDK", "Atrys"],
+  "keywords": [
+    "SDK",
+    "Atrys"
+  ],
   "author": "Mikel Carozzi",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AtrysGlobal/mit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AtrysGlobal/mit/issues"
+  },
+  "homepage": "https://github.com/AtrysGlobal/mit#readme"
 }

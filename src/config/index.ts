@@ -5,7 +5,7 @@ const config: any = {
     CO: '',
     CL: '',
     LOCAL: 'http://caprica.com:3000/api/v1',
-    TEST: 'http://mit-env.eba-2czyhyfy.us-east-1.elasticbeanstalk.com/api/v1'
+    TEST: 'http://mit-env.eba-2czyhyfy.us-east-1.elasticbeanstalk.com/api/v1',
   },
   frontend: {
     BR: '',
@@ -13,7 +13,7 @@ const config: any = {
     CO: '',
     CL: '',
     LOCAL: 'http://caprica.com',
-    TEST: 'http://atrys-dev.telemedicina.com'
+    TEST: 'http://mit-frontend.eba-2czyhyfy.us-east-1.elasticbeanstalk.com',
   },
   MIT_URL: '',
   MIT_SESSION_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/auth/session',
