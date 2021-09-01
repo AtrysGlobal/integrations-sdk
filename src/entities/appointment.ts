@@ -8,6 +8,7 @@ export async function reserveInmediate(): Promise<object> {
     const _request = new ClientRequest('ATRYS');
     const _req = await _request.post('/appointments/immediate/', {});
 
+    if(_req.data.message !== 'OK') throw new Error('Inmediate appointments must be 30 mins apart')
     if (_req.data) sharedData.appopintmentReservedId = _req.data.payload._id;
 
     return _req;
