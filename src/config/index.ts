@@ -13,7 +13,7 @@ const config: any = {
     CO: '',
     CL: '',
     LOCAL: 'http://caprica.com',
-    TEST: 'http://mit-frontend.eba-2czyhyfy.us-east-1.elasticbeanstalk.com',
+    TEST: 'http://mit-frontend-cl.s3-website-us-east-1.amazonaws.com',
   },
   MIT_URL: '',
   MIT_SESSION_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/auth/session',
