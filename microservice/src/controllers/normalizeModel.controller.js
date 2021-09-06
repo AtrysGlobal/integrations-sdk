@@ -5,8 +5,8 @@ async function normalizeModel(req, res) {
         const normalizeModelResponse = await normalizeModelService.normalizeModel(req.body);
         res.send(normalizeModelResponse);
     } catch (error) {
-        console.log('error normalizeModelcontroller',error)
-        throw new Error(error.message)
+        res.status(error.errorObject.httpCode);
+        res.send(error.errorObject)
     }
 }
 
