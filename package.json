@@ -30,6 +30,7 @@
   "scripts": {
     "build": "webpack",
     "build-package": "tsc && cp ./package.json ./lib",
+    "build-test": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build-package",

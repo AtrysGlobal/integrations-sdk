@@ -5,8 +5,7 @@ async function listBlocks(data) {
         const blocksResponse = await mit.listBlocks(data);
         return blocksResponse.data;
     } catch (error) {
-        console.log('error', error)
-        throw new Error(error.message)
+        throw error;
     }
 }
 
