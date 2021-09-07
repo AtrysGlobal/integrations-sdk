@@ -1,5 +1,6 @@
 import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
+import { HttpErrorNew } from '../handlers/base-error';
 
 export async function login(): Promise<any> {
   return new Promise(async (resolve, reject) => {
@@ -18,8 +19,8 @@ export async function login(): Promise<any> {
             password: sharedData.patientPassword,
           };
 
-          if (!sharedData.patientUsername) throw new Error('Yoy must provide a username for login');
-          if (!sharedData.patientPassword) throw new Error('Yoy must provide a password for login');
+          if (!sharedData.patientUsername) reject(new Error('Yoy must provide a username for login'));
+          if (!sharedData.patientPassword) reject(new Error('Yoy must provide a password for login'));
 
           const _request = new ClientRequest('ATRYS');
           _req = await _request.post('/access/login-web', { ...credentials });
@@ -33,6 +34,8 @@ export async function login(): Promise<any> {
     } catch (error) {
       reject(error);
     }
+  }).catch(error => {
+    throw new HttpErrorNew(error);
   });
 }
 

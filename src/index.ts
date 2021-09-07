@@ -11,6 +11,7 @@ import appointment, * as Appopintment from './entities/appointment';
 import * as Patient from './entities/patient';
 import * as Professionals from './entities/professional';
 import * as Blocks from './entities/blocks';
+import { HttpErrorNew } from './handlers/base-error';
 
 export class MIT implements MitInterface {
   private setup: string = '';
@@ -40,14 +41,19 @@ export class MIT implements MitInterface {
   }
 
   public async normalizeModel(clientPatientModel: any): Promise<any> {
-    const _request = new ClientRequest('MIT_RULE_ENGINE');
+    try {
+      const _request = new ClientRequest('MIT_RULE_ENGINE');
 
-    const _req = await _request.post('', clientPatientModel);
+      const _req = await _request.post('', clientPatientModel);
 
-    this.sharedData.patientPassword = _req.data.password;
-    this.sharedData.patientUsername = _req.data.personalData.email;
+      this.sharedData.patientPassword = _req.data.password;
+      this.sharedData.patientUsername = _req.data.personalData.email;
 
-    return _req;
+      return _req;
+
+    } catch (error) {
+      throw new HttpErrorNew(error);
+    }
   }
 
   public async createPatient(patientModel: any): Promise<any> {
@@ -61,15 +67,15 @@ export class MIT implements MitInterface {
 
       return req;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
   public async login(): Promise<any> {
     try {
-      return await Auth.login();
+      return await Auth.login()
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -80,7 +86,7 @@ export class MIT implements MitInterface {
         password: patientModel.password,
       });
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -88,7 +94,7 @@ export class MIT implements MitInterface {
     try {
       return await Professionals.list();
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -96,7 +102,7 @@ export class MIT implements MitInterface {
     try {
       return await Specialty.list(specialtyId);
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -104,7 +110,7 @@ export class MIT implements MitInterface {
     try {
       return await Blocks.list(queryBlock);
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -112,7 +118,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.reserveSheduled(reservePayload);
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -120,7 +126,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.consolidateSheduled(symptoms);
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -128,7 +134,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.reserveInmediate();
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -136,7 +142,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.consolidateInmediate(symptoms);
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
