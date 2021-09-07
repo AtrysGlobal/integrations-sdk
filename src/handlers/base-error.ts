@@ -37,7 +37,7 @@ export type ErrorObject = {
 
 export class HttpErrorNew extends Error {
     public static errorDictionary = { ...errorDictionary };
-    public errorObject = <ErrorObject>{};
+    public errorObject = {} as ErrorObject;
     constructor(errorObject: any) {
         super();
         if (!errorObject) {
@@ -48,11 +48,9 @@ export class HttpErrorNew extends Error {
     }
 
     handleError(err: any) {
-        console.log('handleError', err)
-        let outError = <ErrorObject>{};
+        let outError = {} as ErrorObject;
 
         if (err.code === 'ECONNREFUSED') {
-            console.log('ECONNREFUSED')
             outError = {
                 ...errorDictionary.STANDARD.INTERNAL_SERVER_ERROR,
                 description: err.message
