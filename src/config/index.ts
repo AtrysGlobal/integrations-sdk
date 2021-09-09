@@ -16,8 +16,8 @@ const config: any = {
     TEST: 'http://mit.telemedicina.com',
   },
   MIT_URL: '',
-  MIT_SESSION_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/auth/session',
-  MIT_RULE_ENGINE_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/rules',
+  MIT_SESSION_SERVICE: 'https://api.mit.telemedicina.com/auth/session',
+  MIT_RULE_ENGINE_SERVICE: 'https://api.mit.telemedicina.com/develop/rules',
   CRYPTO_SEED: 'V-pQ%S+Pv8HE&8Ag',
 };
 
