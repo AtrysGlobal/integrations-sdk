@@ -5,7 +5,7 @@ const config: any = {
     CO: '',
     CL: '',
     LOCAL: 'http://caprica.com:3000/api/v1',
-    TEST: 'http://mit-env.eba-2czyhyfy.us-east-1.elasticbeanstalk.com/api/v1',
+    TEST: 'http://backend.mit.telemedicina.com/api/v1',
   },
   frontend: {
     BR: '',
@@ -13,11 +13,11 @@ const config: any = {
     CO: '',
     CL: '',
     LOCAL: 'http://caprica.com',
-    TEST: 'http://mit-frontend-cl.s3-website-us-east-1.amazonaws.com',
+    TEST: 'http://mit.telemedicina.com',
   },
   MIT_URL: '',
-  MIT_SESSION_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/auth/session',
-  MIT_RULE_ENGINE_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/rules',
+  MIT_SESSION_SERVICE: 'https://api.mit.telemedicina.com/auth/session',
+  MIT_RULE_ENGINE_SERVICE: 'https://api.mit.telemedicina.com/develop/rules',
   CRYPTO_SEED: 'V-pQ%S+Pv8HE&8Ag',
 };
 

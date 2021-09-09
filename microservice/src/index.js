@@ -26,10 +26,6 @@ professionalRoutes(app);
 specialtyRoutes(app);
 blockRoutes(app);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
 app.listen(port, () => {
   console.log(`ms-atrys-boilerplate listening at http://localhost:${port}`)
 })
