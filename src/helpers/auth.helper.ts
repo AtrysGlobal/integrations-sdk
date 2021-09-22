@@ -27,6 +27,10 @@ export async function login(): Promise<any> {
 
           sharedData.patientId = _req.data.id;
         }
+        if (_req.data.message && _req.data.message === 'Las credenciales ingresadas son incorrectas o no existen')
+          reject(new Error(_req.data.message))
+        if (_req.data.httpCode && _req.data.httpCode === 400)
+          reject(new Error(_req.data.message))
 
         sharedData.tokens.atrysBackend = _req.data.access_token;
         resolve(_req);

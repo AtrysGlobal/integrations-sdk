@@ -28,7 +28,7 @@ export async function consolidateInmediate(symptoms: string[]): Promise<object> 
       throw new Error(
         'For consolidate a new appointment you must provide an appointment id, throught reserve method, or define in sharedData class',
       );
-    
+
 
     const payload = {
       id: sharedData.appopintmentReservedId,
@@ -52,7 +52,11 @@ export async function reserveSheduled(reservePayload: any): Promise<object> {
     const _request = new ClientRequest('ATRYS');
     const _req = await _request.post('/appointments/reserve/', { ...reservePayload });
 
-    if (_req.data) sharedData.appopintmentReservedId = _req.data.payload.id;
+    if (_req.data) {
+      if (_req.data.message !== 'Resource created') throw new Error(_req.data.message);
+
+      sharedData.appopintmentReservedId = _req.data.payload.id;
+    }
 
     return _req;
   } catch (error: any) {
