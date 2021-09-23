@@ -42,19 +42,22 @@ export class HttpErrorNew extends Error {
         super();
         if (!errorObject) {
             this.errorObject = { ...errorDictionary.STANDARD.INTERNAL_SERVER_ERROR }
+        } else {
+            this.errorObject = this.handleError(errorObject)
         }
-
-        this.errorObject = this.handleError(errorObject)
     }
 
     handleError(err: any) {
         let outError = {} as ErrorObject;
+        let connectError = err.message.match(/connect ECONNREFUSED/)
 
-        if (err.code === 'ECONNREFUSED') {
+        if (connectError) {
             outError = {
                 ...errorDictionary.STANDARD.INTERNAL_SERVER_ERROR,
                 description: err.message
             }
+            return outError;
+
         }
 
         if (err.message === 'Yoy must provide a username for login' || err.message === 'Yoy must provide a password for login') {
@@ -62,6 +65,8 @@ export class HttpErrorNew extends Error {
                 ...errorDictionary.STANDARD.UNAUTHORIZED,
                 description: err.message
             }
+            return outError;
+
         }
 
         if (err.message === 'Token is invalid') {
@@ -69,6 +74,8 @@ export class HttpErrorNew extends Error {
                 ...errorDictionary.STANDARD.UNAUTHORIZED,
                 description: err.message
             }
+            return outError;
+
         }
 
         if (err instanceof TypeError || err instanceof Error) {
@@ -76,8 +83,9 @@ export class HttpErrorNew extends Error {
                 ...errorDictionary.STANDARD.BAD_REQUEST,
                 description: err.message
             }
-        }
+            return outError;
 
+        }
         return outError;
     }
 }

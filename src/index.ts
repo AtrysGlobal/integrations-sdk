@@ -25,7 +25,7 @@ export class MIT implements MitInterface {
     this.sharedData.mode = mode;
   }
 
-  public async session(setup: string): Promise<SessionInterface> {
+  public async session(setup?: string): Promise<SessionInterface> {
     const _request = new ClientRequest('MIT_SESSION');
 
     const _req = await _request.post('', { publicKey: this.publicKey });
@@ -45,7 +45,7 @@ export class MIT implements MitInterface {
       const _request = new ClientRequest('MIT_RULE_ENGINE');
 
       const _req = await _request.post('', clientPatientModel);
-
+      
       this.sharedData.patientPassword = _req.data.password;
       this.sharedData.patientUsername = _req.data.personalData.email;
 
