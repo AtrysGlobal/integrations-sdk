@@ -93,15 +93,6 @@ describe('index tests', () => {
         expect(result.data).not.toBeNull()
     })
 
-    it('should reserve immediate appointment', async () => {
-        const result = await mit.reserveInmediateAppointment()
-        expect(result.data).not.toBeNull()
-    })
-
-    it('should consolidate immediate appoinment', async () => {
-        const result = await mit.consolidateInmediateAppointment([])
-        expect(result.data).not.toBeNull()
-    })
 
     it('should reserve sheduled appointment', async () => {
         const payload = { "professionalDetails": { "userId": "612ce4d96dc3c258b13d3907", "specialtyDetails": { "price": 0 }, "specialtyId": "6127a9acb09493c2e87d7801" }, "professionalId": "612ce4d96dc3c258b13d3907", "dateDetails": { "date": { "year": year, "month": month, "day": day }, "start": start }, "appointmentType": "agendamiento" }
@@ -117,6 +108,24 @@ describe('index tests', () => {
         const result = mit.magicLink()
         // console.log('magic link', result)
         expect(result).not.toBeNull()
+    })
+
+    it('should reserve immediate appointment', async () => {
+        const dt = new Date()
+        const day = dt.getDate()
+        const tempNumber = Math.floor(Math.random() * 100 * day)
+        const newClientPatientModel = { ...clientPatientModel }
+        newClientPatientModel.payload.BeneficiaryData.Email = `patient-sdk${tempNumber}@yopmail.com`
+        const algo = await mit.normalizeModel(clientPatientModel)
+        await mit.createPatient(algo.data)
+        await mit.login()
+        const result = await mit.reserveInmediateAppointment()
+        expect(result.data).not.toBeNull()
+    })
+
+    it('should consolidate immediate appoinment', async () => {
+        const result = await mit.consolidateInmediateAppointment([])
+        expect(result.data).not.toBeNull()
     })
 })
 
