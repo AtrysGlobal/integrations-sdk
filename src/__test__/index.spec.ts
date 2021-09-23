@@ -50,33 +50,6 @@ describe('index tests', () => {
     })
 
     it('should retrieve normalizeModel', async () => {
-        const expected = {
-            clinicId: '5f236fc966fbb0054894b780',
-            identificationData: { isForeign: false, passport: '', dni: '33182287' },
-            personalData: {
-                name: 'GONZALO EZEQUIEL',
-                lastName: 'DAUD',
-                secondLastName: '',
-                phoneNumber: '1161711401',
-                email: 'patient-sd2k@yopmail.com',
-                breed: '5f430c1248530c1de30ffa68',
-                gender: 'gender',
-                birthdate: '1987-07-22',
-                nacionality: '5fdd4956d1d8135520fbbeeb',
-                healthInsurance: '5fc5c15d99ccb04b708b1fc6'
-            },
-            addressData: {
-                uf: '5f42ffca96f8abbeee6dd8b8',
-                city: '5f4300eb8f2acfcc1391b071',
-                neighborhood: '',
-                street: '',
-                complement: '',
-                streetNumber: '',
-                zipcode: ''
-            },
-            password: '!Er950wJF',
-            gender: 'male'
-        }
         const result = await mit.normalizeModel(clientPatientModel)
         patientModel = result.data
         expect(result.data).not.toBeNull()
@@ -237,17 +210,6 @@ describe('index test throw errors', () => {
         await expect(fnThrowErr).rejects.toThrow()
     })
 
-    it.skip('should throw error when list professionals', async () => {
-        const fnErr = async () => {
-            try {
-                await mit.listProfessionals()
-            } catch (error) {
-                throw error
-            }
-        }
-
-        await expect(fnErr).rejects.toThrow()
-    })
 
     it('should throw error when reserve immediate appointment', async () => {
         const fnErr = async () => {
