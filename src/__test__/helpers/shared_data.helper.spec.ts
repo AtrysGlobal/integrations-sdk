@@ -17,7 +17,7 @@ describe('shared data helper tests', () => {
 
     test('should throw error', () => {
         const fnThrowErr = () => {
-            new SharedData()
+           return new SharedData()
         }
         expect(fnThrowErr).toThrowError(new Error('Error: Instantiation failed: Use SharedData.getInstance() instead of new.'))
     })
