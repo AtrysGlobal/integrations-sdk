@@ -21,7 +21,10 @@ module.exports = {
     rules: [
       { 
         test: /\.tsx?$/,
-        loader: "ts-loader"
+        loader: "ts-loader",
+        exclude: [
+          path.resolve(__dirname, 'jest.config.ts')
+        ]
       }
     ]
   }

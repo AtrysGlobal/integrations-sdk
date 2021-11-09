@@ -9,10 +9,10 @@ describe('index tests', () => {
     let patientModel: any
     let start: any
     let blocks: any
-    let dt = new Date()
-    let month = dt.getMonth() + 1
-    let day = dt.getDate()
-    let year = dt.getFullYear()
+    const dt = new Date()
+    const month = dt.getMonth() + 1
+    const day = dt.getDate()
+    const year = dt.getFullYear()
 
     const clientPatientModel = {
         "from": "zurich",

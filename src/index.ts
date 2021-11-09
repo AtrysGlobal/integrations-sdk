@@ -149,14 +149,16 @@ export class MIT implements MitInterface {
   public magicLink(): string {
     const crypto = new Crypto();
 
-    const patientData = {
-      email: this.sharedData.patientUsername,
-      password: this.sharedData.patientPassword,
-      appointmentId: this.sharedData.appopintmentReservedId,
-    };
-
-    const dataEncrypted = crypto.encrypt(patientData);
-    const magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + dataEncrypted;
+    // DEPRECATED para compatibilidad con .NET
+    // const patientData = {
+    //   email: this.sharedData.patientUsername,
+    //   password: this.sharedData.patientPassword,
+    //   appointmentId: this.sharedData.appopintmentReservedId,
+    // };
+    // const dataEncrypted = crypto.encrypt(patientData);
+    
+    const dataEncrypted = crypto.base64Encode(this.sharedData.patientUsername + ';' + this.sharedData.patientPassword + ";" + this.sharedData.appopintmentReservedId)
+    const magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
 
     return magicLink;
   }

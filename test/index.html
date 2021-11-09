@@ -58,7 +58,7 @@
 
         const publicKey = `-----BEGIN RSA PUBLIC KEY-----MIIBCgKCAQEAmoUK20qcKBdALhiD9UFZIcKDaq5gixDKp8Pb4/QHKYOdceYoDe1QFzvvFXAUvoWArLr6/qkVkUE5sC/dU3TqJtMQd4AofpRY7HQmwAXcPb8CDufzVKL4GyTbHXPhvN6Vg7LrYXORYUjrAuAH1ybhGtCZIbpfzr0GgUZ+LqLBKPPXnFhQisFk1/kUan17lkP0b7vJg24nYmaSOn/4RNVBDq0/6E8VaGpzyMfY6/jOaC0wjmPmMrZPGGwwTI+CwiRilEehY9XzZrixvaNd8qL5MHkdfh5gzvMMpP2shXm4+l5bI+8L4B0rvDHI4AtNP8yDOsfju/y7ctWrnh9zl0+nLwIDAQAB-----END RSA PUBLIC KEY-----`
 
-        const mit = new MIT('LOCAL', publicKey, 'SDK_PATIENT');
+        const mit = new MIT('TEST', publicKey, 'SDK_ALONE');
         window.mit = mit
         console.log('MIT', mit);
 
