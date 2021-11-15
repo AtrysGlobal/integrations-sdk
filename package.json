@@ -7,6 +7,7 @@
   "dependencies": {
     "@vercel/ncc": "^0.29.0",
     "axios": "^0.21.1",
+    "buffer": "^6.0.3",
     "crypto-js": "^4.1.1"
   },
   "devDependencies": {

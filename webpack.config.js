@@ -1,5 +1,6 @@
 //webpack.config.js
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: "production",
@@ -27,5 +28,10 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer']
+    }),
+  ]
 };
