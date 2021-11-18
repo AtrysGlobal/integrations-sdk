@@ -62,11 +62,14 @@
         window.mit = mit
         console.log('MIT', mit);
 
+        const integrationClientIdentificator = 'zurich';
+        mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
+
         const session = await mit.session()
         console.log('SESSION', session);
 
         const req = await mit.normalizeModel({
-            from: 'zurich',
+            from: integrationClientIdentificator,
             payload:{
                 "GeolocationData":{
                   "Country":"AR",

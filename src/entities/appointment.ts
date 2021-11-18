@@ -7,7 +7,12 @@ const sharedData = SharedData.getInstance();
 export async function reserveInmediate(): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS');
-    const _req = await _request.post('/appointments/immediate/', {});
+
+    const obj = {
+      integrationClientIdentificator: sharedData.integrationClientIdentificator
+    }
+
+    const _req = await _request.post('/appointments/immediate/', obj);
     if (_req.data.message !== 'OK') {
       throw new Error(_req.data.message);
     }
@@ -49,6 +54,9 @@ export async function consolidateInmediate(symptoms: string[]): Promise<object> 
 
 export async function reserveSheduled(reservePayload: any): Promise<object> {
   try {
+
+    reservePayload.integrationClientIdentificator = sharedData.integrationClientIdentificator;
+
     const _request = new ClientRequest('ATRYS');
     const _req = await _request.post('/appointments/reserve/', { ...reservePayload });
 

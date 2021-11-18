@@ -5,13 +5,17 @@
 
             try {
                 const mit = new MIT('LOCAL', '398475934759375937539875398475m9753j93nhjhkm');
+        
+                const integrationClientIdentificator = 'zurich';
+                mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
+
                 console.log('MIT', mit);
 
                 const session = await mit.session()
                 console.log('SESSION', session);
 
                 const req = await mit.normalizeModel({
-                from: 'zurich',
+                from: integrationClientIdentificator,
                     payload: {
                     "geolocationCountry": "CL",
                     "geolocationState": "RM",

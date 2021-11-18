@@ -21,6 +21,7 @@ export class SharedData {
   public patientPassword: string = '';
   public appopintmentReservedId: string = '';
   public mode: string = '';
+  public integrationClientIdentificator: string = '';
 
   constructor() {
     if (SharedData._instance) {
