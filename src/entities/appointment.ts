@@ -8,6 +8,8 @@ export async function reserveInmediate(): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS');
 
+    if(!sharedData.integrationClientIdentificator) throw new Error('The integrationClientIdentificator property is mandatory, must set in sharedData')
+
     const obj = {
       integrationClientIdentificator: sharedData.integrationClientIdentificator
     }
@@ -54,6 +56,8 @@ export async function consolidateInmediate(symptoms: string[]): Promise<object> 
 
 export async function reserveSheduled(reservePayload: any): Promise<object> {
   try {
+
+    if(!sharedData.integrationClientIdentificator) throw new Error('The integrationClientIdentificator property is mandatory, must set in sharedData')
 
     reservePayload.integrationClientIdentificator = sharedData.integrationClientIdentificator;
 
