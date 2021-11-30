@@ -22,6 +22,7 @@ export class SharedData {
   public appopintmentReservedId: string = '';
   public mode: string = '';
   public integrationClientIdentificator: string = '';
+  public integrationExternalId: string = '';
 
   constructor() {
     if (SharedData._instance) {
