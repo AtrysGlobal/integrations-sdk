@@ -4,7 +4,7 @@
         <script type="module">
 
             try {
-                const mit = new MIT('LOCAL', '398475934759375937539875398475m9753j93nhjhkm');
+                const mit = new MIT('TEST', '398475934759375937539875398475m9753j93nhjhkm');
         
                 const integrationClientIdentificator = 'zurich';
                 mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
@@ -38,8 +38,8 @@
                             "Language":"ES"
                         },
                         "CaseData":{
-                            "CaseId":"1-C6A0OUU",
-                            "CaseNum":"1-26501013462"
+                            "CaseId":"1-C6A0OXZ",
+                            "CaseNum":"1-26501013666"
                         }
                     }    
                 })
@@ -49,10 +49,6 @@
                 const newPatient = await mit.createPatient(req.data)
                 console.log('patient created', newPatient.data);
 
-                const appointmentPayload = await mit.getAppointmentIdByExternalId()
-                console.log("Get appointment by caseId OK", appointmentPayload);
-
-/*
                 const login = await mit.login()
                 console.log('login', login.data);
 
@@ -62,10 +58,13 @@
                 const consolidate = await mit.consolidateInmediateAppointment([])
                 console.log('inmediate consolidate', consolidate.data);
 
+                const appointmentPayload = await mit.getAppointmentIdByExternalId()
+                console.log("Get appointment by caseId OK", appointmentPayload);
+
                 let url = consolidate.data.payload.paymentUrl
                 window.open(url)
 
-
+/*
             const listProfessionals = await mit.listProfessionals()
             console.log('list profesionals', listProfessionals.data);
 
