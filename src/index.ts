@@ -159,10 +159,7 @@ export class MIT implements MitInterface {
     // const dataEncrypted = crypto.encrypt(patientData);
     
     const dataEncrypted = crypto.base64Encode(
-      `${this.sharedData.patientUsername};
-       ${this.sharedData.patientPassword};
-       ${this.sharedData.appopintmentReservedId};
-       integration`
+      `${this.sharedData.patientUsername};${this.sharedData.patientPassword};${this.sharedData.appopintmentReservedId};integration`
     )
 
     const magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);

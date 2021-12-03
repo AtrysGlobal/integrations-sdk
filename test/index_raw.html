@@ -15,33 +15,33 @@
                 console.log('SESSION', session);
 
                 const req = await mit.normalizeModel({
-                    from: integrationClientIdentificator,
-                    payload: {
-                        "GeolocationData":{
-                            "Country":"AR",
-                            "State":"CAPITAL FEDERAL",
-                            "City":"CAPITAL FEDERAL",
-                            "Latitude":"-34.64424e",
-                            "Longitude":"-58.55662",
-                            "Address":"Calle prueba 1234",
-                            "Extra":"Piso 6"
+                "from": "zurich",
+                "payload": {
+                        "GeolocationData": {
+                        "Country": "AR",
+                        "State": "Buenos Aires",
+                        "City": "DHJ",
+                        "Latitude": "-34.5618913",
+                        "Longitude": "-58.4617484",
+                        "Address": "Test 123",
+                        "Extra": ""
                         },
-                        "BeneficiaryData":{
-                            "IdType":"DNI",
-                            "IdNumber":"33182287",
-                            "FirstName":"GONZALO EZEQUIEL",
-                            "LastName":"DAUD",
-                            "IntPhoneCode":"54",
-                            "PhoneNumber":"1161711401",
-                            "Email":"patient-sd2k@yopmail.com",
-                            "DateOfBirth":"1987-07-22",
-                            "Language":"ES"
+                        "BeneficiaryData": {
+                        "IdType": "DNI",
+                        "IdNumber": "34567899",
+                        "FirstName": "Test Test",
+                        "LastName": "Test Test",
+                        "IntPhoneCode": "54",
+                        "PhoneNumber": "12345678",
+                        "Email": "a@b.com",
+                        "DateOfBirth": "2001-01-01",
+                        "Language": "ES"
                         },
-                        "CaseData":{
-                            "CaseId":"1-C6A0OXZ",
-                            "CaseNum":"1-26501013666"
+                        "CaseData": {
+                        "CaseId": "637741353756375358",
+                        "CaseNum": "637741353756375358"
                         }
-                    }    
+                    }
                 })
 
                 console.log('patient normalized', req.data);
@@ -61,8 +61,8 @@
                 const appointmentPayload = await mit.getAppointmentIdByExternalId()
                 console.log("Get appointment by caseId OK", appointmentPayload);
 
-                let url = consolidate.data.payload.paymentUrl
-                window.open(url)
+                const magicLink = mit.magicLink()
+                console.log('maic link', magicLink);
 
 /*
             const listProfessionals = await mit.listProfessionals()
