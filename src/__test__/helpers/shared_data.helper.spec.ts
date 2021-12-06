@@ -10,6 +10,8 @@ describe('shared data helper tests', () => {
             patientUsername: '',
             patientPassword: '',
             appopintmentReservedId: '',
+            integrationClientIdentificator: "",
+            integrationExternalId: "",
             mode: ''
         }
         expect(result).toEqual(expected)
@@ -17,7 +19,7 @@ describe('shared data helper tests', () => {
 
     test('should throw error', () => {
         const fnThrowErr = () => {
-           return new SharedData()
+            return new SharedData()
         }
         expect(fnThrowErr).toThrowError(new Error('Error: Instantiation failed: Use SharedData.getInstance() instead of new.'))
     })
