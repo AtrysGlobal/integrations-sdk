@@ -8,7 +8,6 @@ describe('index tests', () => {
     const mit = new MIT(setup, publicKey, 'SDK_PATIENT')
     let patientModel: any = {}
     let start: any
-    let blocks: any
     const date = new Date()
     const month = date.getMonth() + 1
     const day = date.getDate()
@@ -83,7 +82,6 @@ describe('index tests', () => {
         }
 
         const result = await mit.listBlocks(payload)
-        blocks = result.data.payload[0].blocks
         start = result.data.payload[0].blocks[0]
         expect(result.data).not.toBeNull()
     })
@@ -126,6 +124,20 @@ describe('index tests', () => {
         const result = await mit.consolidateInmediateAppointment([])
         expect(result.data).not.toBeNull()
     })
+    
+    it('should get the appointment id with an external id', async () => {
+
+        const result = await mit.getAppointmentIdByExternalId()
+        const expected = {
+            "administrativeDetails": { 
+                "integrationClientIdentificator": "zurich", 
+                "integrationExternalId": "1-C6A0OUU" 
+            }, 
+            "appointmentId": "61a220d019cbda0cd7a58804"
+        }
+        expect(result).toEqual(expected)
+    });
+    
 })
 
 describe('index test throw errors', () => {
@@ -282,4 +294,17 @@ describe('index test throw errors', () => {
         }
         await expect(fnErr).rejects.toThrow()
     })
+
+    it('should throw an error when trying to get the appointment id with an external id', async () => {
+        const fnErr = async () => {
+            try {
+                const tempSharedData = SharedData.getInstance()
+                tempSharedData.integrationExternalId = ''
+                await mit.getAppointmentIdByExternalId()
+            } catch (error) {
+                throw error
+            }
+        }
+        await expect(fnErr).rejects.toThrow()
+    });
 })

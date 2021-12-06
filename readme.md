@@ -8,6 +8,11 @@ The purpose of this project is to deliver a tool to consume the resources presen
 ***
 At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
+## CDN
+***
+This sdk has been published in the following link so that it is available for use
+https://cdn.mit.telemedicina.com/atrys-sdk.js
+
 
 ## API
 ***
@@ -159,6 +164,10 @@ consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
 magicLink(): string;
 ```
 > Method for create the magic link for deliver to clients for no login acces to Atrys platform.
+```
+getAppointmentIdByExternalId(): Promise<any>;
+```
+> Method that gets the id of an appointment by the external id of the patient.
 
 
 ## Build
