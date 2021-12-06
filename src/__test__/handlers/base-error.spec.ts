@@ -1,21 +1,6 @@
 import { HttpErrorNew, errorDictionary } from "../../handlers/base-error"
 
-// const doSomething = () => {
-//     const error = new Error()
-//     throw new HttpErrorNew(error)
-// }
-
-
 describe('base error tests', () => {
-    // test('should any error', () => {
-    //     expect(doSomething).toThrowError()
-    // })
-
-    // test('should other error when send undefined', () => {
-    //     // const error = new HttpErrorNew(undefined);
-    //     // console.log('error',error)
-    //     expect(someFunctionWhenThrowUndefined).toThrowError()
-    // })
 
     test('should throw error when send undefined', () => {
         const result = new HttpErrorNew(undefined)

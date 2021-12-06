@@ -1,12 +1,13 @@
 {
   "name": "@atrysglobal/mit-sdk",
-  "version": "1.0.9",
+  "version": "1.0.13",
   "description": "Web SDK for Atrys Integrations",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@vercel/ncc": "^0.29.0",
     "axios": "^0.21.1",
+    "buffer": "^6.0.3",
     "crypto-js": "^4.1.1"
   },
   "devDependencies": {
@@ -21,6 +22,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^27.2.0",
+    "license-webpack-plugin": "^4.0.0",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.5",
     "ts-loader": "^9.2.5",
