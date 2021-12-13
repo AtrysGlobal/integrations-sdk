@@ -8,6 +8,24 @@ The purpose of this project is to deliver a tool to consume the resources presen
 ***
 At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
+## CDN
+***
+This sdk has been published in the following link so that it is available for use
+https://cdn.mit.telemedicina.com/atrys-sdk.js
+
+## SharedData
+***
+There is an object called SharedData which contains information necessary for the use of both private and public internal methods.
+
+One of the necessary variables that the client must set is integrationClientIdentificator.
+
+When the MIT main class is instantiated, this variable must be set
+
+Example:
+```
+const integrationClientIdentificator = 'clientName';
+mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
+``` 
 
 ## API
 ***
@@ -27,7 +45,45 @@ normalizeModel(clientPatientModel: any): Promise<any>;
 > 
 >**@clientPatientModel**: Object with the patient data
 
-**Atrys Patient Model.**
+**Client Patient Model.**
+
+Note: The previously set integrationClientIdentificator variable must be used here.
+
+```
+    {
+        "from": integrationClientIdentificator,
+        "payload": {
+            "GeolocationData": {
+                "Country": "AR",
+                "State": "CAPITAL FEDERAL",
+                "City": "CAPITAL FEDERAL",
+                "Latitude": "-34.64424",
+                "Longitude": "-58.55662",
+                "Address": "Calle prueba 1234",
+                "Extra": "Piso 6"
+            },
+            "BeneficiaryData": {
+                "IdType": "DNI",
+                "IdNumber": "33182287",
+                "FirstName": "GONZALO EZEQUIEL",
+                "LastName": "DAUD",
+                "IntPhoneCode": "54",
+                "PhoneNumber": "1161711401",
+                "Email": "patient-sd2k@yopmail.com",
+                "DateOfBirth": "1987-07-22",
+                "Language": "ES"
+            },
+            "CaseData": {
+                "CaseId": "1-C6A0OUU",
+                "CaseNum": "1-26501013462"
+            }
+        }
+    }
+
+```
+
+**Atrys Normalized Patient Model (normalizedPatientModel).**
+Example: const normalizedPatientModel = await mit.normalizeModel(clientPatientModel)
 
 ```
 {
@@ -57,7 +113,10 @@ normalizeModel(clientPatientModel: any): Promise<any>;
         "complement": string,
         "streetNumber": string,
         "zipcode": string,
-    }
+    },
+    "password": string,
+    "externalId": string,
+    "gender":string
 }
 ```
 
@@ -159,6 +218,10 @@ consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
 magicLink(): string;
 ```
 > Method for create the magic link for deliver to clients for no login acces to Atrys platform.
+```
+getAppointmentIdByExternalId(): Promise<any>;
+```
+> Method that gets the id of an appointment by the external id of the patient.
 
 
 ## Build
