@@ -1,20 +1,29 @@
 # Atrys SDK for integrations
 
 ## Purpose
-***
+
 The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
 
 ## Patient model
-***
+
 At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
 ## CDN
-***
-This sdk has been published in the following link so that it is available for use
+
+This SDK has been published in the following link so that it is available for use (javascript in browser)
+
+```
 https://cdn.mit.telemedicina.com/atrys-sdk.js
+```
+
+## NPM Module
+https://www.npmjs.com/package/@atrysglobal/mit-sdk
+```
+npm i -S @atrysglobal/mit-sdk
+```
 
 ## SharedData
-***
+
 There is an object called SharedData which contains information necessary for the use of both private and public internal methods.
 
 One of the necessary variables that the client must set is integrationClientIdentificator.
@@ -22,13 +31,14 @@ One of the necessary variables that the client must set is integrationClientIden
 When the MIT main class is instantiated, this variable must be set
 
 Example:
+
 ```
 const integrationClientIdentificator = 'clientName';
 mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
 ``` 
 
 ## API
-***
+
 ```
 session(setup: string, publicKey: string): Promise<SessionInterface>;
 ```
@@ -45,45 +55,25 @@ normalizeModel(clientPatientModel: any): Promise<any>;
 > 
 >**@clientPatientModel**: Object with the patient data
 
-**Client Patient Model.**
-
+## Client Integration Model
 Note: The previously set integrationClientIdentificator variable must be used here.
 
 ```
-    {
+    const clientPatientModel = {
         "from": integrationClientIdentificator,
-        "payload": {
-            "GeolocationData": {
-                "Country": "AR",
-                "State": "CAPITAL FEDERAL",
-                "City": "CAPITAL FEDERAL",
-                "Latitude": "-34.64424",
-                "Longitude": "-58.55662",
-                "Address": "Calle prueba 1234",
-                "Extra": "Piso 6"
-            },
-            "BeneficiaryData": {
-                "IdType": "DNI",
-                "IdNumber": "33182287",
-                "FirstName": "GONZALO EZEQUIEL",
-                "LastName": "DAUD",
-                "IntPhoneCode": "54",
-                "PhoneNumber": "1161711401",
-                "Email": "patient-sd2k@yopmail.com",
-                "DateOfBirth": "1987-07-22",
-                "Language": "ES"
-            },
-            "CaseData": {
-                "CaseId": "1-C6A0OUU",
-                "CaseNum": "1-26501013462"
-            }
-        }
+        "payload": { ...the model patient used internally }
     }
 
 ```
 
 **Atrys Normalized Patient Model (normalizedPatientModel).**
-Example: const normalizedPatientModel = await mit.normalizeModel(clientPatientModel)
+Example: 
+
+```
+const normalizedPatientModel = await mit.normalizeModel(clientPatientModel)
+```
+
+The service returns internal model parsed for ready to use in Atrys backends.
 
 ```
 {
@@ -225,7 +215,6 @@ getAppointmentIdByExternalId(): Promise<any>;
 
 
 ## Build
-***
 
 The project can be built to run as SDK in the browser or to be used in BackEnd in a nodejs microservice for example.
 
