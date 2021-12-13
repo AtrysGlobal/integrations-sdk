@@ -139,15 +139,21 @@ mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
 # API
 
 ```
-session(setup: string, publicKey: string): Promise<SessionInterface>;
+MIT(setup: string, publicKey: string);
 ```
-> Create a new session in our session service ang get a MIT Token
->
+
 >**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR. 
 >
 >For integration and development, the value must be **TEST**
 >
 >**@publicKey**: String of the public key for validate the origin of the request
+
+```
+session(): Promise<SessionInterface>;
+```
+> Create a new session in our session service ang get a MIT Token
+>
+
 
 ```
 normalizeModel(clientPatientModel: any): Promise<any>;
