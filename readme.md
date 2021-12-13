@@ -2,11 +2,11 @@
 
 ## Purpose
 
-The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
+The purpose of this project is to deliver a SDK to consume the resources present in the Atrys teleconsultation platform (Inmediate and Sheduled Appointments), exposing a series of methods to perform the necessary requests to the several backends.
 
 ## Patient model
 
-At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
+At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model into Atrys patient model, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
 ## CDN
 
@@ -82,7 +82,8 @@ https://cdn.mit.telemedicina.com/atrys-sdk.js
         console.log("Get appointment by caseId OK", appointmentPayload);
 
         const magicLink = mit.magicLink()
-        console.log('maic link', magicLink);
+        console.log('magic link', magicLink);
+        
     } catch (error) {
         console.log(error);
     }
