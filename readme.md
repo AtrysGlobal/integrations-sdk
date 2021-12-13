@@ -16,6 +16,80 @@ This SDK has been published in the following link so that it is available for us
 https://cdn.mit.telemedicina.com/atrys-sdk.js
 ```
 
+### Javscript Basic Example
+
+```
+<script src="https://cdn.mit.telemedicina.com/atrys-sdk.js" type="module"></script>
+<script type="module">
+
+    try {
+        const mit = new MIT('TEST', '');
+    
+        const integrationClientIdentificator = 'EXAMPLE';
+        mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
+
+        console.log('MIT', mit);
+
+        const session = await mit.session()
+        console.log('SESSION', session);
+
+        const req = await mit.normalizeModel({
+        "from": integrationClientIdentificator,
+        "payload": {
+                "GeolocationData": {
+                    "Country": "AR",
+                    "State": "Buenos Aires",
+                    "City": "DHJ",
+                    "Latitude": "-34.5618913",
+                    "Longitude": "-58.4617484",
+                    "Address": "Test 123",
+                    "Extra": ""
+                },
+                "BeneficiaryData": {
+                    "IdType": "DNI",
+                    "IdNumber": "34567899",
+                    "FirstName": "Test Test",
+                    "LastName": "Test Test",
+                    "IntPhoneCode": "54",
+                    "PhoneNumber": "12345678",
+                    "Email": "a@b.com",
+                    "DateOfBirth": "2001-01-01",
+                    "Language": "ES"
+                },
+                "CaseData": {
+                    "CaseId": "637741353756375358",
+                    "CaseNum": "637741353756375358"
+                }
+            }
+        })
+
+        console.log('patient normalized', req.data);
+
+        const newPatient = await mit.createPatient(req.data)
+        console.log('patient created', newPatient.data);
+
+        const login = await mit.login()
+        console.log('login', login.data);
+
+        const inmediate = await mit.reserveInmediateAppointment()
+        console.log('inmediate reserve', inmediate.data);
+
+        const consolidate = await mit.consolidateInmediateAppointment([])
+        console.log('inmediate consolidate', consolidate.data);
+
+        const appointmentPayload = await mit.getAppointmentIdByExternalId()
+        console.log("Get appointment by caseId OK", appointmentPayload);
+
+        const magicLink = mit.magicLink()
+        console.log('maic link', magicLink);
+    } catch (error) {
+        console.log(error);
+    }
+    
+</script>
+```                
+
+
 ## NPM Module
 
 The npm site of the module can be found [here](https://www.npmjs.com/package/@atrysglobal/mit-sdk)
