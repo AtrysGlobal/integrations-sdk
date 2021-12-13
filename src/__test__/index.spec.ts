@@ -6,13 +6,12 @@ describe('index tests', () => {
     const publicKey = ``
     const setup = process.env.setup || 'TEST'
     const mit = new MIT(setup, publicKey, 'SDK_PATIENT')
-    let patientModel: any
+    let patientModel: any = {}
     let start: any
-    let blocks: any
-    let dt = new Date()
-    let month = dt.getMonth() + 1
-    let day = dt.getDate()
-    let year = dt.getFullYear()
+    const date = new Date()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const year = date.getFullYear()
 
     const clientPatientModel = {
         "from": "zurich",
@@ -83,7 +82,6 @@ describe('index tests', () => {
         }
 
         const result = await mit.listBlocks(payload)
-        blocks = result.data.payload[0].blocks
         start = result.data.payload[0].blocks[0]
         expect(result.data).not.toBeNull()
     })
@@ -106,14 +104,13 @@ describe('index tests', () => {
     })
     it('should retrieve magic link', () => {
         const result = mit.magicLink()
-        // console.log('magic link', result)
         expect(result).not.toBeNull()
     })
 
     it('should reserve immediate appointment', async () => {
         const dt = new Date()
-        const day = dt.getDate()
-        const tempNumber = Math.floor(Math.random() * 100 * day)
+        const d = dt.getDate()
+        const tempNumber = Math.floor(Math.random() * 100 * d)
         const newClientPatientModel = { ...clientPatientModel }
         newClientPatientModel.payload.BeneficiaryData.Email = `patient-sdk${tempNumber}@yopmail.com`
         const algo = await mit.normalizeModel(clientPatientModel)
@@ -127,6 +124,20 @@ describe('index tests', () => {
         const result = await mit.consolidateInmediateAppointment([])
         expect(result.data).not.toBeNull()
     })
+    
+    it('should get the appointment id with an external id', async () => {
+
+        const result = await mit.getAppointmentIdByExternalId()
+        const expected = {
+            "administrativeDetails": { 
+                "integrationClientIdentificator": "zurich", 
+                "integrationExternalId": "1-C6A0OUU" 
+            }, 
+            "appointmentId": "61a220d019cbda0cd7a58804"
+        }
+        expect(result).toEqual(expected)
+    });
+    
 })
 
 describe('index test throw errors', () => {
@@ -134,13 +145,11 @@ describe('index test throw errors', () => {
     const publicKey = ``
     const setup = process.env.setup || 'TEST'
     const mit = new MIT(setup, publicKey, 'SDK_PATIENT')
-    let patientModel: any
-    let start: any
-    let blocks: any
-    let dt = new Date()
-    let month = dt.getMonth() + 1
-    let day = dt.getDate()
-    let year = dt.getFullYear()
+    const patientModel: any = {}
+    const dt = new Date()
+    const month = dt.getMonth() + 1
+    const day = dt.getDate()
+    const year = dt.getFullYear()
 
     const clientPatientModel = {
         "from": "zurich",
@@ -190,7 +199,7 @@ describe('index test throw errors', () => {
     it('should throw error list specialties', async () => {
         const fnErr = async () => {
             try {
-                let wrongValue: any = null
+                const wrongValue: any = null
                 return await mit.listSpecialties(wrongValue)
             } catch (error) {
                 throw error
@@ -223,7 +232,7 @@ describe('index test throw errors', () => {
     it('should throw error when reserve immediate appointment', async () => {
         const fnErr = async () => {
             try {
-                let tempSharedData = SharedData.getInstance()
+                const tempSharedData = SharedData.getInstance()
                 tempSharedData.appopintmentReservedId = '0'
                 await mit.reserveInmediateAppointment()
                 await mit.consolidateInmediateAppointment([])
@@ -239,7 +248,7 @@ describe('index test throw errors', () => {
     it('should throw error when consolidate immediate appointment with wrong appointmentReservedId', async () => {
         const fnErr = async () => {
             try {
-                let tempSharedData = SharedData.getInstance()
+                const tempSharedData = SharedData.getInstance()
                 tempSharedData.appopintmentReservedId = '0'
                 await mit.consolidateInmediateAppointment([])
             } catch (error) {
@@ -260,7 +269,7 @@ describe('index test throw errors', () => {
     it('should throw error when createPatient with wrong patientModel', async () => {
         const fnErr = async () => {
             try {
-                let tempPatientModel: any = null
+                const tempPatientModel: any = null
                 await mit.createPatient(tempPatientModel)
             } catch (error) {
                 throw error
@@ -274,7 +283,7 @@ describe('index test throw errors', () => {
             try {
                 await mit.session()
                 await mit.normalizeModel(clientPatientModel)
-                let tempPatientModel = { ...patientModel }
+                const tempPatientModel = { ...patientModel }
                 tempPatientModel.password = 1
                 await mit.createPatient(tempPatientModel)
                 await mit.login()
@@ -285,4 +294,17 @@ describe('index test throw errors', () => {
         }
         await expect(fnErr).rejects.toThrow()
     })
+
+    it('should throw an error when trying to get the appointment id with an external id', async () => {
+        const fnErr = async () => {
+            try {
+                const tempSharedData = SharedData.getInstance()
+                tempSharedData.integrationExternalId = ''
+                await mit.getAppointmentIdByExternalId()
+            } catch (error) {
+                throw error
+            }
+        }
+        await expect(fnErr).rejects.toThrow()
+    });
 })

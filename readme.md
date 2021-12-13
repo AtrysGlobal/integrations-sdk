@@ -1,16 +1,44 @@
 # Atrys SDK for integrations
 
 ## Purpose
-***
+
 The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
 
 ## Patient model
-***
+
 At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
+## CDN
+
+This SDK has been published in the following link so that it is available for use (javascript in browser)
+
+```
+https://cdn.mit.telemedicina.com/atrys-sdk.js
+```
+
+## NPM Module
+https://www.npmjs.com/package/@atrysglobal/mit-sdk
+```
+npm i -S @atrysglobal/mit-sdk
+```
+
+## SharedData
+
+There is an object called SharedData which contains information necessary for the use of both private and public internal methods.
+
+One of the necessary variables that the client must set is integrationClientIdentificator.
+
+When the MIT main class is instantiated, this variable must be set
+
+Example:
+
+```
+const integrationClientIdentificator = 'clientName';
+mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
+``` 
 
 ## API
-***
+
 ```
 session(setup: string, publicKey: string): Promise<SessionInterface>;
 ```
@@ -27,7 +55,25 @@ normalizeModel(clientPatientModel: any): Promise<any>;
 > 
 >**@clientPatientModel**: Object with the patient data
 
-**Atrys Patient Model.**
+## Client Integration Model
+Note: The previously set integrationClientIdentificator variable must be used here.
+
+```
+    const clientPatientModel = {
+        "from": integrationClientIdentificator,
+        "payload": { ...the model patient used internally }
+    }
+
+```
+
+**Atrys Normalized Patient Model (normalizedPatientModel).**
+Example: 
+
+```
+const normalizedPatientModel = await mit.normalizeModel(clientPatientModel)
+```
+
+The service returns internal model parsed for ready to use in Atrys backends.
 
 ```
 {
@@ -57,7 +103,10 @@ normalizeModel(clientPatientModel: any): Promise<any>;
         "complement": string,
         "streetNumber": string,
         "zipcode": string,
-    }
+    },
+    "password": string,
+    "externalId": string,
+    "gender":string
 }
 ```
 
@@ -159,10 +208,13 @@ consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
 magicLink(): string;
 ```
 > Method for create the magic link for deliver to clients for no login acces to Atrys platform.
+```
+getAppointmentIdByExternalId(): Promise<any>;
+```
+> Method that gets the id of an appointment by the external id of the patient.
 
 
 ## Build
-***
 
 The project can be built to run as SDK in the browser or to be used in BackEnd in a nodejs microservice for example.
 

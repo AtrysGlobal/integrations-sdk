@@ -49,7 +49,7 @@ export class HttpErrorNew extends Error {
 
     handleError(err: any) {
         let outError = {} as ErrorObject;
-        let connectError = err.message.match(/connect ECONNREFUSED/)
+        const connectError = err.message.match(/connect ECONNREFUSED/)
 
         if (connectError) {
             outError = {

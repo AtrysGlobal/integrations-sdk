@@ -14,10 +14,10 @@ export class ClientRequest {
       timeout: 1000 * 50,
       responseType: 'json',
       headers: {
-        'User-Agent': 'Atrys/SDK',
+        // 'User-Agent': 'Atrys/SDK',
         Authorization: 'Bearer ' + this.selector(env).token,
-        Origin: 'sdk',
-        'Access-Control-Allow-Origin': '*',
+        // Origin: 'sdk',
+        // 'Access-Control-Allow-Origin': '*',
         // 'origin':'x-requested-with',
         // 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
         // 'Content-Type': 'application/json',

@@ -14,4 +14,12 @@ export class Crypto {
     const decrypted = CryptoJS.AES.decrypt(value, key).toString(CryptoJS.enc.Utf8);
     return JSON.parse(decodeURIComponent(decrypted));
   }
+
+  base64Encode(text: string): string{
+    return Buffer.from(text).toString('base64');
+  }
+
+  base64Decode(encoded: string): string{
+    return Buffer.from(encoded, 'base64').toString('binary')
+  }
 }

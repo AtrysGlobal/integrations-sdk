@@ -48,6 +48,7 @@ export class MIT implements MitInterface {
       
       this.sharedData.patientPassword = _req.data.password;
       this.sharedData.patientUsername = _req.data.personalData.email;
+      this.sharedData.integrationExternalId = _req.data.externalId;
 
       return _req;
 
@@ -149,16 +150,29 @@ export class MIT implements MitInterface {
   public magicLink(): string {
     const crypto = new Crypto();
 
-    const patientData = {
-      email: this.sharedData.patientUsername,
-      password: this.sharedData.patientPassword,
-      appointmentId: this.sharedData.appopintmentReservedId,
-    };
+    // DEPRECATED para compatibilidad con .NET
+    // const patientData = {
+    //   email: this.sharedData.patientUsername,
+    //   password: this.sharedData.patientPassword,
+    //   appointmentId: this.sharedData.appopintmentReservedId,
+    // };
+    // const dataEncrypted = crypto.encrypt(patientData);
+    
+    const dataEncrypted = crypto.base64Encode(
+      `${this.sharedData.patientUsername};${this.sharedData.patientPassword};${this.sharedData.appopintmentReservedId};integration`
+    )
 
-    const dataEncrypted = crypto.encrypt(patientData);
-    const magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + dataEncrypted;
+    const magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
 
     return magicLink;
+  }
+
+  public async getAppointmentIdByExternalId(): Promise<any>{
+    try {
+      return await Appopintment.getAppointmentIdByExternalId();
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
