@@ -17,14 +17,39 @@ https://cdn.mit.telemedicina.com/atrys-sdk.js
 ```
 
 ## NPM Module
-https://www.npmjs.com/package/@atrysglobal/mit-sdk
+
+The npm site of the module can be found [here](https://www.npmjs.com/package/@atrysglobal/mit-sdk)
+
 ```
 npm i -S @atrysglobal/mit-sdk
 ```
 
 ## SharedData
 
-There is an object called SharedData which contains information necessary for the use of both private and public internal methods.
+This class is a singleton to set and get information necessary for the use of both private and public internal methods.
+
+the public properties are:
+
+```
+public environment: Environment = {
+	frontend: string,
+	backend: string,
+};
+
+public tokens: SessionTokens = {
+	mit: string,
+	atrysBackend: string,
+	atrysFrontEnd: string,
+};
+
+public patientId: string;
+public patientUsername: string;
+public patientPassword: string;
+public appopintmentReservedId: string;
+public mode: string;
+public integrationClientIdentificator: string;
+public integrationExternalId: string;
+```
 
 One of the necessary variables that the client must set is integrationClientIdentificator.
 
@@ -37,16 +62,18 @@ const integrationClientIdentificator = 'clientName';
 mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
 ``` 
 
-## API
+# API
 
 ```
 session(setup: string, publicKey: string): Promise<SessionInterface>;
 ```
 > Create a new session in our session service ang get a MIT Token
 >
->**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR.  
+>**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR. 
+>
+>For integration and development, the value must be **TEST**
+>
 >**@publicKey**: String of the public key for validate the origin of the request
-
 
 ```
 normalizeModel(clientPatientModel: any): Promise<any>;
@@ -64,6 +91,37 @@ Note: The previously set integrationClientIdentificator variable must be used he
         "payload": { ...the model patient used internally }
     }
 
+```
+
+Here is an **example** of a payload model for integration:
+
+```
+{
+    "GeolocationData": {
+        "Country": "AR",
+        "State": "Buenos Aires",
+        "City": "DHJ",
+        "Latitude": "-34.5618913",
+        "Longitude": "-58.4617484",
+        "Address": "Test 123",
+        "Extra": ""
+    },
+    "BeneficiaryData": {
+        "IdType": "DNI",
+        "IdNumber": "34567899",
+        "FirstName": "Test Test",
+        "LastName": "Test Test",
+        "IntPhoneCode": "54",
+        "PhoneNumber": "12345678",
+        "Email": "a@b.com",
+        "DateOfBirth": "2001-01-01",
+        "Language": "ES"
+    },
+    "CaseData": {
+        "CaseId": "637741353756375358",
+        "CaseNum": "637741353756375358"
+    }
+}
 ```
 
 **Atrys Normalized Patient Model (normalizedPatientModel).**
@@ -111,7 +169,7 @@ The service returns internal model parsed for ready to use in Atrys backends.
 ```
 
 ```
-  createPatient(normalizedPatientModel: any): Promise<any>;
+createPatient(normalizedPatientModel: any): Promise<any>;
 ```
 > Method for create a new patient in the Atrys Backend.
 > 
@@ -159,6 +217,7 @@ listBlocks(queryBlock: any): Promise<any>;
 ```
 reserveSheduledAppointment(reservePayload: any): Promise<any>;
 ```
+
 > Method for reserve a new scheduled appointment.
 > 
 >**@reservePayload**:
@@ -188,30 +247,35 @@ reserveSheduledAppointment(reservePayload: any): Promise<any>;
 ```
 consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
 ```
-> Method for consolidate previous reserved appointment.
-> 
+
+> Method for consolidate previous reserved appointment. 
 >**@symptoms**: array of symptoms
 
 
 ```
 reserveInmediateAppointment(): Promise<any>;
 ```
+
 > Method for reserve a new inmediate appointment.
 
 
 ```
 consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
 ```
+
 > Method for consolidate previous inmediate appointment.
 
 ```
 magicLink(): string;
 ```
-> Method for create the magic link for deliver to clients for no login acces to Atrys platform.
+
+> Method for create the magic link for deliver to clients for passwordless login acces to Atrys platform.
+
 ```
 getAppointmentIdByExternalId(): Promise<any>;
 ```
-> Method that gets the id of an appointment by the external id of the patient.
+
+> Method that gets the id of an appointment by the external id of the patient. (or get appointment id by external integration id)
 
 
 ## Build
