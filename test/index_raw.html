@@ -15,31 +15,31 @@
                 console.log('SESSION', session);
 
                 const req = await mit.normalizeModel({
-                "from": "zurich",
+                "from": integrationClientIdentificator,
                 "payload": {
                         "GeolocationData": {
-                        "Country": "AR",
-                        "State": "Buenos Aires",
-                        "City": "DHJ",
-                        "Latitude": "-34.5618913",
-                        "Longitude": "-58.4617484",
-                        "Address": "Test 123",
-                        "Extra": ""
+                            "Country": "AR",
+                            "State": "Buenos Aires",
+                            "City": "DHJ",
+                            "Latitude": "-34.5618913",
+                            "Longitude": "-58.4617484",
+                            "Address": "Test 123",
+                            "Extra": ""
                         },
                         "BeneficiaryData": {
-                        "IdType": "DNI",
-                        "IdNumber": "34567899",
-                        "FirstName": "Test Test",
-                        "LastName": "Test Test",
-                        "IntPhoneCode": "54",
-                        "PhoneNumber": "12345678",
-                        "Email": "a@b.com",
-                        "DateOfBirth": "2001-01-01",
-                        "Language": "ES"
+                            "IdType": "DNI",
+                            "IdNumber": "34567899",
+                            "FirstName": "Test Test",
+                            "LastName": "Test Test",
+                            "IntPhoneCode": "54",
+                            "PhoneNumber": "12345678",
+                            "Email": "a@b.com",
+                            "DateOfBirth": "2001-01-01",
+                            "Language": "ES"
                         },
                         "CaseData": {
-                        "CaseId": "637741353756375358",
-                        "CaseNum": "637741353756375358"
+                            "CaseId": "637741353756375358",
+                            "CaseNum": "637741353756375358"
                         }
                     }
                 })
