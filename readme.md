@@ -17,6 +17,7 @@ https://cdn.mit.telemedicina.com/atrys-sdk.js
 ```
 
 ### Javscript Basic Example
+#### Inmediate medical apppointment.
 
 ```
 <script src="https://cdn.mit.telemedicina.com/atrys-sdk.js" type="module"></script>
