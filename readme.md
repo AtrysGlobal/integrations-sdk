@@ -123,9 +123,29 @@ public patientUsername: string;
 public patientPassword: string;
 public appopintmentReservedId: string;
 public mode: string;
+public mode: publicKey;
 public integrationClientIdentificator: string;
 public integrationExternalId: string;
 ```
+
+>**@patientId:** String patient id, this will be used when access is granted at login and the value will be set to sharedData.patientId. 
+>
+>**@patientUsername:** String patient's username, the value will be stored in the variable sharedData.patientUsername when the model is normalized and will also be used to generate the magic link.
+>
+>**@patientPassword:** String patient's password, the value will be stored when normalizing the model in the variable sharedData.patientPassword and will be used during login.
+>
+>**@appopinmentReservedId:** String Id of the reserved schedule, which will be stored in sharedData.appopintmentReservedId and will be used when the appointment is consolidated.
+>
+>**@mode:** String integration mode. The value is defined in the constructor in the variable sharedData.mode, currently only SDK_PATIENT is enabled.
+>
+>**@publicKey:** String public access key, which is defined in the constructor in the variable sharedData.publicKey and this is used when a request is made to obtain the session token.
+>
+>**@integrationClientIdentificator:** String Unique identificator for integrated client, must be used in the payload.source when normelize patient endpoint is called.
+>
+>**@environment:** Instance of Environmentss where the frontend and backend endpoints will be stored.
+>
+>**@tokens:** Tokens instance that will be used to store the necessary tokens for the use of different methods.
+>
 
 One of the necessary variables that the client must set is integrationClientIdentificator.
 
