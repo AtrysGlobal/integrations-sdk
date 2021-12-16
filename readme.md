@@ -2,11 +2,11 @@
 
 ## Purpose
 
-The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
+The purpose of this project is to deliver a SDK to consume the resources present in the Atrys teleconsultation platform (Inmediate and Sheduled Appointments), exposing a series of methods to perform the necessary requests to the several backends.
 
 ## Patient model
 
-At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
+At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model into Atrys patient model, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
 ## CDN
 
@@ -17,6 +17,7 @@ https://cdn.mit.telemedicina.com/atrys-sdk.js
 ```
 
 ### Javscript Basic Example
+#### Inmediate medical apppointment.
 
 ```
 <script src="https://cdn.mit.telemedicina.com/atrys-sdk.js" type="module"></script>
@@ -81,7 +82,8 @@ https://cdn.mit.telemedicina.com/atrys-sdk.js
         console.log("Get appointment by caseId OK", appointmentPayload);
 
         const magicLink = mit.magicLink()
-        console.log('maic link', magicLink);
+        console.log('magic link', magicLink);
+        
     } catch (error) {
         console.log(error);
     }
@@ -121,9 +123,29 @@ public patientUsername: string;
 public patientPassword: string;
 public appopintmentReservedId: string;
 public mode: string;
+public mode: publicKey;
 public integrationClientIdentificator: string;
 public integrationExternalId: string;
 ```
+
+>**@patientId:** String patient id, this will be used when access is granted at login and the value will be set to sharedData.patientId. 
+>
+>**@patientUsername:** String patient's username, the value will be stored in the variable sharedData.patientUsername when the model is normalized and will also be used to generate the magic link.
+>
+>**@patientPassword:** String patient's password, the value will be stored when normalizing the model in the variable sharedData.patientPassword and will be used during login.
+>
+>**@appopinmentReservedId:** String Id of the reserved schedule, which will be stored in sharedData.appopintmentReservedId and will be used when the appointment is consolidated.
+>
+>**@mode:** String integration mode. The value is defined in the constructor in the variable sharedData.mode, currently only SDK_PATIENT is enabled.
+>
+>**@publicKey:** String public access key, which is defined in the constructor in the variable sharedData.publicKey and this is used when a request is made to obtain the session token.
+>
+>**@integrationClientIdentificator:** String Unique identificator for integrated client, must be used in the payload.source when normelize patient endpoint is called.
+>
+>**@environment:** Instance of Environmentss where the frontend and backend endpoints will be stored.
+>
+>**@tokens:** Tokens instance that will be used to store the necessary tokens for the use of different methods.
+>
 
 One of the necessary variables that the client must set is integrationClientIdentificator.
 
