@@ -63,7 +63,7 @@ export async function reserveInmediate(): Promise<object> {
 }
 
 export async function consolidateInmediate(symptoms: string[]): Promise<object> {
-  return await consolidate(symptoms, 'INMEDIATE');
+  return consolidate(symptoms, 'INMEDIATE');
 }
 
 export async function reserveSheduled(reservePayload: any): Promise<object> {
@@ -92,7 +92,7 @@ export async function reserveSheduled(reservePayload: any): Promise<object> {
 }
 
 export async function consolidateSheduled(symptoms: string[]): Promise<object> {
-  return await consolidate(symptoms, 'SCHEDULED');
+  return consolidate(symptoms, 'SCHEDULED');
 }
 
 export async function getAppointmentIdByExternalId(): Promise<object>{
