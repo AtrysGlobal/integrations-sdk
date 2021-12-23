@@ -1,4 +1,3 @@
-import { HttpErrorNew } from '../handlers/base-error';
 import { Environment } from '../interfaces/environment.interface';
 import { SessionTokens } from '../interfaces/session_tokens.interface';
 

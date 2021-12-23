@@ -1,4 +1,3 @@
-import config from './config';
 import { ClientRequest } from './helpers/request.helper';
 import { SharedData } from './helpers/shared_data.helper';
 import { Crypto } from './helpers/crypto.helper';
@@ -7,7 +6,7 @@ import { SessionInterface } from './interfaces/session.interface';
 
 import * as Auth from './helpers/auth.helper';
 import * as Specialty from './entities/specialty';
-import appointment, * as Appopintment from './entities/appointment';
+import * as Appopintment from './entities/appointment';
 import * as Patient from './entities/patient';
 import * as Professionals from './entities/professional';
 import * as Blocks from './entities/blocks';
@@ -62,12 +61,12 @@ export class MIT implements MitInterface {
       const req: any = await Patient.register(patientModel);
 
       if (req.data.responseType === 'error' && req.data.httpCode === 422) {
-        const reset = await this.resetCredentials(patientModel);
-        return reset;
+        return this.resetCredentials(patientModel);
       }
 
       return req;
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -76,6 +75,7 @@ export class MIT implements MitInterface {
     try {
       return await Auth.login()
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -87,6 +87,7 @@ export class MIT implements MitInterface {
         password: patientModel.password,
       });
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -95,6 +96,7 @@ export class MIT implements MitInterface {
     try {
       return await Professionals.list();
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -103,6 +105,7 @@ export class MIT implements MitInterface {
     try {
       return await Specialty.list(specialtyId);
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -111,6 +114,7 @@ export class MIT implements MitInterface {
     try {
       return await Blocks.list(queryBlock);
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -119,6 +123,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.reserveSheduled(reservePayload);
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -127,6 +132,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.consolidateSheduled(symptoms);
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -135,6 +141,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.reserveInmediate();
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -143,6 +150,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.consolidateInmediate(symptoms);
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -162,15 +170,14 @@ export class MIT implements MitInterface {
       `${this.sharedData.patientUsername};${this.sharedData.patientPassword};${this.sharedData.appopintmentReservedId};integration`
     )
 
-    const magicLink = this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
-
-    return magicLink;
+    return this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
   }
 
   public async getAppointmentIdByExternalId(): Promise<any>{
     try {
       return await Appopintment.getAppointmentIdByExternalId();
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }

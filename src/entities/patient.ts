@@ -25,9 +25,8 @@ export async function changePassword(credentials: any): Promise<object> {
     if (!credentials) throw new Error('Yoy must provide a credentials for patient operations');
 
     const _request = new ClientRequest('SDK');
-    const _req = await _request.post('/account/sdk/change-password', { ...credentials });
+    return _request.post('/account/sdk/change-password', { ...credentials });
 
-    return _req;
   } catch (error: any) {
     throw new HttpErrorNew(error);
   }

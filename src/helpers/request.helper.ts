@@ -14,13 +14,7 @@ export class ClientRequest {
       timeout: 1000 * 50,
       responseType: 'json',
       headers: {
-        // 'User-Agent': 'Atrys/SDK',
         Authorization: 'Bearer ' + this.selector(env).token,
-        // Origin: 'sdk',
-        // 'Access-Control-Allow-Origin': '*',
-        // 'origin':'x-requested-with',
-        // 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
-        // 'Content-Type': 'application/json',
       },
     });
   }
@@ -68,12 +62,10 @@ export class ClientRequest {
   }
 
   async post(endpoint: string, payload: any): Promise<any> {
-    const _req = await this.axiosInstance.post(endpoint, payload, { validateStatus: () => true });
-    return _req;
+    return this.axiosInstance.post(endpoint, payload, { validateStatus: () => true });
   }
 
   async get(endpoint: string, params: any = {}): Promise<any> {
-    const _req = await this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true });
-    return _req;
+    return this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true });
   }
 }
