@@ -16,6 +16,19 @@ This SDK has been published in the following link so that it is available for us
 https://cdn.mit.telemedicina.com/atrys-sdk.js
 ```
 
+## Environment Setups
+For use the SDK you must use one of the Atrys Environments (Countries), the valid strings are:
+
+> PROD-BR: Brasil
+> 
+> PROD-ES: Spain 
+> 
+> PROD-CO: Colombia
+> 
+> PROD-CL: Chile
+
+For integration yo need to replace the PROD string for INT
+
 ### Javscript Basic Example
 #### Inmediate medical apppointment.
 
