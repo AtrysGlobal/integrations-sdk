@@ -22,6 +22,7 @@ export class MIT implements MitInterface {
     this.publicKey = publicKey;
     this.sharedData = SharedData.getInstance();
     this.sharedData.mode = mode;
+    this.sharedData.setup = setup;
   }
 
   public async session(setup?: string): Promise<SessionInterface> {
@@ -42,6 +43,8 @@ export class MIT implements MitInterface {
   public async normalizeModel(clientPatientModel: any): Promise<any> {
     try {
       const _request = new ClientRequest('MIT_RULE_ENGINE');
+
+      clientPatientModel.setup = this.sharedData.setup;
 
       const _req = await _request.post('', clientPatientModel);
       
