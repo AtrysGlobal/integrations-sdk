@@ -22,6 +22,7 @@ export class SharedData {
   public mode: string = '';
   public integrationClientIdentificator: string = '';
   public integrationExternalId: string = '';
+  public setup: string = '';
 
   constructor() {
     if (SharedData._instance) {
