@@ -1,6 +1,6 @@
 {
   "name": "@atrysglobal/mit-sdk",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Web SDK for Atrys Integrations",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
