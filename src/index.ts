@@ -69,8 +69,7 @@ export class MIT implements MitInterface {
 
       return req;
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -78,8 +77,7 @@ export class MIT implements MitInterface {
     try {
       return await Auth.login()
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -90,8 +88,7 @@ export class MIT implements MitInterface {
         password: patientModel.password,
       });
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -99,8 +96,7 @@ export class MIT implements MitInterface {
     try {
       return await Professionals.list();
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -108,8 +104,7 @@ export class MIT implements MitInterface {
     try {
       return await Specialty.list(specialtyId);
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -117,8 +112,7 @@ export class MIT implements MitInterface {
     try {
       return await Blocks.list(queryBlock);
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -126,8 +120,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.reserveSheduled(reservePayload);
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -135,8 +128,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.consolidateSheduled(symptoms);
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -144,8 +136,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.reserveInmediate();
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -153,8 +144,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.consolidateInmediate(symptoms);
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 
@@ -180,8 +170,7 @@ export class MIT implements MitInterface {
     try {
       return await Appopintment.getAppointmentIdByExternalId();
     } catch (error) {
-      console.error(error)
-      throw error;
+      throw new HttpErrorNew(error)
     }
   }
 }
