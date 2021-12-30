@@ -7,7 +7,7 @@ const config: any = {
     'PROD-BR': 'https://b1.atrys-brasil.telemedicina.com/api/v1',
     'PROD-ES': 'https://b1.atrys-espana.telemedicina.com/api/v1',
     'PROD-CO': 'https://b1.atrys-colombia.telemedicina.com/api/v1',
-    'PROD-CL': 'https://b1.atrys-chile.telemedicina.com/api/v1',
+    'PROD-CL': 'https://b1.atrys.telemedicina.com/api/v1',
     'LOCAL': 'http://caprica.com:3000/api/v1',
     'TEST': 'https://backend.mit.telemedicina.com/api/v1',
   },
