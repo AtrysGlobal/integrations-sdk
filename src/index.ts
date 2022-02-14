@@ -48,10 +48,6 @@ export class MIT implements MitInterface {
 
       const _req = await _request.post('', clientPatientModel);
 
-      if(_req.status != 200){
-        throw new MitError(_req.data.message)
-      }
-
       this.sharedData.patientPassword = _req.data.password;
       this.sharedData.patientUsername = _req.data.personalData.email;
       this.sharedData.integrationExternalId = _req.data.externalId;

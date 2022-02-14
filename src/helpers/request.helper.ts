@@ -79,7 +79,7 @@ export class ClientRequest {
   private catchErrors(endpoint: string, request: any): Promise<any> {
     const allowedStatusCodes = [200, 422]
 
-    if (allowedStatusCodes.indexOf(request.status) ==  -1) {
+    if (allowedStatusCodes.indexOf(request.status) ===  -1) {
 
       this.sharedData.errors.push({
         endpoint,
