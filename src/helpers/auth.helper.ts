@@ -1,6 +1,6 @@
 import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
-import { HttpErrorNew } from '../handlers/base-error';
+import { MitError } from '../handlers/mit-error';
 
 export async function login(): Promise<any> {
   return new Promise(async (resolve, reject) => {
@@ -44,7 +44,7 @@ export async function login(): Promise<any> {
       reject(error);
     }
   }).catch(error => {
-    throw new HttpErrorNew(error);
+    throw new MitError(error);
   });
 }
 

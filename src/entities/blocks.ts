@@ -1,6 +1,6 @@
 import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
-import { HttpErrorNew } from '../handlers/base-error';
+import { MitError } from '../handlers/mit-error';
 
 const sharedData = SharedData.getInstance();
 
@@ -15,7 +15,7 @@ export async function list(queryBlock: any): Promise<object> {
     }
     return _req;
   } catch (error: any) {
-    throw new HttpErrorNew(error);
+    throw new MitError(error);
   }
 }
 

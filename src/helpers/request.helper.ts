@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SharedData } from './shared_data.helper';
 import config from '../config';
+import { MitError, ERROR_TYPES } from '../handlers/mit-error';
 
 export class ClientRequest {
   private sharedData: SharedData;
@@ -62,10 +63,32 @@ export class ClientRequest {
   }
 
   async post(endpoint: string, payload: any): Promise<any> {
-    return this.axiosInstance.post(endpoint, payload, { validateStatus: () => true });
+    return this.catchErrors(
+      endpoint, 
+      await this.axiosInstance.post(endpoint, payload, { validateStatus: () => true })
+    )
   }
 
   async get(endpoint: string, params: any = {}): Promise<any> {
-    return this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true });
+    return this.catchErrors(
+      endpoint, 
+      this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true })
+    )
+  }
+
+  private catchErrors(endpoint: string, request: any): Promise<any> {
+    const allowedStatusCodes = [200, 422]
+
+    if (allowedStatusCodes.indexOf(request.status) ==  -1) {
+
+      this.sharedData.errors.push({
+        endpoint,
+        message: request.data.message
+      })
+
+      throw new MitError(request.data.message, ERROR_TYPES.BAD_REQUEST);
+    }
+
+    return request;
   }
 }

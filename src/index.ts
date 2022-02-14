@@ -10,7 +10,7 @@ import * as Appopintment from './entities/appointment';
 import * as Patient from './entities/patient';
 import * as Professionals from './entities/professional';
 import * as Blocks from './entities/blocks';
-import { HttpErrorNew } from './handlers/base-error';
+import { MitError } from './handlers/mit-error';
 
 export class MIT implements MitInterface {
   private setup: string = '';
@@ -47,15 +47,19 @@ export class MIT implements MitInterface {
       clientPatientModel.setup = this.sharedData.setup;
 
       const _req = await _request.post('', clientPatientModel);
-      
+
+      if(_req.status != 200){
+        throw new MitError(_req.data.message)
+      }
+
       this.sharedData.patientPassword = _req.data.password;
       this.sharedData.patientUsername = _req.data.personalData.email;
       this.sharedData.integrationExternalId = _req.data.externalId;
 
       return _req;
 
-    } catch (error) {
-      throw new HttpErrorNew(error);
+    } catch (error: any) {
+      throw new MitError(error);
     }
   }
 
@@ -68,16 +72,16 @@ export class MIT implements MitInterface {
       }
 
       return req;
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
   public async login(): Promise<any> {
     try {
       return await Auth.login()
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
@@ -87,64 +91,64 @@ export class MIT implements MitInterface {
         email: patientModel.personalData.email,
         password: patientModel.password,
       });
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
   public async listProfessionals(): Promise<any> {
     try {
       return await Professionals.list();
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
   public async listSpecialties(specialtyId: string): Promise<any> {
     try {
       return await Specialty.list(specialtyId);
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
   public async listBlocks(queryBlock: any): Promise<any> {
     try {
       return await Blocks.list(queryBlock);
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
   public async reserveSheduledAppointment(reservePayload: any): Promise<any> {
     try {
       return await Appopintment.reserveSheduled(reservePayload);
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
   public async consolidateSheduledAppointment(symptoms: string[]): Promise<any> {
     try {
       return await Appopintment.consolidateSheduled(symptoms);
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
   public async reserveInmediateAppointment(): Promise<any> {
     try {
       return await Appopintment.reserveInmediate();
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
   public async consolidateInmediateAppointment(symptoms: string[]): Promise<any> {
     try {
       return await Appopintment.consolidateInmediate(symptoms);
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 
@@ -169,8 +173,8 @@ export class MIT implements MitInterface {
   public async getAppointmentIdByExternalId(): Promise<any>{
     try {
       return await Appopintment.getAppointmentIdByExternalId();
-    } catch (error) {
-      throw new HttpErrorNew(error)
+    } catch (error: any) {
+      throw new MitError(error)
     }
   }
 }

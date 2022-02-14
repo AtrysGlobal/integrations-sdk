@@ -1,5 +1,6 @@
 import { Environment } from '../interfaces/environment.interface';
 import { SessionTokens } from '../interfaces/session_tokens.interface';
+import { IErrors} from '../interfaces/errors.interface';
 
 export class SharedData {
   private static _instance: SharedData = new SharedData();
@@ -23,6 +24,7 @@ export class SharedData {
   public integrationClientIdentificator: string = '';
   public integrationExternalId: string = '';
   public setup: string = '';
+  public errors:IErrors[] = [];
 
   constructor() {
     if (SharedData._instance) {
