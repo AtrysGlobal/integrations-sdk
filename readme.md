@@ -139,6 +139,7 @@ public mode: string;
 public mode: publicKey;
 public integrationClientIdentificator: string;
 public integrationExternalId: string;
+public errors: IErrors[];
 ```
 
 >**@patientId:** String patient id, this will be used when access is granted at login and the value will be set to sharedData.patientId. 
@@ -159,6 +160,7 @@ public integrationExternalId: string;
 >
 >**@tokens:** Tokens instance that will be used to store the necessary tokens for the use of different methods.
 >
+>**@errors:** Array of runtime errors catched by the SDK
 
 One of the necessary variables that the client must set is integrationClientIdentificator.
 
