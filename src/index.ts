@@ -25,10 +25,13 @@ export class MIT implements MitInterface {
     this.sharedData.setup = setup;
   }
 
-  public async session(setup?: string): Promise<SessionInterface> {
+  public async session(): Promise<SessionInterface> {
     const _request = new ClientRequest('MIT_SESSION');
 
-    const _req = await _request.post('', { publicKey: this.publicKey });
+    const publicKey = this.publicKey
+    const setup = this.setup
+
+    const _req = await _request.post('', { publicKey, setup });
     this.sharedData.tokens.mit = _req.data.token;
 
     return {

@@ -81,12 +81,14 @@ export class ClientRequest {
 
     if (allowedStatusCodes.indexOf(request.status) ===  -1) {
 
+      const requestError = request.data.message || request.data.error
+
       this.sharedData.errors.push({
         endpoint,
-        message: request.data.message
+        message: requestError
       })
 
-      throw new MitError(request.data.message, ERROR_TYPES.BAD_REQUEST);
+      throw new MitError(requestError, ERROR_TYPES.BAD_REQUEST);
     }
 
     return request;
