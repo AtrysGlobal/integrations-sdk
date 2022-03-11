@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SharedData } from './shared_data.helper';
 import config from '../config';
+import { MitError, ERROR_TYPES } from '../handlers/mit-error';
 
 export class ClientRequest {
   private sharedData: SharedData;
@@ -14,13 +15,7 @@ export class ClientRequest {
       timeout: 1000 * 50,
       responseType: 'json',
       headers: {
-        // 'User-Agent': 'Atrys/SDK',
         Authorization: 'Bearer ' + this.selector(env).token,
-        // Origin: 'sdk',
-        // 'Access-Control-Allow-Origin': '*',
-        // 'origin':'x-requested-with',
-        // 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
-        // 'Content-Type': 'application/json',
       },
     });
   }
@@ -68,12 +63,37 @@ export class ClientRequest {
   }
 
   async post(endpoint: string, payload: any): Promise<any> {
-    const _req = await this.axiosInstance.post(endpoint, payload, { validateStatus: () => true });
-    return _req;
+    return this.catchErrors(
+      endpoint, 
+      await this.axiosInstance.post(endpoint, payload, { validateStatus: () => true })
+    )
   }
 
   async get(endpoint: string, params: any = {}): Promise<any> {
-    const _req = await this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true });
-    return _req;
+    return this.catchErrors(
+      endpoint, 
+      await this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true })
+    )
+  }
+
+  private catchErrors(endpoint: string, request: any): Promise<any> {
+    const allowedStatusCodes = [200, 422]
+
+    console.log('request', request);
+    
+
+    if (allowedStatusCodes.indexOf(request.status) ===  -1) {
+
+      const requestError = request.data.message || request.data.error
+
+      this.sharedData.errors.push({
+        endpoint,
+        message: requestError
+      })
+
+      throw new MitError(requestError, ERROR_TYPES.BAD_REQUEST);
+    }
+
+    return request;
   }
 }

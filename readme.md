@@ -2,11 +2,11 @@
 
 ## Purpose
 
-The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
+The purpose of this project is to deliver a SDK to consume the resources present in the Atrys teleconsultation platform (Inmediate and Sheduled Appointments), exposing a series of methods to perform the necessary requests to the several backends.
 
 ## Patient model
 
-At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
+At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model into Atrys patient model, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
 ## CDN
 
@@ -16,15 +16,151 @@ This SDK has been published in the following link so that it is available for us
 https://cdn.mit.telemedicina.com/atrys-sdk.js
 ```
 
+## Environment Setups
+For use the SDK you must use one of the Atrys Environments (Countries), the valid strings are:
+
+> PROD-BR: Brasil
+> 
+> PROD-ES: Spain 
+> 
+> PROD-CO: Colombia
+> 
+> PROD-CL: Chile
+
+For integration yo need to replace the PROD string for INT
+
+### Javscript Basic Example
+#### Inmediate medical apppointment.
+
+```
+<script src="https://cdn.mit.telemedicina.com/atrys-sdk.js" type="module"></script>
+<script type="module">
+
+    try {
+        const mit = new MIT('TEST', '');
+    
+        const integrationClientIdentificator = 'EXAMPLE';
+        mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
+
+        console.log('MIT', mit);
+
+        const session = await mit.session()
+        console.log('SESSION', session);
+
+        const req = await mit.normalizeModel({
+        "from": integrationClientIdentificator,
+        "payload": {
+                "GeolocationData": {
+                    "Country": "AR",
+                    "State": "Buenos Aires",
+                    "City": "DHJ",
+                    "Latitude": "-34.5618913",
+                    "Longitude": "-58.4617484",
+                    "Address": "Test 123",
+                    "Extra": ""
+                },
+                "BeneficiaryData": {
+                    "IdType": "DNI",
+                    "IdNumber": "34567899",
+                    "FirstName": "Test Test",
+                    "LastName": "Test Test",
+                    "IntPhoneCode": "54",
+                    "PhoneNumber": "12345678",
+                    "Email": "a@b.com",
+                    "DateOfBirth": "2001-01-01",
+                    "Language": "ES"
+                },
+                "CaseData": {
+                    "CaseId": "637741353756375358",
+                    "CaseNum": "637741353756375358"
+                }
+            }
+        })
+
+        console.log('patient normalized', req.data);
+
+        const newPatient = await mit.createPatient(req.data)
+        console.log('patient created', newPatient.data);
+
+        const login = await mit.login()
+        console.log('login', login.data);
+
+        const inmediate = await mit.reserveInmediateAppointment()
+        console.log('inmediate reserve', inmediate.data);
+
+        const consolidate = await mit.consolidateInmediateAppointment([])
+        console.log('inmediate consolidate', consolidate.data);
+
+        const appointmentPayload = await mit.getAppointmentIdByExternalId()
+        console.log("Get appointment by caseId OK", appointmentPayload);
+
+        const magicLink = mit.magicLink()
+        console.log('magic link', magicLink);
+        
+    } catch (error) {
+        console.log(error);
+    }
+    
+</script>
+```                
+
+
 ## NPM Module
-https://www.npmjs.com/package/@atrysglobal/mit-sdk
+
+The npm site of the module can be found [here](https://www.npmjs.com/package/@atrysglobal/mit-sdk)
+
 ```
 npm i -S @atrysglobal/mit-sdk
 ```
 
 ## SharedData
 
-There is an object called SharedData which contains information necessary for the use of both private and public internal methods.
+This class is a singleton to set and get information necessary for the use of both private and public internal methods.
+
+the public properties are:
+
+```
+public environment: Environment = {
+	frontend: string,
+	backend: string,
+};
+
+public tokens: SessionTokens = {
+	mit: string,
+	atrysBackend: string,
+	atrysFrontEnd: string,
+};
+
+public patientId: string;
+public patientUsername: string;
+public patientPassword: string;
+public appopintmentReservedId: string;
+public mode: string;
+public mode: publicKey;
+public integrationClientIdentificator: string;
+public integrationExternalId: string;
+public errors: IErrors[];
+```
+
+>**@patientId:** String patient id, this will be used when access is granted at login and the value will be set to sharedData.patientId. 
+>
+>**@patientUsername:** String patient's username, the value will be stored in the variable sharedData.patientUsername when the model is normalized and will also be used to generate the magic link.
+>
+>**@patientPassword:** String patient's password, the value will be stored when normalizing the model in the variable sharedData.patientPassword and will be used during login.
+>
+>**@appopinmentReservedId:** String Id of the reserved schedule, which will be stored in sharedData.appopintmentReservedId and will be used when the appointment is consolidated.
+>
+>**@mode:** String integration mode. The value is defined in the constructor in the variable sharedData.mode, currently only SDK_PATIENT is enabled.
+>
+>**@publicKey:** String public access key, which is defined in the constructor in the variable sharedData.publicKey and this is used when a request is made to obtain the session token.
+>
+>**@integrationClientIdentificator:** String Unique identificator for integrated client, must be used in the payload.source when normelize patient endpoint is called.
+>
+>**@environment:** Instance of Environmentss where the frontend and backend endpoints will be stored.
+>
+>**@tokens:** Tokens instance that will be used to store the necessary tokens for the use of different methods.
+>
+>**@errors:** Array of runtime errors catched by the SDK
 
 One of the necessary variables that the client must set is integrationClientIdentificator.
 
@@ -37,15 +173,23 @@ const integrationClientIdentificator = 'clientName';
 mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
 ``` 
 
-## API
+# API
 
 ```
-session(setup: string, publicKey: string): Promise<SessionInterface>;
+MIT(setup: string, publicKey: string);
+```
+
+>**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR. 
+>
+>For integration and development, the value must be **TEST**
+>
+>**@publicKey**: String of the public key for validate the origin of the request
+
+```
+session(): Promise<SessionInterface>;
 ```
 > Create a new session in our session service ang get a MIT Token
 >
->**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR.  
->**@publicKey**: String of the public key for validate the origin of the request
 
 
 ```
@@ -64,6 +208,37 @@ Note: The previously set integrationClientIdentificator variable must be used he
         "payload": { ...the model patient used internally }
     }
 
+```
+
+Here is an **example** of a payload model for integration:
+
+```
+{
+    "GeolocationData": {
+        "Country": "AR",
+        "State": "Buenos Aires",
+        "City": "DHJ",
+        "Latitude": "-34.5618913",
+        "Longitude": "-58.4617484",
+        "Address": "Test 123",
+        "Extra": ""
+    },
+    "BeneficiaryData": {
+        "IdType": "DNI",
+        "IdNumber": "34567899",
+        "FirstName": "Test Test",
+        "LastName": "Test Test",
+        "IntPhoneCode": "54",
+        "PhoneNumber": "12345678",
+        "Email": "a@b.com",
+        "DateOfBirth": "2001-01-01",
+        "Language": "ES"
+    },
+    "CaseData": {
+        "CaseId": "637741353756375358",
+        "CaseNum": "637741353756375358"
+    }
+}
 ```
 
 **Atrys Normalized Patient Model (normalizedPatientModel).**
@@ -111,7 +286,7 @@ The service returns internal model parsed for ready to use in Atrys backends.
 ```
 
 ```
-  createPatient(normalizedPatientModel: any): Promise<any>;
+createPatient(normalizedPatientModel: any): Promise<any>;
 ```
 > Method for create a new patient in the Atrys Backend.
 > 
@@ -159,6 +334,7 @@ listBlocks(queryBlock: any): Promise<any>;
 ```
 reserveSheduledAppointment(reservePayload: any): Promise<any>;
 ```
+
 > Method for reserve a new scheduled appointment.
 > 
 >**@reservePayload**:
@@ -188,30 +364,35 @@ reserveSheduledAppointment(reservePayload: any): Promise<any>;
 ```
 consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
 ```
-> Method for consolidate previous reserved appointment.
-> 
+
+> Method for consolidate previous reserved appointment. 
 >**@symptoms**: array of symptoms
 
 
 ```
 reserveInmediateAppointment(): Promise<any>;
 ```
+
 > Method for reserve a new inmediate appointment.
 
 
 ```
 consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
 ```
+
 > Method for consolidate previous inmediate appointment.
 
 ```
 magicLink(): string;
 ```
-> Method for create the magic link for deliver to clients for no login acces to Atrys platform.
+
+> Method for create the magic link for deliver to clients for passwordless login acces to Atrys platform.
+
 ```
 getAppointmentIdByExternalId(): Promise<any>;
 ```
-> Method that gets the id of an appointment by the external id of the patient.
+
+> Method that gets the id of an appointment by the external id of the patient. (or get appointment id by external integration id)
 
 
 ## Build

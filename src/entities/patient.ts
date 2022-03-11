@@ -1,6 +1,6 @@
 import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
-import { HttpErrorNew } from '../handlers/base-error';
+import { MitError } from '../handlers/mit-error';
 
 const sharedData = SharedData.getInstance();
 
@@ -16,7 +16,7 @@ export async function register(patientModel: any): Promise<object> {
 
     return _req;
   } catch (error: any) {
-    throw new HttpErrorNew(error);
+    throw new MitError(error);
   }
 }
 
@@ -25,11 +25,10 @@ export async function changePassword(credentials: any): Promise<object> {
     if (!credentials) throw new Error('Yoy must provide a credentials for patient operations');
 
     const _request = new ClientRequest('SDK');
-    const _req = await _request.post('/account/sdk/change-password', { ...credentials });
+    return _request.post('/account/sdk/change-password', { ...credentials });
 
-    return _req;
   } catch (error: any) {
-    throw new HttpErrorNew(error);
+    throw new MitError(error);
   }
 }
 export default { register };
