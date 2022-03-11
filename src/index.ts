@@ -53,7 +53,12 @@ export class MIT implements MitInterface {
 
       this.sharedData.patientPassword = _req.data.password;
       this.sharedData.patientUsername = _req.data.personalData.email;
-      this.sharedData.integrationExternalId = _req.data.externalId;
+
+      if(!_req.data.hasOwnProperty('externalId')){
+        this.sharedData.integrationExternalId = Date.now().toString();
+      }else{
+        this.sharedData.integrationExternalId = _req.data.externalId;
+      }
 
       return _req;
 
