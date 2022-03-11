@@ -72,12 +72,15 @@ export class ClientRequest {
   async get(endpoint: string, params: any = {}): Promise<any> {
     return this.catchErrors(
       endpoint, 
-      this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true })
+      await this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true })
     )
   }
 
   private catchErrors(endpoint: string, request: any): Promise<any> {
     const allowedStatusCodes = [200, 422]
+
+    console.log('request', request);
+    
 
     if (allowedStatusCodes.indexOf(request.status) ===  -1) {
 
