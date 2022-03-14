@@ -54,9 +54,9 @@ export class MIT implements MitInterface {
       this.sharedData.patientPassword = _req.data.password;
       this.sharedData.patientUsername = _req.data.personalData.email;
 
-      if(!_req.data.hasOwnProperty('externalId')){
+      if (!_req.data.hasOwnProperty('externalId')) {
         this.sharedData.integrationExternalId = Date.now().toString();
-      }else{
+      } else {
         this.sharedData.integrationExternalId = _req.data.externalId;
       }
 
@@ -166,7 +166,7 @@ export class MIT implements MitInterface {
     //   appointmentId: this.sharedData.appopintmentReservedId,
     // };
     // const dataEncrypted = crypto.encrypt(patientData);
-    
+
     const dataEncrypted = crypto.base64Encode(
       `${this.sharedData.patientUsername};${this.sharedData.patientPassword};${this.sharedData.appopintmentReservedId};integration`
     )
@@ -174,7 +174,7 @@ export class MIT implements MitInterface {
     return this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
   }
 
-  public async getAppointmentIdByExternalId(): Promise<any>{
+  public async getAppointmentIdByExternalId(): Promise<any> {
     try {
       return await Appopintment.getAppointmentIdByExternalId();
     } catch (error: any) {

@@ -1,6 +1,6 @@
 import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
-import { MitError } from '../handlers/mit-error';
+import { ERROR_TYPES, MitError } from '../handlers/mit-error';
 
 const sharedData = SharedData.getInstance();
 
@@ -13,7 +13,7 @@ export async function list(): Promise<object> {
     }
     return _req;
   } catch (error: any) {
-    throw new MitError(error);
+    throw new MitError(error, ERROR_TYPES.PROFESSIONALS);
   }
 }
 

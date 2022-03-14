@@ -64,14 +64,14 @@ export class ClientRequest {
 
   async post(endpoint: string, payload: any): Promise<any> {
     return this.catchErrors(
-      endpoint, 
+      endpoint,
       await this.axiosInstance.post(endpoint, payload, { validateStatus: () => true })
     )
   }
 
   async get(endpoint: string, params: any = {}): Promise<any> {
     return this.catchErrors(
-      endpoint, 
+      endpoint,
       await this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true })
     )
   }
@@ -79,10 +79,7 @@ export class ClientRequest {
   private catchErrors(endpoint: string, request: any): Promise<any> {
     const allowedStatusCodes = [200, 422]
 
-    console.log('request', request);
-    
-
-    if (allowedStatusCodes.indexOf(request.status) ===  -1) {
+    if (allowedStatusCodes.indexOf(request.status) === -1) {
 
       const requestError = request.data.message || request.data.error
 
@@ -91,7 +88,7 @@ export class ClientRequest {
         message: requestError
       })
 
-      throw new MitError(requestError, ERROR_TYPES.BAD_REQUEST);
+      throw new MitError(request.data.message, ERROR_TYPES.BAD_REQUEST, request?.data?.internalCode ?? request?.data?.internalcode);
     }
 
     return request;
