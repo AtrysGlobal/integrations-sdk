@@ -1,11 +1,12 @@
 <body>
+
     <head>
-        <script src="http://192.168.0.156:4200/dist/atrys-sdk.js" type="module"></script>
+        <script src="http://localhost:4200/dist/atrys-sdk.js" type="module"></script>
         <script type="module">
 
             try {
-                const mit = new MIT('PROD-CL', '398475934759375937539875398475m9753j93nhjhkm');
-        
+                const mit = new MIT('TEST', '');
+
                 const integrationClientIdentificator = 'zurich';
                 mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
 
@@ -14,35 +15,37 @@
                 const session = await mit.session()
                 console.log('SESSION', session);
 
-                const req = await mit.normalizeModel({
-                "from": integrationClientIdentificator,
-                "payload": {
-                        "GeolocationData": {
-                            "Country": "AR",
-                            "State": "Buenos Aires",
-                            "City": "DHJ",
-                            "Latitude": "-34.5618913",
-                            "Longitude": "-58.4617484",
-                            "Address": "Test 123",
-                            "Extra": ""
-                        },
-                        "BeneficiaryData": {
-                            "IdType": "DNI",
-                            "IdNumber": "34567899",
-                            "FirstName": "Test Test",
-                            "LastName": "Test Test",
-                            "IntPhoneCode": "54",
-                            "PhoneNumber": "12345678",
-                            "Email": "aa@bb.com",
-                            "DateOfBirth": "2001-01-01",
-                            "Language": "ES"
-                        },
-                        "CaseData": {
-                            "CaseId": "OIO-998493",
-                            "CaseNum": "UA-99883235-OK87"
+                const req = await mit.normalizeModel(
+                    {
+                        "from": integrationClientIdentificator,
+                        "payload": {
+                            "GeolocationData": {
+                                "Country": "AR",
+                                "State": "Buenos Aires",
+                                "City": "DHJ",
+                                "Latitude": "-34.5618913",
+                                "Longitude": "-58.4617484",
+                                "Address": "Test 123",
+                                "Extra": ""
+                            },
+                            "BeneficiaryData": {
+                                "IdType": "DNI",
+                                "IdNumber": "34567899",
+                                "FirstName": "Test Test",
+                                "LastName": "Test Test",
+                                "IntPhoneCode": "54",
+                                "PhoneNumber": "12345678",
+                                "Email": "aa@bb.com",
+                                "DateOfBirth": "2001-01-01",
+                                "Language": "ES"
+                            },
+                            "CaseData": {
+                                "CaseId": "OIO-998493",
+                                "CaseNum": "UA-99883235-OK87"
+                            }
                         }
                     }
-                })
+                )
 
                 console.log('patient normalized', req.data);
 
@@ -64,55 +67,55 @@
                 const magicLink = mit.magicLink()
                 console.log('maic link', magicLink);
 
-/*
-            const listProfessionals = await mit.listProfessionals()
-            console.log('list profesionals', listProfessionals.data);
-
-            // medico
-            const specialties = await mit.listSpecialties('5f35e707127b082ccd516c1b')
-            console.log('list specialties', specialties.data);
-
-            // medico general
-            const blocks = await mit.listBlocks({
-                date: {
-                    month: 8,
-                    year: 2021,
-                    day: 19
-                },
-                specailtyId: "6001fd6deb69bb33a2ae41b9"
-            })
-            console.log('list blocks', blocks.data);
-
-            const reserve = await mit.reserveSheduledAppointment({
-                appointmentType: "agendamiento",
-                professionalDetails: {
-                    specialtyId: "6001fd6deb69bb33a2ae41b9",
-                    userId: "611e6f7c92e36c0b6f81fa34",
-                    specialtyDetails: {
-                        price: 0
-                    }
-                },
-                dateDetails: {
-                    date: {
-                        year: 2021,
-                        month: 8,
-                        day: 19
-                    },
-                    start: "15:30"
-                }
-            })
-            console.log('reserve', reserve.data);
-
-            const consolidate = await mit.consolidateSheduledAppointment([])
-            console.log('consolidate', consolidate.data);
-
-            let url = consolidate.data.payload.paymentUrl
-            window.open(url)
-*/
+                /*
+                            const listProfessionals = await mit.listProfessionals()
+                            console.log('list profesionals', listProfessionals.data);
+                
+                            // medico
+                            const specialties = await mit.listSpecialties('5f35e707127b082ccd516c1b')
+                            console.log('list specialties', specialties.data);
+                
+                            // medico general
+                            const blocks = await mit.listBlocks({
+                                date: {
+                                    month: 8,
+                                    year: 2021,
+                                    day: 19
+                                },
+                                specailtyId: "6001fd6deb69bb33a2ae41b9"
+                            })
+                            console.log('list blocks', blocks.data);
+                
+                            const reserve = await mit.reserveSheduledAppointment({
+                                appointmentType: "agendamiento",
+                                professionalDetails: {
+                                    specialtyId: "6001fd6deb69bb33a2ae41b9",
+                                    userId: "611e6f7c92e36c0b6f81fa34",
+                                    specialtyDetails: {
+                                        price: 0
+                                    }
+                                },
+                                dateDetails: {
+                                    date: {
+                                        year: 2021,
+                                        month: 8,
+                                        day: 19
+                                    },
+                                    start: "15:30"
+                                }
+                            })
+                            console.log('reserve', reserve.data);
+                
+                            const consolidate = await mit.consolidateSheduledAppointment([])
+                            console.log('consolidate', consolidate.data);
+                
+                            let url = consolidate.data.payload.paymentUrl
+                            window.open(url)
+                */
             } catch (error) {
-                console.log(error);
+                console.error('Mit Error', error.toObject());
             }
-            
+
         </script>
     </head>
 </body>

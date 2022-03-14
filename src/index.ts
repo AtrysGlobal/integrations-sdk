@@ -25,10 +25,13 @@ export class MIT implements MitInterface {
     this.sharedData.setup = setup;
   }
 
-  public async session(setup?: string): Promise<SessionInterface> {
+  public async session(): Promise<SessionInterface> {
     const _request = new ClientRequest('MIT_SESSION');
 
-    const _req = await _request.post('', { publicKey: this.publicKey });
+    const publicKey = this.publicKey
+    const setup = this.setup
+
+    const _req = await _request.post('', { publicKey, setup });
     this.sharedData.tokens.mit = _req.data.token;
 
     return {
@@ -50,7 +53,12 @@ export class MIT implements MitInterface {
 
       this.sharedData.patientPassword = _req.data.password;
       this.sharedData.patientUsername = _req.data.personalData.email;
-      this.sharedData.integrationExternalId = _req.data.externalId;
+
+      if (!_req.data.hasOwnProperty('externalId')) {
+        this.sharedData.integrationExternalId = Date.now().toString();
+      } else {
+        this.sharedData.integrationExternalId = _req.data.externalId;
+      }
 
       return _req;
 
@@ -158,7 +166,7 @@ export class MIT implements MitInterface {
     //   appointmentId: this.sharedData.appopintmentReservedId,
     // };
     // const dataEncrypted = crypto.encrypt(patientData);
-    
+
     const dataEncrypted = crypto.base64Encode(
       `${this.sharedData.patientUsername};${this.sharedData.patientPassword};${this.sharedData.appopintmentReservedId};integration`
     )
@@ -166,7 +174,7 @@ export class MIT implements MitInterface {
     return this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
   }
 
-  public async getAppointmentIdByExternalId(): Promise<any>{
+  public async getAppointmentIdByExternalId(): Promise<any> {
     try {
       return await Appopintment.getAppointmentIdByExternalId();
     } catch (error: any) {

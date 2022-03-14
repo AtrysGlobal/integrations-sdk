@@ -1,6 +1,6 @@
 import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
-import { MitError } from '../handlers/mit-error';
+import { ERROR_TYPES, MitError } from '../handlers/mit-error';
 
 export async function login(): Promise<any> {
   return new Promise(async (resolve, reject) => {
@@ -28,11 +28,11 @@ export async function login(): Promise<any> {
           sharedData.patientId = _req.data.id;
         }
 
-        if (_req.data.message && _req.data.message === 'Las credenciales ingresadas son incorrectas o no existen'){
+        if (_req.data.message && _req.data.message === 'Las credenciales ingresadas son incorrectas o no existen') {
           reject(new Error(_req.data.message))
         }
-          
-        if (_req.data.httpCode && _req.data.httpCode === 400){
+
+        if (_req.data.httpCode && _req.data.httpCode === 400) {
           reject(new Error(_req.data.message))
         }
 
@@ -44,7 +44,7 @@ export async function login(): Promise<any> {
       reject(error);
     }
   }).catch(error => {
-    throw new MitError(error);
+    throw new MitError(error, ERROR_TYPES.AUTH);
   });
 }
 
