@@ -88,7 +88,7 @@ export class ClientRequest {
         message: requestError
       })
 
-      throw new MitError(request.data.message, ERROR_TYPES.BAD_REQUEST, request?.data?.internalCode);
+      throw new MitError(request.data.message, ERROR_TYPES.BAD_REQUEST, request?.data?.internalCode ?? request?.data?.internalcode);
     }
 
     return request;

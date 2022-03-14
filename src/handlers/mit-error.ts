@@ -13,11 +13,13 @@ export class MitError extends Error implements IMitError {
             //Esto evita que el error se muestre como Error: Error: Error: mensaje de error
             super(error.message)
             this.msg = error.msg;
-            this.code = error.code;
 
             //Check del tipo de error, en caso de que el tipo venga de un MitError anterior y el nuevo tenga el valor por defecto (UNkNOWN)
             //Se chequea que el nuevo tipo sea UNKNOWN, de ser así se setea el type del MitError anterior, en caso contrario el type va a ser el que venga desde el constructor
             this.type = (type === ERROR_TYPES.UNKNOWN) ? error.type : type;
+
+            //Para el code aplica la misma logica que el type
+            this.code = (code === '000') ? error.code : code;
         } else {
             //Segundo caso, el error es de tipo string
             super(error);
