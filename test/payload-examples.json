@@ -1,0 +1,55 @@
+[
+    {
+        "GeolocationData": {
+            "Country": "AR",
+            "State": "Buenos Aires",
+            "City": "DHJ",
+            "Latitude": "-34.5618913",
+            "Longitude": "-58.4617484",
+            "Address": "Test 123",
+            "Extra": ""
+        },
+        "BeneficiaryData": {
+            "IdType": "DNI",
+            "IdNumber": "198298827",
+            "FirstName": "José",
+            "LastName": "Abarca",
+            "IntPhoneCode": "54",
+            "PhoneNumber": "12345678",
+            "Email": "jose.abc@yopmail.com",
+            "DateOfBirth": "2001-01-01",
+            "Language": "ES"
+        },
+        "CaseData": {
+            "CaseId": "OIO-998493",
+            "CaseNum": "UA-99883235-OK87"
+        }
+    },
+    {
+        "identificationData": {
+            "cpf": "616.829.326-48",
+            "isForeign": false
+        },
+        "personalData": {
+            "name": "Andreau",
+            "lastName": "Loureiro",
+            "secondLastName": "Perez",
+            "motherName": "Da Silva",
+            "phoneNumber": "4859485495894",
+            "email": "andreau.loureiro@yopmail.com",
+            "breed": "",
+            "gender": "",
+            "birthdate": "22/12/1981",
+            "nacionality": ""
+        },
+        "addressData": {
+            "cep": "99438939",
+            "uf": "893475938457",
+            "city": "98347984573",
+            "neighborhood": "",
+            "street": "Samba St",
+            "streetNumber": "8893"
+        },
+        "password": "MedicB2COnline!"
+    }
+]
