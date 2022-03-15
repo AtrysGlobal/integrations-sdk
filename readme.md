@@ -1,3 +1,5 @@
+!["Package logo"](./media/header.png)
+
 # Atrys SDK for integrations
 
 ## Purpose
