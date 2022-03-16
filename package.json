@@ -1,5 +1,5 @@
 {
-  "name": "@atrysglobal/mit-sdk",
+  "name": "@atrysglobal/integrations-sdk",
   "version": "1.1.2",
   "description": "Web SDK for Atrys Integrations",
   "main": "lib/index.js",
