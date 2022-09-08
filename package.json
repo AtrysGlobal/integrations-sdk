@@ -35,6 +35,7 @@
   },
   "scripts": {
     "build": "webpack",
+    "serve": "docker run --rm -p 4200:80 -v /Users/server/ITMS/MIT/SDK:/usr/share/nginx/html:ro nginx",
     "build-package": "tsc && cp ./package.json ./lib",
     "publish": "npm run build-package && npm publish --access=public",
     "build-test": "tsc",
