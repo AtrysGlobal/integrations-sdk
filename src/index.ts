@@ -10,175 +10,183 @@ import * as Appopintment from './entities/appointment';
 import * as Patient from './entities/patient';
 import * as Professionals from './entities/professional';
 import * as Blocks from './entities/blocks';
+import * as Clinic from './entities/clinic';
+
 import { MitError } from './handlers/mit-error';
 
-export class MIT implements MitInterface {
-  private setup: string = '';
-  protected publicKey: string = '';
-  protected sharedData: SharedData;
+namespace MIT {
 
-  constructor(setup: string, publicKey: string, mode: string) {
-    this.setup = setup;
-    this.publicKey = publicKey;
-    this.sharedData = SharedData.getInstance();
-    this.sharedData.mode = mode;
-    this.sharedData.setup = setup;
+  export class Configuration {
+    constructor(public stage: string, public setup: string, public clinicId: string, public mode: string) {
+      this.stage = stage;
+      this.setup = setup;
+      this.clinicId = clinicId
+      this.mode = mode;
+    }
   }
 
-  public async session(): Promise<SessionInterface> {
-    const _request = new ClientRequest('MIT_SESSION');
+  export class Credentials {
+    protected _publicKey: string = '';
 
-    const publicKey = this.publicKey
-    const setup = this.setup
+    constructor(publicKey: string) {
+      this._publicKey = publicKey
+    }
 
-    const _req = await _request.post('', { publicKey, setup });
-    this.sharedData.tokens.mit = _req.data.token;
-
-    return {
-      token: this.sharedData.tokens.mit,
-      environment: {
-        frontend: _request.environments(this.setup, 'frontend'),
-        backend: _request.environments(this.setup, 'backend'),
-      },
-    };
+    public get publicKey(): string {
+      return this._publicKey
+    }
   }
 
-  public async normalizeModel(clientPatientModel: any): Promise<any> {
-    try {
-      const _request = new ClientRequest('MIT_RULE_ENGINE');
+  export class SDK implements MitInterface {
+    protected sharedData: SharedData;
+    public mode: string = '';
 
-      clientPatientModel.setup = this.sharedData.setup;
+    constructor(config: Configuration, private credentials: Credentials) {
+      this.sharedData = SharedData.getInstance();
+      this.sharedData.mode = config.mode;
+      this.sharedData.stage = config.stage;
+      this.sharedData.setup = config.setup;
+      this.sharedData.clinicId = config.clinicId;
+    }
 
-      const _req = await _request.post('', clientPatientModel);
+    public async session(): Promise<SessionInterface> {
+      const _request = new ClientRequest('MIT_SESSION');
 
-      this.sharedData.patientPassword = _req.data.password;
-      this.sharedData.patientUsername = _req.data.personalData.email;
+      const publicKey = this.credentials.publicKey
+      const stage = this.sharedData.stage
 
-      if (!_req.data.hasOwnProperty('externalId')) {
-        this.sharedData.integrationExternalId = Date.now().toString();
-      } else {
-        this.sharedData.integrationExternalId = _req.data.externalId;
+      const _req = await _request.post('', { publicKey, setup: stage });
+      this.sharedData.tokens.mit = _req.data.token;
+
+      const getClinicBaseUrl = await Clinic.getBaseUrl()
+      this.sharedData.environment.frontend = getClinicBaseUrl
+
+      return {
+        token: this.sharedData.tokens.mit
+      };
+    }
+
+    public async normalizeModel(clientPatientModel: any): Promise<any> {
+      try {
+        const _request = new ClientRequest('MIT_RULE_ENGINE');
+
+        clientPatientModel.setup = this.sharedData.stage;
+
+        const _req = await _request.post('', clientPatientModel);
+
+        this.sharedData.patientPassword = _req.data.password;
+        this.sharedData.patientUsername = _req.data.personalData.email;
+
+        if (!_req.data.hasOwnProperty('externalId')) {
+          this.sharedData.integrationExternalId = Date.now().toString();
+        } else {
+          this.sharedData.integrationExternalId = _req.data.externalId;
+        }
+
+        return _req;
+
+      } catch (error: any) {
+        throw new MitError(error);
       }
-
-      return _req;
-
-    } catch (error: any) {
-      throw new MitError(error);
     }
-  }
 
-  public async createPatient(patientModel: any): Promise<any> {
-    try {
-      const req: any = await Patient.register(patientModel);
+    public async createPatient(patientModel: any): Promise<any> {
+      try {
+        const req: any = await Patient.register(patientModel);
 
-      if (req.data.responseType === 'error' && req.data.httpCode === 422) {
-        return this.resetCredentials(patientModel);
+        if (req.data.statusCode === 422) {
+          return this.resetCredentials(patientModel);
+        }
+
+        return req;
+      } catch (error: any) {
+        throw new MitError(error)
       }
-
-      return req;
-    } catch (error: any) {
-      throw new MitError(error)
     }
-  }
 
-  public async login(): Promise<any> {
-    try {
-      return await Auth.login()
-    } catch (error: any) {
-      throw new MitError(error)
+    public async login(): Promise<any> {
+      try {
+        return await Auth.login()
+      } catch (error: any) {
+        throw new MitError(error)
+      }
     }
-  }
 
-  private async resetCredentials(patientModel: any): Promise<any> {
-    try {
-      return await Patient.changePassword({
-        email: patientModel.personalData.email,
-        password: patientModel.password,
-      });
-    } catch (error: any) {
-      throw new MitError(error)
+    private async resetCredentials(patientModel: any): Promise<any> {
+      try {
+        return await Patient.changePassword({
+          email: patientModel.personalData.email,
+          password: patientModel.password,
+        });
+      } catch (error: any) {
+        throw new MitError(error)
+      }
     }
-  }
 
-  public async listProfessionals(): Promise<any> {
-    try {
-      return await Professionals.list();
-    } catch (error: any) {
-      throw new MitError(error)
+    public async listProfessionals(): Promise<any> {
+      try {
+        return await Professionals.list();
+      } catch (error: any) {
+        throw new MitError(error)
+      }
     }
-  }
 
-  public async listSpecialties(specialtyId: string): Promise<any> {
-    try {
-      return await Specialty.list(specialtyId);
-    } catch (error: any) {
-      throw new MitError(error)
+    public async listSpecialties(specialtyId: string): Promise<any> {
+      try {
+        return await Specialty.list(specialtyId);
+      } catch (error: any) {
+        throw new MitError(error)
+      }
     }
-  }
 
-  public async listBlocks(queryBlock: any): Promise<any> {
-    try {
-      return await Blocks.list(queryBlock);
-    } catch (error: any) {
-      throw new MitError(error)
+    public async listBlocks(queryBlock: any): Promise<any> {
+      try {
+        return await Blocks.list(queryBlock);
+      } catch (error: any) {
+        throw new MitError(error)
+      }
     }
-  }
 
-  public async reserveSheduledAppointment(reservePayload: any): Promise<any> {
-    try {
-      return await Appopintment.reserveSheduled(reservePayload);
-    } catch (error: any) {
-      throw new MitError(error)
+    public async reserve(reservePayload: any): Promise<any> {
+      try {
+        return await Appopintment.reserve(reservePayload);
+      } catch (error: any) {
+        throw new MitError(error)
+      }
     }
-  }
 
-  public async consolidateSheduledAppointment(symptoms: string[]): Promise<any> {
-    try {
-      return await Appopintment.consolidateSheduled(symptoms);
-    } catch (error: any) {
-      throw new MitError(error)
+    public async consolidate(symptoms: string[]): Promise<any> {
+      try {
+        return await Appopintment.consolidate(symptoms);
+      } catch (error: any) {
+        throw new MitError(error)
+      }
     }
-  }
 
-  public async reserveInmediateAppointment(): Promise<any> {
-    try {
-      return await Appopintment.reserveInmediate();
-    } catch (error: any) {
-      throw new MitError(error)
+    public magicLink(): string {
+      const crypto = new Crypto();
+
+      // DEPRECATED para compatibilidad con .NET
+      // const patientData = {
+      //   email: this.sharedData.patientUsername,
+      //   password: this.sharedData.patientPassword,
+      //   appointmentId: this.sharedData.appopintmentReservedId,
+      // };
+      // const dataEncrypted = crypto.encrypt(patientData);
+
+      const dataEncrypted = crypto.base64Encode(
+        `${this.sharedData.patientUsername};${this.sharedData.patientPassword};${this.sharedData.appopintmentReservedId};integration`
+      )
+
+      return this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
     }
-  }
 
-  public async consolidateInmediateAppointment(symptoms: string[]): Promise<any> {
-    try {
-      return await Appopintment.consolidateInmediate(symptoms);
-    } catch (error: any) {
-      throw new MitError(error)
-    }
-  }
-
-  public magicLink(): string {
-    const crypto = new Crypto();
-
-    // DEPRECATED para compatibilidad con .NET
-    // const patientData = {
-    //   email: this.sharedData.patientUsername,
-    //   password: this.sharedData.patientPassword,
-    //   appointmentId: this.sharedData.appopintmentReservedId,
-    // };
-    // const dataEncrypted = crypto.encrypt(patientData);
-
-    const dataEncrypted = crypto.base64Encode(
-      `${this.sharedData.patientUsername};${this.sharedData.patientPassword};${this.sharedData.appopintmentReservedId};integration`
-    )
-
-    return this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
-  }
-
-  public async getAppointmentIdByExternalId(): Promise<any> {
-    try {
-      return await Appopintment.getAppointmentIdByExternalId();
-    } catch (error: any) {
-      throw new MitError(error)
+    public async getAppointmentIdByExternalId(): Promise<any> {
+      try {
+        return await Appopintment.getAppointmentIdByExternalId();
+      } catch (error: any) {
+        throw new MitError(error)
+      }
     }
   }
 }

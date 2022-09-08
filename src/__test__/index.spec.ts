@@ -4,8 +4,14 @@ import { SharedData } from '../helpers/shared_data.helper'
 
 describe('index tests', () => {
     const publicKey = ``
-    const setup = process.env.setup || 'TEST'
-    const mit = new MIT(setup, publicKey, 'SDK_PATIENT')
+    const stage = process.env.stage || 'DEV'
+    const setup = process.env.setup || 'ES'
+    const clinicId = process.env.clinicId || '5f236fc966fbb0054894b780'
+
+    const config = new MIT.Configuration(stage, setup, clinicId, 'SDK_PATIENT')
+    const credentials = new MIT.Credentials(publicKey)
+    const mit = new MIT.SDK(config, credentials)
+
     let patientModel: any = {}
     let start: any
     const date = new Date()
@@ -94,12 +100,12 @@ describe('index tests', () => {
 
     it('should reserve sheduled appointment', async () => {
         const payload = { "professionalDetails": { "userId": "612ce4d96dc3c258b13d3907", "specialtyDetails": { "price": 0 }, "specialtyId": "6127a9acb09493c2e87d7801" }, "professionalId": "612ce4d96dc3c258b13d3907", "dateDetails": { "date": { "year": year, "month": month, "day": day }, "start": start }, "appointmentType": "agendamiento" }
-        const result = await mit.reserveSheduledAppointment(payload)
+        const result = await mit.reserve(payload)
         expect(result.data).not.toBeNull()
     })
 
     it('should consolidate sheduled appointment', async () => {
-        const result = await mit.consolidateSheduledAppointment([])
+        const result = await mit.consolidate([])
         expect(result.data).not.toBeNull()
     })
     it('should retrieve magic link', () => {
@@ -107,44 +113,50 @@ describe('index tests', () => {
         expect(result).not.toBeNull()
     })
 
-    it('should reserve immediate appointment', async () => {
-        const dt = new Date()
-        const d = dt.getDate()
-        const tempNumber = Math.floor(Math.random() * 100 * d)
-        const newClientPatientModel = { ...clientPatientModel }
-        newClientPatientModel.payload.BeneficiaryData.Email = `patient-sdk${tempNumber}@yopmail.com`
-        const algo = await mit.normalizeModel(clientPatientModel)
-        await mit.createPatient(algo.data)
-        await mit.login()
-        const result = await mit.reserveInmediateAppointment()
-        expect(result.data).not.toBeNull()
-    })
+    // it('should reserve immediate appointment', async () => {
+    //     const dt = new Date()
+    //     const d = dt.getDate()
+    //     const tempNumber = Math.floor(Math.random() * 100 * d)
+    //     const newClientPatientModel = { ...clientPatientModel }
+    //     newClientPatientModel.payload.BeneficiaryData.Email = `patient-sdk${tempNumber}@yopmail.com`
+    //     const algo = await mit.normalizeModel(clientPatientModel)
+    //     await mit.createPatient(algo.data)
+    //     await mit.login()
+    //     const result = await mit.reserveInmediateAppointment()
+    //     expect(result.data).not.toBeNull()
+    // })
 
-    it('should consolidate immediate appoinment', async () => {
-        const result = await mit.consolidateInmediateAppointment([])
-        expect(result.data).not.toBeNull()
-    })
-    
+    // it('should consolidate immediate appoinment', async () => {
+    //     const result = await mit.consolidateInmediateAppointment([])
+    //     expect(result.data).not.toBeNull()
+    // })
+
     it('should get the appointment id with an external id', async () => {
 
         const result = await mit.getAppointmentIdByExternalId()
         const expected = {
-            "administrativeDetails": { 
-                "integrationClientIdentificator": "zurich", 
-                "integrationExternalId": "1-C6A0OUU" 
-            }, 
+            "administrativeDetails": {
+                "integrationClientIdentificator": "zurich",
+                "integrationExternalId": "1-C6A0OUU"
+            },
             "appointmentId": "61a220d019cbda0cd7a58804"
         }
         expect(result).toEqual(expected)
     });
-    
+
 })
 
 describe('index test throw errors', () => {
     jest.setTimeout(100000)
     const publicKey = ``
-    const setup = process.env.setup || 'TEST'
-    const mit = new MIT(setup, publicKey, 'SDK_PATIENT')
+    const stage = process.env.stage || 'DEV'
+    const setup = process.env.setup || 'ES'
+    const clinicId = process.env.clinicId || '5f236fc966fbb0054894b780'
+
+    const config = new MIT.Configuration(stage, setup, clinicId, 'SDK_PATIENT')
+    const credentials = new MIT.Credentials(publicKey)
+    const mit = new MIT.SDK(config, credentials)
+
     const patientModel: any = {}
     const dt = new Date()
     const month = dt.getMonth() + 1
@@ -211,7 +223,7 @@ describe('index test throw errors', () => {
     it('should reserve sheduled appointment throw error', async () => {
         const payload = { "professionalDetails": { "userId": "612ce4d96dc3c258b13d3907", "specialtyDetails": { "price": 0 }, "specialtyId": "6127a9acb09493c2e87d7801" }, "professionalId": "612ce4d96dc3c258b13d3907", "dateDetails": { "date": { "year": year, "month": month, "day": day }, "start": "00:00" }, "appointmentType": "agendamiento" }
         const fnErr = async () => {
-            await mit.reserveSheduledAppointment(payload)
+            await mit.reserve(payload)
         }
 
         await expect(fnErr).rejects.toThrow()
@@ -220,7 +232,7 @@ describe('index test throw errors', () => {
     it('should consolidate sheduled appointment throw error', async () => {
         const fnThrowErr = async () => {
             try {
-                await mit.consolidateSheduledAppointment([])
+                await mit.consolidate([])
             } catch (error) {
                 throw new HttpErrorNew(error)
             }
@@ -229,35 +241,35 @@ describe('index test throw errors', () => {
     })
 
 
-    it('should throw error when reserve immediate appointment', async () => {
-        const fnErr = async () => {
-            try {
-                const tempSharedData = SharedData.getInstance()
-                tempSharedData.appopintmentReservedId = '0'
-                await mit.reserveInmediateAppointment()
-                await mit.consolidateInmediateAppointment([])
-                await mit.reserveInmediateAppointment()
-            } catch (error) {
-                throw error
-            }
-        }
+    // it('should throw error when reserve immediate appointment', async () => {
+    //     const fnErr = async () => {
+    //         try {
+    //             const tempSharedData = SharedData.getInstance()
+    //             tempSharedData.appopintmentReservedId = '0'
+    //             await mit.reserveInmediateAppointment()
+    //             await mit.consolidateInmediateAppointment([])
+    //             await mit.reserveInmediateAppointment()
+    //         } catch (error) {
+    //             throw error
+    //         }
+    //     }
 
-        await expect(fnErr).rejects.toThrow()
-    })
+    //     await expect(fnErr).rejects.toThrow()
+    // })
 
-    it('should throw error when consolidate immediate appointment with wrong appointmentReservedId', async () => {
-        const fnErr = async () => {
-            try {
-                const tempSharedData = SharedData.getInstance()
-                tempSharedData.appopintmentReservedId = '0'
-                await mit.consolidateInmediateAppointment([])
-            } catch (error) {
-                throw error
-            }
-        }
+    // it('should throw error when consolidate immediate appointment with wrong appointmentReservedId', async () => {
+    //     const fnErr = async () => {
+    //         try {
+    //             const tempSharedData = SharedData.getInstance()
+    //             tempSharedData.appopintmentReservedId = '0'
+    //             await mit.consolidateInmediateAppointment([])
+    //         } catch (error) {
+    //             throw error
+    //         }
+    //     }
 
-        await expect(fnErr).rejects.toThrow()
-    })
+    //     await expect(fnErr).rejects.toThrow()
+    // })
 
     it('should throw error when normalizeModel with wrong payload', async () => {
         const fnErr = async () => {
