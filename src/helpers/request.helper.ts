@@ -2,6 +2,7 @@ import axios from 'axios';
 import { SharedData } from './shared_data.helper';
 import config from '../config';
 import { MitError, ERROR_TYPES } from '../handlers/mit-error';
+import endpoints from '../config/endpoints';
 
 export class ClientRequest {
   private sharedData: SharedData;
@@ -16,40 +17,26 @@ export class ClientRequest {
       responseType: 'json',
       headers: {
         Authorization: 'Bearer ' + this.selector(env).token,
+        Setup: this.sharedData.setup
       },
     });
-  }
-
-  environments(setup: string, layer: string): string {
-    switch (layer) {
-      case 'frontend':
-        this.sharedData.environment.frontend = config.frontend[setup];
-        return this.sharedData.environment.frontend;
-
-      case 'backend':
-        this.sharedData.environment.backend = config.backend[setup];
-        return this.sharedData.environment.backend;
-
-      default:
-        return '';
-    }
   }
 
   selector(env: string): any {
     switch (env) {
       case 'ATRYS':
         return {
-          url: this.sharedData.environment.backend,
-          token: this.sharedData.tokens.atrysBackend,
+          url: this.sharedData.environment.backend = config('').backend[this.sharedData.stage],
+          token: this.sharedData.tokens.accessToken,
         };
       case 'MIT_SESSION':
         return {
-          url: config.MIT_SESSION_SERVICE,
+          url: endpoints.MIT_SESSION_SERVICE,
           token: this.sharedData.tokens.mit,
         };
       case 'MIT_RULE_ENGINE':
         return {
-          url: config.MIT_RULE_ENGINE_SERVICE,
+          url: endpoints.MIT_RULE_ENGINE_SERVICE,
           token: this.sharedData.tokens.mit,
         };
       case 'SDK':
@@ -69,6 +56,13 @@ export class ClientRequest {
     )
   }
 
+  async put(endpoint: string, payload: any): Promise<any> {
+    return this.catchErrors(
+      endpoint,
+      await this.axiosInstance.put(endpoint, payload, { validateStatus: () => true })
+    )
+  }
+
   async get(endpoint: string, params: any = {}): Promise<any> {
     return this.catchErrors(
       endpoint,
@@ -77,7 +71,7 @@ export class ClientRequest {
   }
 
   private catchErrors(endpoint: string, request: any): Promise<any> {
-    const allowedStatusCodes = [200, 422]
+    const allowedStatusCodes = [200, 201, 422]
 
     if (allowedStatusCodes.indexOf(request.status) === -1) {
 

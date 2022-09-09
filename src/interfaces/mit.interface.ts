@@ -8,9 +8,7 @@ export interface MitInterface {
   listProfessionals(): Promise<any>;
   listSpecialties(specialtyId: string): Promise<any>;
   listBlocks(queryBlock: any): Promise<any>;
-  reserveSheduledAppointment(reservePayload: any): Promise<any>;
-  consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
-  reserveInmediateAppointment(): Promise<any>;
-  consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
+  reserve(reservePayload: any): Promise<any>;
+  consolidate(symptoms: string[]): Promise<any>;
   magicLink(): string;
 }

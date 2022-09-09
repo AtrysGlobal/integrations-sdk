@@ -1,18 +1,12 @@
 import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
 import { ERROR_TYPES, MitError } from '../handlers/mit-error';
+import endpoints from '../config/endpoints'
+import { AppointmentType } from '../enum/appointment.enum';
 
 const sharedData = SharedData.getInstance();
 
-const consolidate = async (symptoms: string[], type: string): Promise<object> => {
-  let _endpoint: string = '';
-
-  if (type === 'INMEDIATE') {
-    _endpoint = '/appointments/immediate/consolidate/'
-  } else {
-    _endpoint = '/appointments/consolidate/'
-  }
-
+export const consolidate = async (symptoms: string[]): Promise<object> => {
   try {
     const _request = new ClientRequest('ATRYS');
 
@@ -26,7 +20,7 @@ const consolidate = async (symptoms: string[], type: string): Promise<object> =>
       patientDetails: { symptoms },
     };
 
-    const _req = await _request.post(_endpoint, { ...payload });
+    const _req = await _request.post(endpoints.appointments.consolidate, { ...payload });
 
     if (_req.data.message !== 'OK') {
       throw new MitError(_req.data.message);
@@ -38,7 +32,7 @@ const consolidate = async (symptoms: string[], type: string): Promise<object> =>
   }
 }
 
-export async function reserveInmediate(): Promise<object> {
+export async function reserve(appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS');
 
@@ -46,11 +40,14 @@ export async function reserveInmediate(): Promise<object> {
 
     const obj = {
       integrationClientIdentificator: sharedData.integrationClientIdentificator,
-      integrationExternalId: sharedData.integrationExternalId
+      integrationExternalId: sharedData.integrationExternalId,
+      dateDetails,
+      appointmentType,
+      patientDetails
     }
 
-    const _req = await _request.post('/appointments/immediate/', obj);
-    if (_req.data.message !== 'OK') {
+    const _req = await _request.post(endpoints.appointments.reserve, obj);
+    if (_req.data.statusCode !== 201) {
       throw new MitError(_req.data.message);
     }
 
@@ -62,39 +59,6 @@ export async function reserveInmediate(): Promise<object> {
   }
 }
 
-export async function consolidateInmediate(symptoms: string[]): Promise<object> {
-  return consolidate(symptoms, 'INMEDIATE');
-}
-
-export async function reserveSheduled(reservePayload: any): Promise<object> {
-  try {
-
-    if (!sharedData.integrationClientIdentificator) throw new MitError('The integrationClientIdentificator property is mandatory, must set in sharedData')
-
-    reservePayload.integrationClientIdentificator = sharedData.integrationClientIdentificator;
-    reservePayload.integrationExternalId = sharedData.integrationExternalId;
-
-    const _request = new ClientRequest('ATRYS');
-    const _req = await _request.post('/appointments/reserve/', { ...reservePayload });
-
-    if (_req.data) {
-      if (_req.data.message !== 'Resource created') {
-        throw new MitError(_req.data.message);
-      }
-
-      sharedData.appopintmentReservedId = _req.data.payload.id;
-    }
-
-    return _req;
-  } catch (error: any) {
-    throw new MitError(error, ERROR_TYPES.APPOINTMENTS);
-  }
-}
-
-export async function consolidateSheduled(symptoms: string[]): Promise<object> {
-  return consolidate(symptoms, 'SCHEDULED');
-}
-
 export async function getAppointmentIdByExternalId(): Promise<object> {
   try {
     const externalId = sharedData.integrationExternalId
@@ -102,7 +66,7 @@ export async function getAppointmentIdByExternalId(): Promise<object> {
     if (!externalId) throw new MitError('The externalId argument is mandatory')
 
     const _request = new ClientRequest('ATRYS');
-    const _req = await _request.get(`/integrations/appointments/inmediate/${externalId}`);
+    const _req = await _request.get(`${endpoints.integrations.list}/${externalId}`);
 
     return _req.data.payload;
 
@@ -111,4 +75,4 @@ export async function getAppointmentIdByExternalId(): Promise<object> {
   }
 }
 
-export default { reserveInmediate, consolidateInmediate, reserveSheduled, consolidateSheduled };
+export default { reserve, consolidate, getAppointmentIdByExternalId };

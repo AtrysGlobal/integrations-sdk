@@ -1,5 +1,5 @@
 export interface SessionTokens {
   mit: string;
-  atrysBackend: string;
+  accessToken: string;
   atrysFrontEnd: string;
 }

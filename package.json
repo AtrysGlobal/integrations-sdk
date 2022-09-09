@@ -1,6 +1,6 @@
 {
-  "name": "@atrysglobal/mit-sdk",
-  "version": "1.1.2",
+  "name": "@atrysglobal/integrations-sdk",
+  "version": "1.1.3",
   "description": "Web SDK for Atrys Integrations",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -35,6 +35,7 @@
   },
   "scripts": {
     "build": "webpack",
+    "serve": "docker run --rm -p 4200:80 -v /Users/server/ITMS/MIT/SDK:/usr/share/nginx/html:ro nginx",
     "build-package": "tsc && cp ./package.json ./lib",
     "publish": "npm run build-package && npm publish --access=public",
     "build-test": "tsc",
