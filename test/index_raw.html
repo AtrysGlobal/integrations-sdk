@@ -61,63 +61,59 @@
                 const login = await mit.login()
                 console.log('login', login.data);
 
-                const inmediate = await mit.reserve('IMMEDIATE')
-                console.log('inmediate reserve', inmediate.data);
+                // const inmediate = await mit.reserve('IMMEDIATE')
+                // console.log('inmediate reserve', inmediate.data);
+
+                // const consolidate = await mit.consolidate([])
+                // console.log('inmediate consolidate', consolidate.data);
+
+                // const appointmentPayload = await mit.getAppointmentIdByExternalId()
+                // console.log("Get appointment by caseId OK", appointmentPayload);
+
+                // const magicLink = mit.magicLink()
+                // console.log('maic link', magicLink);
+
+                /*    
+                // agendamiento
+                */
+
+                const listSpecialties = await mit.listMedicalSpecialties()
+                console.log('list Medical Specialties', listSpecialties.data);
+
+                const specialties = await mit.listSpecialtiesByMedicalSpecialtyId('5f35e707127b082ccd516c1b')
+                console.log('list specialties', specialties.data);
+
+                const dateBlock = {
+                    month: 9,
+                    year: 2022,
+                    day: 12
+                }
+
+                const blocks = await mit.listBlocks({
+                    date: dateBlock,
+                    specailtyId: "6213e196c2a6c02a6ac792b1"
+                })
+
+                const dateDetails = {
+                    date: dateBlock,
+                    start: "16:30"
+                }
+
+                const professionalDetails = {
+                    specialtyId: "6213e196c2a6c02a6ac792b1",
+                    userId: "6217765f76f0e0556808c454"
+                }
+
+                console.log('list blocks', blocks.data);
+
+                const reserve = await mit.reserve('SCHEDULED', dateDetails, professionalDetails)
+                console.log('reserve', reserve.data);
 
                 const consolidate = await mit.consolidate([])
-                console.log('inmediate consolidate', consolidate.data);
+                console.log('consolidate', consolidate.data);
 
-                const appointmentPayload = await mit.getAppointmentIdByExternalId()
-                console.log("Get appointment by caseId OK", appointmentPayload);
-
-                const magicLink = mit.magicLink()
-                console.log('maic link', magicLink);
-
-                /*
-                            const listProfessionals = await mit.listProfessionals()
-                            console.log('list profesionals', listProfessionals.data);
-                
-                            // medico
-                            const specialties = await mit.listSpecialties('5f35e707127b082ccd516c1b')
-                            console.log('list specialties', specialties.data);
-                
-                            // medico general
-                            const blocks = await mit.listBlocks({
-                                date: {
-                                    month: 8,
-                                    year: 2021,
-                                    day: 19
-                                },
-                                specailtyId: "6001fd6deb69bb33a2ae41b9"
-                            })
-                            console.log('list blocks', blocks.data);
-                
-                            const reserve = await mit.reserveSheduledAppointment({
-                                appointmentType: "agendamiento",
-                                professionalDetails: {
-                                    specialtyId: "6001fd6deb69bb33a2ae41b9",
-                                    userId: "611e6f7c92e36c0b6f81fa34",
-                                    specialtyDetails: {
-                                        price: 0
-                                    }
-                                },
-                                dateDetails: {
-                                    date: {
-                                        year: 2021,
-                                        month: 8,
-                                        day: 19
-                                    },
-                                    start: "15:30"
-                                }
-                            })
-                            console.log('reserve', reserve.data);
-                
-                            const consolidate = await mit.consolidateSheduledAppointment([])
-                            console.log('consolidate', consolidate.data);
-                
-                            let url = consolidate.data.payload.paymentUrl
-                            window.open(url)
-                */
+                // let url = consolidate.data.payload.paymentUrl
+                // window.open(url)
             } catch (error) {
                 console.error('Mit Error', error.message);
             }

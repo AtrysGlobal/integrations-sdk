@@ -5,12 +5,12 @@ import endpoints from '../config/endpoints'
 
 const sharedData = SharedData.getInstance();
 
-export async function list(specialtyId: string): Promise<object> {
+export async function listById(specialtyId: string): Promise<object> {
   try {
     if (!specialtyId) throw new Error('You must provide a specialty id');
 
     const _request = new ClientRequest('ATRYS');
-    const _req = await _request.get(`${endpoints.specialty.list}${specialtyId}`);
+    const _req = await _request.get(`${endpoints.specialty.listBySpecialtyId}/${specialtyId}`);
     if (_req.data.message !== 'OK') {
       throw new MitError(_req.data.message);
     }
@@ -20,4 +20,4 @@ export async function list(specialtyId: string): Promise<object> {
   }
 }
 
-export default { list };
+export default { listById };

@@ -72,46 +72,46 @@ describe('index tests', () => {
         expect(result.data).not.toBeNull()
     })
 
-    it('should list professionals', async () => {
-        const result = await mit.listProfessionals()
-        expect(result.data).not.toBeNull()
-    })
+    // it('should list professionals', async () => {
+    //     const result = await mit.listProfessionals()
+    //     expect(result.data).not.toBeNull()
+    // })
 
-    it('should list blocks', async () => {
-        const payload = {
-            "date": {
-                "month": month,
-                "year": year,
-                "day": day
-            },
-            "specialtyId": "6127a9acb09493c2e87d7801"
-        }
+    // it('should list blocks', async () => {
+    //     const payload = {
+    //         "date": {
+    //             "month": month,
+    //             "year": year,
+    //             "day": day
+    //         },
+    //         "specialtyId": "6127a9acb09493c2e87d7801"
+    //     }
 
-        const result = await mit.listBlocks(payload)
-        start = result.data.payload[0].blocks[0]
-        expect(result.data).not.toBeNull()
-    })
+    //     const result = await mit.listBlocks(payload)
+    //     start = result.data.payload[0].blocks[0]
+    //     expect(result.data).not.toBeNull()
+    // })
 
-    it('should list specialties', async () => {
-        const result = await mit.listSpecialties('5f35e707127b082ccd516c1b')
-        expect(result.data).not.toBeNull()
-    })
+    // it('should list specialties', async () => {
+    //     const result = await mit.listSpecialties('5f35e707127b082ccd516c1b')
+    //     expect(result.data).not.toBeNull()
+    // })
 
 
-    it('should reserve sheduled appointment', async () => {
-        const payload = { "professionalDetails": { "userId": "612ce4d96dc3c258b13d3907", "specialtyDetails": { "price": 0 }, "specialtyId": "6127a9acb09493c2e87d7801" }, "professionalId": "612ce4d96dc3c258b13d3907", "dateDetails": { "date": { "year": year, "month": month, "day": day }, "start": start }, "appointmentType": "agendamiento" }
-        const result = await mit.reserve(payload)
-        expect(result.data).not.toBeNull()
-    })
+    // it('should reserve sheduled appointment', async () => {
+    //     const payload = { "professionalDetails": { "userId": "612ce4d96dc3c258b13d3907", "specialtyDetails": { "price": 0 }, "specialtyId": "6127a9acb09493c2e87d7801" }, "professionalId": "612ce4d96dc3c258b13d3907", "dateDetails": { "date": { "year": year, "month": month, "day": day }, "start": start }, "appointmentType": "agendamiento" }
+    //     const result = await mit.reserve(payload)
+    //     expect(result.data).not.toBeNull()
+    // })
 
-    it('should consolidate sheduled appointment', async () => {
-        const result = await mit.consolidate([])
-        expect(result.data).not.toBeNull()
-    })
-    it('should retrieve magic link', () => {
-        const result = mit.magicLink()
-        expect(result).not.toBeNull()
-    })
+    // it('should consolidate sheduled appointment', async () => {
+    //     const result = await mit.consolidate([])
+    //     expect(result.data).not.toBeNull()
+    // })
+    // it('should retrieve magic link', () => {
+    //     const result = mit.magicLink()
+    //     expect(result).not.toBeNull()
+    // })
 
     // it('should reserve immediate appointment', async () => {
     //     const dt = new Date()
@@ -208,26 +208,26 @@ describe('index test throw errors', () => {
         await expect(fnErr).rejects.toThrow()
     })
 
-    it('should throw error list specialties', async () => {
-        const fnErr = async () => {
-            try {
-                const wrongValue: any = null
-                return await mit.listSpecialties(wrongValue)
-            } catch (error) {
-                throw error
-            }
-        }
-        await expect(fnErr).rejects.toThrow()
-    })
+    // it('should throw error list specialties', async () => {
+    //     const fnErr = async () => {
+    //         try {
+    //             const wrongValue: any = null
+    //             return await mit.listSpecialties(wrongValue)
+    //         } catch (error) {
+    //             throw error
+    //         }
+    //     }
+    //     await expect(fnErr).rejects.toThrow()
+    // })
 
-    it('should reserve sheduled appointment throw error', async () => {
-        const payload = { "professionalDetails": { "userId": "612ce4d96dc3c258b13d3907", "specialtyDetails": { "price": 0 }, "specialtyId": "6127a9acb09493c2e87d7801" }, "professionalId": "612ce4d96dc3c258b13d3907", "dateDetails": { "date": { "year": year, "month": month, "day": day }, "start": "00:00" }, "appointmentType": "agendamiento" }
-        const fnErr = async () => {
-            await mit.reserve(payload)
-        }
+    // it('should reserve sheduled appointment throw error', async () => {
+    //     const payload = { "professionalDetails": { "userId": "612ce4d96dc3c258b13d3907", "specialtyDetails": { "price": 0 }, "specialtyId": "6127a9acb09493c2e87d7801" }, "professionalId": "612ce4d96dc3c258b13d3907", "dateDetails": { "date": { "year": year, "month": month, "day": day }, "start": "00:00" }, "appointmentType": "agendamiento" }
+    //     const fnErr = async () => {
+    //         await mit.reserve(payload)
+    //     }
 
-        await expect(fnErr).rejects.toThrow()
-    })
+    //     await expect(fnErr).rejects.toThrow()
+    // })
 
     it('should consolidate sheduled appointment throw error', async () => {
         const fnThrowErr = async () => {

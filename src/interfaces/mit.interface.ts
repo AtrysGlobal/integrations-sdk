@@ -5,8 +5,9 @@ export interface MitInterface {
   normalizeModel(clientPatientModel: any): Promise<any>;
   createPatient(clientPatientModel: any): Promise<any>;
   login(): Promise<any>;
-  listProfessionals(): Promise<any>;
-  listSpecialties(specialtyId: string): Promise<any>;
+  listMedicalSpecialties(): Promise<any>;
+  listSpecialtiesByMedicalSpecialtyId(specialtyId: string): Promise<any>;
+  listProfessionalsBySpecialtyId(specialtyId: string): Promise<any>;
   listBlocks(queryBlock: any): Promise<any>;
   reserve(reservePayload: any): Promise<any>;
   consolidate(symptoms: string[]): Promise<any>;

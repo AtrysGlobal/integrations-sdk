@@ -10,16 +10,16 @@ const endpoints = {
         query: '/blocks/query'
     },
     medicalSpecialties: {
-        list: '/medical-specialties'
+        list: '/common/medical-specialties'
     },
     patient: {
 
     },
     professional: {
-
+        listBySpecialtyId: "/professionals/list/specialty"
     },
     specialty: {
-        list: '/list/specialties'
+        listBySpecialtyId: '/administrative/list/specialties'
     },
     user: {
 

@@ -3,7 +3,7 @@ import { SharedData } from './helpers/shared_data.helper';
 import { Crypto } from './helpers/crypto.helper';
 import { MitInterface } from './interfaces/mit.interface';
 import { SessionInterface } from './interfaces/session.interface';
-
+import { AppointmentType } from './enum/appointment.enum';
 import * as Auth from './helpers/auth.helper';
 import * as Specialty from './entities/specialty';
 import * as Appopintment from './entities/appointment';
@@ -11,6 +11,7 @@ import * as Patient from './entities/patient';
 import * as Professionals from './entities/professional';
 import * as Blocks from './entities/blocks';
 import * as Clinic from './entities/clinic';
+import * as MedicalSpecialties from './entities/medical-specialties';
 
 import { MitError } from './handlers/mit-error';
 
@@ -123,17 +124,25 @@ namespace MIT {
       }
     }
 
-    public async listProfessionals(): Promise<any> {
+    public async listMedicalSpecialties(): Promise<any> {
       try {
-        return await Professionals.list();
+        return await MedicalSpecialties.list();
       } catch (error: any) {
         throw new MitError(error)
       }
     }
 
-    public async listSpecialties(specialtyId: string): Promise<any> {
+    public async listSpecialtiesByMedicalSpecialtyId(specialtyId: string): Promise<any> {
       try {
-        return await Specialty.list(specialtyId);
+        return await Specialty.listById(specialtyId);
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    public async listProfessionalsBySpecialtyId(specialtyId: string): Promise<any> {
+      try {
+        return await Professionals.listBySpecialty(specialtyId);
       } catch (error: any) {
         throw new MitError(error)
       }
@@ -147,9 +156,9 @@ namespace MIT {
       }
     }
 
-    public async reserve(reservePayload: any): Promise<any> {
+    public async reserve(appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<any> {
       try {
-        return await Appopintment.reserve(reservePayload);
+        return await Appopintment.reserve(appointmentType, dateDetails, patientDetails);
       } catch (error: any) {
         throw new MitError(error)
       }

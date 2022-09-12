@@ -17,7 +17,8 @@ export class ClientRequest {
       responseType: 'json',
       headers: {
         Authorization: 'Bearer ' + this.selector(env).token,
-        Setup: this.sharedData.setup
+        Setup: this.sharedData.setup,
+        "Atrys-Product": "TS"
       },
     });
   }

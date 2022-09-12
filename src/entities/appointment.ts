@@ -32,7 +32,7 @@ export const consolidate = async (symptoms: string[]): Promise<object> => {
   }
 }
 
-export async function reserve(appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<object> {
+export async function reserve(appointmentType: AppointmentType, dateDetails: any = {}, professionalDetails: any = {}): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS');
 
@@ -43,7 +43,7 @@ export async function reserve(appointmentType: AppointmentType, dateDetails: any
       integrationExternalId: sharedData.integrationExternalId,
       dateDetails,
       appointmentType,
-      patientDetails
+      professionalDetails
     }
 
     const _req = await _request.post(endpoints.appointments.reserve, obj);
