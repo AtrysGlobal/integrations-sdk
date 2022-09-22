@@ -17,7 +17,8 @@ const endpoints = {
 
     },
     professional: {
-        listBySpecialtyId: "/professionals/list/specialty"
+        listBySpecialtyId: '/professionals/list/specialty',
+        list: '/professionals/list'
     },
     specialty: {
         listBySpecialtyId: '/administrative/list/specialties'

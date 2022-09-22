@@ -18,4 +18,17 @@ export async function listBySpecialty(specialtyId: string): Promise<object> {
   }
 }
 
-export default { listBySpecialty };
+export async function list(): Promise<object> {
+  try {
+    const _request = new ClientRequest('ATRYS');
+    const _req = await _request.get(endpoints.professional.list);
+    if (_req.data.message !== 'OK') {
+      throw new MitError(_req.data.message);
+    }
+    return _req;
+  } catch (error: any) {
+    throw new MitError(error, ERROR_TYPES.PROFESSIONALS);
+  }
+}
+
+export default { listBySpecialty, list };

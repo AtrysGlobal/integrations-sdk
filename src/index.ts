@@ -149,6 +149,14 @@ namespace MIT {
       }
     }
 
+    protected listProfessionals = async (): Promise<any> => {
+      try {
+        return await Professionals.list();
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
     protected listBlocks = async (queryBlock: any): Promise<any> => {
       try {
         return await Blocks.list(queryBlock);
@@ -187,10 +195,6 @@ namespace MIT {
       } catch (error: any) {
         throw new MitError(error)
       }
-    }
-
-    protected listProfessionals = async (): Promise<any> => {
-
     }
 
     protected getAvailabilities = async (professionalId: string): Promise<any> => {
@@ -324,7 +328,7 @@ namespace MIT {
       byExternalId: this.getAppointmentIdByExternalId
     }
 
-    public specialties = {
+    public specialty = {
       list: this.listMedicalSpecialties,
       byId: this.listSpecialtiesByMedicalSpecialtyId
     }

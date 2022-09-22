@@ -2,23 +2,6 @@ import { SessionInterface } from './session.interface';
 import { IAvailability } from './availability.inteface'
 
 export interface MitInterface {
-  // session(setup: string, publicKey: string): Promise<SessionInterface>;
-  // normalizeModel(clientPatientModel: any): Promise<any>;
-  // createPatient(clientPatientModel: any): Promise<any>;
-  // login(): Promise<any>;
-  // listMedicalSpecialties(): Promise<any>;
-  // listSpecialtiesByMedicalSpecialtyId(specialtyId: string): Promise<any>;
-  // listProfessionalsBySpecialtyId(specialtyId: string): Promise<any>;
-  // listBlocks(queryBlock: any): Promise<any>;
-  // reserve(reservePayload: any): Promise<any>;
-  // consolidate(symptoms: string[]): Promise<any>;
-  // magicLink(): string;
-  // getSymptoms(): Promise<any>;
-  // getObjetives(): Promise<any>;
-  // listProfessionals(): Promise<any>;
-  // getAvailabilities(professionalId: string): Promise<any>;
-  // createAvailability(availability: IAvailability, professionalId: string): Promise<any>;
-  // updateAvailability(availability: IAvailability, availabilityId: string): Promise<any>;
   availability: {
     create: (availability: IAvailability, professionalId: string) => Promise<any>;
     update: (availability: IAvailability, availabilityId: string, professionalId: string) => Promise<any>;
@@ -43,7 +26,7 @@ export interface MitInterface {
     login: () => Promise<any>;
     resetCredentials: (patientModel: any) => Promise<any>
   };
-  specialties: {
+  specialty: {
     list: () => Promise<any>;
     byId: (specialtyId: string) => Promise<any>;
   };
