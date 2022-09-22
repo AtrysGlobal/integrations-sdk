@@ -12,6 +12,8 @@ import * as Professionals from './entities/professional';
 import * as Blocks from './entities/blocks';
 import * as Clinic from './entities/clinic';
 import * as MedicalSpecialties from './entities/medical-specialties';
+import * as Availability from './entities/availability';
+import { IAvailability } from './interfaces/availability.inteface'
 
 import { MitError } from './handlers/mit-error';
 
@@ -38,25 +40,24 @@ namespace MIT {
     }
   }
 
-  export class SDK implements MitInterface {
+  export abstract class SDK implements MitInterface {
     protected sharedData: SharedData;
-    public mode: string = '';
 
-    constructor(config: Configuration, private credentials: Credentials) {
+    constructor(protected config: Configuration, protected credentials: Credentials) {
       this.sharedData = SharedData.getInstance();
-      this.sharedData.mode = config.mode;
-      this.sharedData.stage = config.stage;
-      this.sharedData.setup = config.setup;
-      this.sharedData.clinicId = config.clinicId;
+      this.sharedData.mode = this.config.mode;
+      this.sharedData.stage = this.config.stage;
+      this.sharedData.setup = this.config.setup;
+      this.sharedData.clinicId = this.config.clinicId;
     }
 
-    public async session(): Promise<SessionInterface> {
+    protected session = async (): Promise<SessionInterface> => {
       const _request = new ClientRequest('MIT_SESSION');
-
       const publicKey = this.credentials.publicKey
       const stage = this.sharedData.stage
+      const clinicId = this.sharedData.clinicId
 
-      const _req = await _request.post('', { publicKey, setup: stage });
+      const _req = await _request.post('', { publicKey, setup: stage, clinicId });
       this.sharedData.tokens.mit = _req.data.token;
 
       const getClinicBaseUrl = await Clinic.getBaseUrl()
@@ -67,7 +68,7 @@ namespace MIT {
       };
     }
 
-    public async normalizeModel(clientPatientModel: any): Promise<any> {
+    protected normalizeModel = async (clientPatientModel: any): Promise<any> => {
       try {
         const _request = new ClientRequest('MIT_RULE_ENGINE');
 
@@ -91,7 +92,7 @@ namespace MIT {
       }
     }
 
-    public async createPatient(patientModel: any): Promise<any> {
+    protected createPatient = async (patientModel: any): Promise<any> => {
       try {
         const req: any = await Patient.register(patientModel);
 
@@ -105,7 +106,7 @@ namespace MIT {
       }
     }
 
-    public async login(): Promise<any> {
+    protected login = async (): Promise<any> => {
       try {
         return await Auth.login()
       } catch (error: any) {
@@ -113,7 +114,7 @@ namespace MIT {
       }
     }
 
-    private async resetCredentials(patientModel: any): Promise<any> {
+    protected resetCredentials = async (patientModel: any): Promise<any> => {
       try {
         return await Patient.changePassword({
           email: patientModel.personalData.email,
@@ -124,7 +125,7 @@ namespace MIT {
       }
     }
 
-    public async listMedicalSpecialties(): Promise<any> {
+    protected listMedicalSpecialties = async (): Promise<any> => {
       try {
         return await MedicalSpecialties.list();
       } catch (error: any) {
@@ -132,7 +133,7 @@ namespace MIT {
       }
     }
 
-    public async listSpecialtiesByMedicalSpecialtyId(specialtyId: string): Promise<any> {
+    protected listSpecialtiesByMedicalSpecialtyId = async (specialtyId: string): Promise<any> => {
       try {
         return await Specialty.listById(specialtyId);
       } catch (error: any) {
@@ -140,7 +141,7 @@ namespace MIT {
       }
     }
 
-    public async listProfessionalsBySpecialtyId(specialtyId: string): Promise<any> {
+    protected listProfessionalsBySpecialtyId = async (specialtyId: string): Promise<any> => {
       try {
         return await Professionals.listBySpecialty(specialtyId);
       } catch (error: any) {
@@ -148,7 +149,7 @@ namespace MIT {
       }
     }
 
-    public async listBlocks(queryBlock: any): Promise<any> {
+    protected listBlocks = async (queryBlock: any): Promise<any> => {
       try {
         return await Blocks.list(queryBlock);
       } catch (error: any) {
@@ -156,7 +157,7 @@ namespace MIT {
       }
     }
 
-    public async reserve(appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<any> {
+    protected reserve = async (appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<any> => {
       try {
         return await Appopintment.reserve(appointmentType, dateDetails, patientDetails);
       } catch (error: any) {
@@ -164,7 +165,7 @@ namespace MIT {
       }
     }
 
-    public async consolidate(symptoms: string[]): Promise<any> {
+    protected consolidate = async (symptoms: string[]): Promise<any> => {
       try {
         return await Appopintment.consolidate(symptoms);
       } catch (error: any) {
@@ -172,7 +173,119 @@ namespace MIT {
       }
     }
 
-    public magicLink(): string {
+    protected getSymptoms = async (): Promise<any> => {
+      try {
+        return await Appopintment.getSymptoms();
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    protected getObjetives = async (): Promise<any> => {
+      try {
+        return await Availability.listObjectives()
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    protected listProfessionals = async (): Promise<any> => {
+
+    }
+
+    protected getAvailabilities = async (professionalId: string): Promise<any> => {
+      try {
+        return await Availability.list(professionalId)
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    // { "administrativeDetails": 
+    //     { 
+    //         "objective": "6213e19cc2a6c02a6ac79328", 
+    //         "appointmentDuration": 10 
+    //     }, 
+    //     "professionalDetails": { 
+    //         "specialtyId": "6213e196c2a6c02a6ac792b1" 
+    //     }, 
+    //     "dateDetails": { 
+    //         "startDate": { 
+    //             "year": 2022, 
+    //             "month": 9, 
+    //             "day": 20 
+    //         }, 
+    //         "endDate": { 
+    //             "year": 2023, 
+    //             "month": 9, 
+    //             "day": 7 
+    //         }, 
+    //         "days": ["lunes", "martes", "miercoles", "jueves", "viernes"], 
+    //         "dailyRanges": [{ "start": "09:00", "end": "19:00" }] 
+    //     } 
+    // }
+
+    protected createAvailability = async (availability: IAvailability, professionalId: string): Promise<any> => {
+      try {
+        return await Availability.create(availability, professionalId)
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    // { "administrativeDetails": { 
+    //     "objective": "6213e19cc2a6c02a6ac79328", 
+    //     "appointmentDuration": 10 
+    //   }, 
+    //  "professionalDetails": 
+    //   { 
+    //     "specialtyId": "6213e196c2a6c02a6ac792b1" 
+    //   }, 
+    //   "dateDetails": { 
+    //     "startDate": { 
+    //       "day": 20, 
+    //       "month": 9, 
+    //       "year": 2022 
+    //     }, 
+    //     "endDate": { 
+    //       "day": 30, 
+    //       "month": 11, 
+    //       "year": 2022 
+    //     }, 
+    //     "days": ["sabado", "domingo"], 
+    //     "dailyRanges": [{ "start": "17:00", "end": "18:00" }] 
+    //   } 
+    // }
+
+    protected updateAvailability = async (availability: IAvailability, availabilityId: string, professionalId: string): Promise<any> => {
+      try {
+        return await Availability.update(availability, availabilityId, professionalId)
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    protected disableAvailability = async (availabilityId: string): Promise<any> => {
+      try {
+        return await Availability.toggle(availabilityId, false)
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    protected enableAvailability = async (availabilityId: string): Promise<any> => {
+      try {
+        return await Availability.toggle(availabilityId, true)
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    protected getBlockedDays = async (): Promise<any> => {
+
+    }
+
+    protected magicLink = (): string => {
       const crypto = new Crypto();
 
       // DEPRECATED para compatibilidad con .NET
@@ -190,12 +303,51 @@ namespace MIT {
       return this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
     }
 
-    public async getAppointmentIdByExternalId(): Promise<any> {
+    protected getAppointmentIdByExternalId = async (): Promise<any> => {
       try {
         return await Appopintment.getAppointmentIdByExternalId();
       } catch (error: any) {
         throw new MitError(error)
       }
+    }
+
+    public patient = {
+      create: this.createPatient,
+      login: this.login,
+      resetCredentials: this.resetCredentials
+    }
+
+    public appointment = {
+      reserve: this.reserve,
+      consolidate: this.consolidate,
+      symptoms: this.getSymptoms,
+      byExternalId: this.getAppointmentIdByExternalId
+    }
+
+    public specialties = {
+      list: this.listMedicalSpecialties,
+      byId: this.listSpecialtiesByMedicalSpecialtyId
+    }
+
+    public common = {
+      session: this.session,
+      normalize: this.normalizeModel,
+      ssoLink: this.magicLink
+    }
+
+    public professionals = {
+      bySpecialtyId: this.listProfessionalsBySpecialtyId,
+      blocks: this.listBlocks,
+      list: this.listProfessionals
+    }
+
+    public availability = {
+      update: this.updateAvailability,
+      create: this.createAvailability,
+      list: this.getAvailabilities,
+      objetives: this.getObjetives,
+      disable: this.disableAvailability,
+      enable: this.enableAvailability
     }
   }
 }

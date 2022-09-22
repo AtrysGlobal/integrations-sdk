@@ -75,4 +75,17 @@ export async function getAppointmentIdByExternalId(): Promise<object> {
   }
 }
 
+export async function getSymptoms(): Promise<object> {
+  try {
+    const _request = new ClientRequest('ATRYS');
+    const _req = await _request.get(endpoints.appointments.symptoms);
+
+    return _req.data.payload;
+
+  } catch (error: any) {
+    throw new MitError(error, ERROR_TYPES.APPOINTMENTS);
+  }
+}
+
+
 export default { reserve, consolidate, getAppointmentIdByExternalId };

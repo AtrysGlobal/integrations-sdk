@@ -1,7 +1,8 @@
 const endpoints = {
     appointments: {
         consolidate: '/appointments/action/create/consolidate',
-        reserve: '/appointments/action/create/reserve'
+        reserve: '/appointments/action/create/reserve',
+        symptoms: '/common/symptoms'
     },
     integrations: {
         list: '/integrations/appointments/inmediate'
@@ -29,10 +30,8 @@ const endpoints = {
         changePasswordSdk: '/account/credentials/sdk'
     },
     availability: {
-
-    },
-    symptoms: {
-
+        objetives: '/objetives',
+        path: '/availability',
     },
     diagnostics: {
 

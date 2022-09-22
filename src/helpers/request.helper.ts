@@ -16,14 +16,22 @@ export class ClientRequest {
       timeout: 1000 * 50,
       responseType: 'json',
       headers: {
-        Authorization: 'Bearer ' + this.selector(env).token,
+        Authorization: 'Bearer ' + this.sdkMode(env),
         Setup: this.sharedData.setup,
-        "Atrys-Product": "TS"
+        "Atrys-Product": "SDK"
       },
     });
   }
 
-  selector(env: string): any {
+  private sdkMode(env: any) {
+    if (this.sharedData.mode === 'SDK_ADMIN') {
+      return this.sharedData.tokens.mit
+    }
+
+    return this.selector(env).token
+  }
+
+  private selector(env: string): any {
     switch (env) {
       case 'ATRYS':
         return {
@@ -50,21 +58,21 @@ export class ClientRequest {
     }
   }
 
-  async post(endpoint: string, payload: any): Promise<any> {
+  public async post(endpoint: string, payload: any): Promise<any> {
     return this.catchErrors(
       endpoint,
       await this.axiosInstance.post(endpoint, payload, { validateStatus: () => true })
     )
   }
 
-  async put(endpoint: string, payload: any): Promise<any> {
+  public async put(endpoint: string, payload: any): Promise<any> {
     return this.catchErrors(
       endpoint,
       await this.axiosInstance.put(endpoint, payload, { validateStatus: () => true })
     )
   }
 
-  async get(endpoint: string, params: any = {}): Promise<any> {
+  public async get(endpoint: string, params: any = {}): Promise<any> {
     return this.catchErrors(
       endpoint,
       await this.axiosInstance.get(endpoint, { params: { ...params }, validateStatus: () => true })
@@ -75,9 +83,7 @@ export class ClientRequest {
     const allowedStatusCodes = [200, 201, 422]
 
     if (allowedStatusCodes.indexOf(request.status) === -1) {
-
       const requestError = request.data.message || request.data.error
-
       this.sharedData.errors.push({
         endpoint,
         message: requestError

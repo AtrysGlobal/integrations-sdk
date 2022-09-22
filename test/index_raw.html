@@ -6,8 +6,10 @@
 
             try {
                 const clinicId = '5f236fc966fbb0054894b780'
+                const sdkMode = 'SDK_ADMIN'
+                // const sdkMode = 'SDK_PATIENT'
 
-                const config = new MIT.Configuration('DEV', 'CL', clinicId, 'SDK_PATIENT')
+                const config = new MIT.Configuration('DEV', 'CL', clinicId, sdkMode)
                 const credentials = new MIT.Credentials('-----BEGIN RSA PUBLIC KEY-----MIIBCgKCAQEAhQ6LOrh7aR0Ayj5qTCDQ4G4KdONIj4JVQ7/b8uPDXC8o7EPc1wE77cu6hvLT4jfoEI0jmZJ3st7M9ioGj3idSBFDrIIL3vk6TNcHDoqokozWf7VoqlTY/Ex+SViL0pHhZwofLECawEHnjjfRRg03+QBPs1MZdgAOp4o/UMygkIiEaK0q5Nqy1z1BJdvmEdKxqTeoJ/5zyq8udL+KnrA60c0nT6YYb2ifugzoC35Z2Vdqcyk3YK6ilGpTIUtK9FRgniI8UiNdQqhWk11rsZwS30a9EA0oKM7ZUYaPe/rhwaIAEZMUTL8aqHgrcp6f6LKLwP7k8b8PBszldNlzj9R5bQIDAQAB-----END RSA PUBLIC KEY-----')
 
                 const mit = new MIT.SDK(config, credentials);
@@ -18,10 +20,10 @@
                 console.log(new Date())
                 console.log('MIT', mit);
 
-                const session = await mit.session()
+                const session = await mit.common.session()
                 console.log('SESSION', session);
 
-                const req = await mit.normalizeModel(
+                const req = await mit.common.normalize(
                     {
                         "from": integrationClientIdentificator,
                         "payload": {
@@ -53,13 +55,95 @@
                     }
                 )
 
-                console.log('patient normalized', req.data);
+                /*
+                    Gestión de agenda
+                */
 
-                const newPatient = await mit.createPatient(req.data)
-                console.log('patient created', newPatient.data);
+                // const objetives = await mit.getObjetives()
+                // console.log('objetives', objetives)
 
-                const login = await mit.login()
-                console.log('login', login.data);
+                // const listSpecialties = await mit.listMedicalSpecialties()
+                // console.log('list Medical Specialties', listSpecialties.data);
+
+                // const specialties = await mit.listSpecialtiesByMedicalSpecialtyId('5f35e707127b082ccd516c1b')
+                // console.log('list specialties', specialties.data);
+
+                // const newAvailability = {
+                //     "administrativeDetails":
+                //     {
+                //         "objective": "6213e19cc2a6c02a6ac79328",
+                //         "appointmentDuration": 10
+                //     },
+                //     "professionalDetails": {
+                //         "specialtyId": "6213e196c2a6c02a6ac792b1"
+                //     },
+                //     "dateDetails": {
+                //         "startDate": {
+                //             "year": 2022,
+                //             "month": 9,
+                //             "day": 20
+                //         },
+                //         "endDate": {
+                //             "year": 2022,
+                //             "month": 11,
+                //             "day": 30
+                //         },
+                //         "days": ["sabado", "domingo"],
+                //         "dailyRanges": [{ "start": "17:00", "end": "19:00" }]
+                //     }
+                // }
+
+                // listar availabilities
+                const availabilities = await mit.availability.list('62143e9076f0e0556808b2e7');
+                console.log('availabilities', availabilities)
+
+                // Actualizar Availability
+                // const updateAvailabilityPayload = {
+                //     "administrativeDetails":
+                //     {
+                //         "objective": "6213e19cc2a6c02a6ac79328",
+                //         "appointmentDuration": 10
+                //     },
+                //     "professionalDetails": {
+                //         "specialtyId": "6213e196c2a6c02a6ac792b1"
+                //     },
+                //     "dateDetails": {
+                //         "startDate": {
+                //             "year": 2022,
+                //             "month": 9,
+                //             "day": 20
+                //         },
+                //         "endDate": {
+                //             "year": 2022,
+                //             "month": 11,
+                //             "day": 30
+                //         },
+                //         "days": ["lunes", "martes", "sabado", "domingo"],
+                //         "dailyRanges": [{ "start": "15:00", "end": "17:00" }]
+                //     }
+                // }
+
+                // const updateAvailability = await mit.availability.update(updateAvailabilityPayload, '632b6553ff12ea00092fbbcf', '62143e9076f0e0556808b2e7');
+                // console.log('updated availability', updateAvailability)
+
+                // HabilitarAvailability
+                // Al desabilitar una disponibilidad las citas asociadas se cancelarán de forma recursiva.
+                // const enableAvailability = await mit.availability.enable('632b6553ff12ea00092fbbcf');
+                // console.log('enableAvailability', enableAvailability)
+
+                // const availability = await mit.createAvailability(newAvailability, '62143e9076f0e0556808b2e7');
+                // console.log('availability', availability)
+
+                // const symptoms = await mit.getSymptoms()
+                // console.log('symptoms', symptoms)
+
+                // console.log('patient normalized', req.data);
+
+                // const newPatient = await mit.createPatient(req.data)
+                // console.log('patient created', newPatient.data);
+
+                // const login = await mit.login()
+                // console.log('login', login.data);
 
                 // const inmediate = await mit.reserve('IMMEDIATE')
                 // console.log('inmediate reserve', inmediate.data);
@@ -77,45 +161,48 @@
                 // agendamiento
                 */
 
-                const listSpecialties = await mit.listMedicalSpecialties()
-                console.log('list Medical Specialties', listSpecialties.data);
+                // const listSpecialties = await mit.listMedicalSpecialties()
+                // console.log('list Medical Specialties', listSpecialties.data);
 
-                const specialties = await mit.listSpecialtiesByMedicalSpecialtyId('5f35e707127b082ccd516c1b')
-                console.log('list specialties', specialties.data);
+                // const specialties = await mit.listSpecialtiesByMedicalSpecialtyId('5f35e707127b082ccd516c1b')
+                // console.log('list specialties', specialties.data);
 
-                const dateBlock = {
-                    month: 9,
-                    year: 2022,
-                    day: 12
-                }
+                // const dateBlock = {
+                //     month: 9,
+                //     year: 2022,
+                //     day: 21
+                // }
 
-                const blocks = await mit.listBlocks({
-                    date: dateBlock,
-                    specailtyId: "6213e196c2a6c02a6ac792b1"
-                })
+                // const blocks = await mit.listBlocks({
+                //     date: dateBlock,
+                //     specailtyId: "6213e196c2a6c02a6ac792b1"
+                // })
 
-                const dateDetails = {
-                    date: dateBlock,
-                    start: "16:30"
-                }
+                // const dateDetails = {
+                //     date: dateBlock,
+                //     start: "09:00"
+                // }
 
-                const professionalDetails = {
-                    specialtyId: "6213e196c2a6c02a6ac792b1",
-                    userId: "6217765f76f0e0556808c454"
-                }
+                // const professionalDetails = {
+                //     specialtyId: "6213e196c2a6c02a6ac792b1",
+                //     userId: "6217765f76f0e0556808c454"
+                // }
 
-                console.log('list blocks', blocks.data);
+                // console.log('list blocks', blocks.data);
 
-                const reserve = await mit.reserve('SCHEDULED', dateDetails, professionalDetails)
-                console.log('reserve', reserve.data);
+                // const reserve = await mit.reserve('SCHEDULED', dateDetails, professionalDetails)
+                // console.log('reserve', reserve.data);
 
-                const consolidate = await mit.consolidate([])
-                console.log('consolidate', consolidate.data);
+                // const consolidate = await mit.consolidate([])
+                // console.log('consolidate', consolidate.data);
+
+                // const magicLink = mit.magicLink()
+                // console.log('magic link', magicLink);
 
                 // let url = consolidate.data.payload.paymentUrl
                 // window.open(url)
             } catch (error) {
-                console.error('Mit Error', error.message);
+                console.error('Mit Error', error);
             }
 
         </script>
