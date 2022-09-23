@@ -3,6 +3,10 @@ import { ClientRequest } from '../helpers/request.helper';
 import { ERROR_TYPES, MitError } from '../handlers/mit-error';
 import endpoints from '../config/endpoints'
 
+/**
+ * It logs in a patient and returns a promise with the response
+ * @returns The access token
+ */
 export async function login(): Promise<any> {
   return new Promise(async (resolve, reject) => {
     try {
@@ -21,25 +25,25 @@ export async function login(): Promise<any> {
       setTimeout(async () => {
         let _req: any;
 
-        if (sharedData.mode === 'SDK_ALONE') {
-          const _request = new ClientRequest('SDK');
-          _req = await _request.post(endpoints.access.integrations, {});
-        } else {
-          // obtención token login token
-          const _request = new ClientRequest('ATRYS');
-          _req = await _request.post(endpoints.access.login, { ...credentials });
+        // if (sharedData.mode === 'SDK_ALONE') {
+        //   const _request = new ClientRequest('SDK');
+        //   _req = await _request.post(endpoints.access.integrations, {});
+        // } else {
+        // obtención token login token
+        const _request = new ClientRequest('ATRYS');
+        _req = await _request.post(endpoints.access.login, { ...credentials });
 
-          // validación token para obtener access token
-          const tokenRequest = new ClientRequest('ATRYS');
-          const validateToken = await tokenRequest.post(endpoints.access.validate, {
-            loginToken: _req.data.payload.loginToken
-          })
+        // validación token para obtener access token
+        const tokenRequest = new ClientRequest('ATRYS');
+        const validateToken = await tokenRequest.post(endpoints.access.validate, {
+          loginToken: _req.data.payload.loginToken
+        })
 
-          const accessToken = validateToken.data.payload.accessToken
-          sharedData.tokens.accessToken = accessToken;
+        const accessToken = validateToken.data.payload.accessToken
+        sharedData.tokens.accessToken = accessToken;
 
-          sharedData.patientId = _req.data.payload.id;
-        }
+        sharedData.patientId = _req.data.payload.id;
+        // }
 
         if (_req.data.message && _req.data.message === 'Las credenciales ingresadas son incorrectas o no existen') {
           reject(new Error(_req.data.message))

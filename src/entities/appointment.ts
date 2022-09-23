@@ -6,6 +6,19 @@ import { AppointmentType } from '../enum/appointment.enum';
 
 const sharedData = SharedData.getInstance();
 
+/**
+ * It takes an array of strings as a parameter, and returns a promise that resolves to an object
+ * @param {string[]} symptoms - string[]
+ * @returns An object with the following structure:
+ * {
+ *   "data": {
+ *     "message": "OK",
+ *     "data": {
+ *       "id": "5f5d8f8f8f8f8f8f8f8f8f8f",
+ *       "patientDetails": {
+ *         "symptoms": [
+ *           "fever",
+ */
 export const consolidate = async (symptoms: string[]): Promise<object> => {
   try {
     const _request = new ClientRequest('ATRYS');
@@ -32,7 +45,14 @@ export const consolidate = async (symptoms: string[]): Promise<object> => {
   }
 }
 
-export async function reserve(appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<object> {
+/**
+ * It reserves an appointment in the system
+ * @param {AppointmentType} appointmentType - AppointmentType,
+ * @param {any} dateDetails - {
+ * @param {any} professionalDetails - {
+ * @returns The appointment reserved id
+ */
+export async function reserve(appointmentType: AppointmentType, dateDetails: any = {}, professionalDetails: any = {}): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS');
 
@@ -43,7 +63,7 @@ export async function reserve(appointmentType: AppointmentType, dateDetails: any
       integrationExternalId: sharedData.integrationExternalId,
       dateDetails,
       appointmentType,
-      patientDetails
+      professionalDetails
     }
 
     const _req = await _request.post(endpoints.appointments.reserve, obj);
@@ -59,6 +79,10 @@ export async function reserve(appointmentType: AppointmentType, dateDetails: any
   }
 }
 
+/**
+ * It gets the appointment id by the external id.
+ * @returns The appointment id
+ */
 export async function getAppointmentIdByExternalId(): Promise<object> {
   try {
     const externalId = sharedData.integrationExternalId
@@ -74,5 +98,22 @@ export async function getAppointmentIdByExternalId(): Promise<object> {
     throw new MitError(error, ERROR_TYPES.APPOINTMENTS);
   }
 }
+
+/**
+ * It makes a request to the API endpoint `/symptoms` and returns the response data
+ * @returns An object with the symptoms
+ */
+export async function getSymptoms(): Promise<object> {
+  try {
+    const _request = new ClientRequest('ATRYS');
+    const _req = await _request.get(endpoints.appointments.symptoms);
+
+    return _req.data.payload;
+
+  } catch (error: any) {
+    throw new MitError(error, ERROR_TYPES.APPOINTMENTS);
+  }
+}
+
 
 export default { reserve, consolidate, getAppointmentIdByExternalId };

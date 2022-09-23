@@ -5,6 +5,10 @@ import endpoints from '../config/endpoints'
 
 const sharedData = SharedData.getInstance();
 
+/**
+ * It gets the base url of the clinic
+ * @returns A url for clinic front end
+ */
 export const getBaseUrl = async (): Promise<string> => {
     try {
         const _request = new ClientRequest('ATRYS');

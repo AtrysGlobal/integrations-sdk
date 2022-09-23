@@ -21,15 +21,15 @@ https://cdn.mit.telemedicina.com/atrys-sdk.js
 ## Environment Setups
 For use the SDK you must use one of the Atrys Environments (Countries), the valid strings are:
 
-> PROD-BR: Brasil
+> BR: Brasil
 > 
-> PROD-ES: Spain 
+> ES: Spain 
 > 
-> PROD-CO: Colombia
+> CO: Colombia
 > 
-> PROD-CL: Chile
+> CL: Chile
 
-For integration yo need to replace the PROD string for INT
+For integration yo need to replace the PROD string for STAGING
 
 ### Javscript Basic Example
 #### Inmediate medical apppointment.
@@ -39,7 +39,12 @@ For integration yo need to replace the PROD string for INT
 <script type="module">
 
     try {
-        const mit = new MIT('TEST', '');
+        const clinicId = ''
+
+        const config = new MIT.Configuration('DEV', 'CL', clinicId, 'SDK_PATIENT')
+        const credentials = new MIT.Credentials('')
+
+        const mit = new MIT.SDK(config, credentials);
     
         const integrationClientIdentificator = 'EXAMPLE';
         mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
@@ -115,6 +120,19 @@ The npm site of the module can be found [here](https://www.npmjs.com/package/@at
 npm i -S @atrysglobal/mit-sdk
 ```
 
+## MIT.Configuration
+
+>**@ stage:**: String of the desired stage to be consumed, current posibilities are: DEV, STAGING and PROD
+>
+>**@ setup:**: String of the deseired setup to be performed in backend behaviour, current posibilities are mentioned in Environment Setups below.
+>
+>**@ clinicId:**: String given by AtrysHealth at the moment of integration, its UUID of the clinic to be used in the SDK operations.
+>
+>**@ mode:**: String, for consumers the only avalilable value its 'SDK_PATIENT'
+
+## MIT.Credentials
+>**@ publicKey:**: String, of the key pair given by AtrysHealth at the moment of integration. Used to authenticate the request of the current client.
+
 ## SharedData
 
 This class is a singleton to set and get information necessary for the use of both private and public internal methods.
@@ -141,7 +159,11 @@ public mode: string;
 public mode: publicKey;
 public integrationClientIdentificator: string;
 public integrationExternalId: string;
-public errors: IErrors[];
+public setup: string = '';
+public stage: string = '';
+public errors: IErrors[] = [];
+public clinicId: string = '';
+public loginToken: string = '';
 ```
 
 >**@patientId:** String patient id, this will be used when access is granted at login and the value will be set to sharedData.patientId. 
@@ -163,6 +185,14 @@ public errors: IErrors[];
 >**@tokens:** Tokens instance that will be used to store the necessary tokens for the use of different methods.
 >
 >**@errors:** Array of runtime errors catched by the SDK
+>
+>**@ stage:** String of the desired stage to be consumed, current posibilities are: DEV, STAGING and PROD
+>
+>**@ setup:** String of the deseired setup to be performed in backend behaviour, current posibilities are mentioned in Environment Setups below.
+>
+>**@ clinicId:** String given by AtrysHealth at the moment of integration, its UUID of the clinic to be used in the SDK operations.
+>
+>**@ loginToken:** String of backend token to authenticate request operations.
 
 One of the necessary variables that the client must set is integrationClientIdentificator.
 
@@ -333,8 +363,21 @@ listBlocks(queryBlock: any): Promise<any>;
 }
 ```
 
+### Appointment Type Enum
+
 ```
-reserveSheduledAppointment(reservePayload: any): Promise<any>;
+export enum AppointmentType {
+    SCHEDULED,
+    IMMEDIATE
+}
+```
+
+#### Inmediate Appointment Reserve
+
+>**@type**: String value 'IMMEDIATE'
+
+```
+reserve(appointmentType: AppointmentType): Promise<any>;
 ```
 
 > Method for reserve a new scheduled appointment.
@@ -343,25 +386,41 @@ reserveSheduledAppointment(reservePayload: any): Promise<any>;
 
 ```
 {
-	"appointmentType":"agendamiento",
-	"professionalDetails"{
-		"specialtyId":"611d8635f2fbbcfe08c8f5b0",
-			"userId":"6126517f17148aa3c070ff4b",
-			"specialtyDetails":{
-				"price":0
-				}
-			},
-		"dateDetails":{
-			"date":{
-				"month":8,
-				"year":2021,
-				"day":25
-			},
-		"start":"17:10"
-	}
+    "appointmentType": "IMMEDIATE"
 }
 ```
 
+#### Scheduled Appointment Reserve
+
+>**@type**: String value 'SCHEDULED'
+>**@ dateDetails**: String value 'SCHEDULED'
+>**@ patientDetails**: String value 'SCHEDULED'
+
+```
+reserve(appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<any>;
+```
+
+> Method for reserve a new scheduled appointment.
+> 
+>**@reservePayload**:
+
+```
+{
+    "professionalDetails": {
+        "specialtyId": "6213e196c2a6c02a6ac792b1",
+        "userId": "6217765f76f0e0556808c454"
+    },
+    "dateDetails": {
+        "date": {
+            "year": 2022,
+            "month": 8,
+            "day": 10
+        },
+        "start": "15:50"
+    },
+    "appointmentType": "SCHEDULED"
+}
+```
 
 ```
 consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
