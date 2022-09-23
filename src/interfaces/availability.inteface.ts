@@ -33,6 +33,8 @@ interface IAvailabilityBase {
     professionalDetails: ProfessionalDetails;
 }
 
+/* Extending the interface IAvailabilityBase and adding the startDate and endDate properties to the
+dateDetails object. */
 export interface IAvailability extends IAvailabilityBase {
     dateDetails: {
         startDate: Date;
@@ -40,6 +42,8 @@ export interface IAvailability extends IAvailabilityBase {
     } & IAvailabilityBase['dateDetails'];
 }
 
+/* Extending the interface IAvailabilityBase and adding the startDate and endDate properties to the
+dateDetails object. */
 export interface IAvailabilityDocument extends IAvailabilityBase {
     professionalDetails: {
         userId: string;

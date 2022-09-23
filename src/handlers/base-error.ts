@@ -35,9 +35,15 @@ export type ErrorObject = {
 };
 
 
+/* It's a class that extends the Error class and it's used to handle errors in a more consistent way */
 export class HttpErrorNew extends Error {
     public static errorDictionary = { ...errorDictionary };
     public errorObject = {} as ErrorObject;
+    /**
+     * If the errorObject is null, then we set the errorObject to the default error object. Otherwise,
+     * we call the handleError function
+     * @param {any} errorObject - This is the error object that is passed to the constructor.
+     */
     constructor(errorObject: any) {
         super();
         if (!errorObject) {
@@ -47,6 +53,14 @@ export class HttpErrorNew extends Error {
         }
     }
 
+    /**
+     * It takes an error object and returns an error object
+     * @param {any} err - any - The error object that is passed to the function.
+     * @returns An object with the following properties:
+     *     - code: number
+     *     - description: string
+     *     - message: string
+     */
     handleError(err: any) {
         let outError = {} as ErrorObject;
         const connectError = err.message.match(/connect ECONNREFUSED/)

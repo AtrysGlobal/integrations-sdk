@@ -5,6 +5,11 @@ import endpoints from '../config/endpoints'
 
 const sharedData = SharedData.getInstance();
 
+/**
+ * It returns a list of doctors by specialty id
+ * @param {string} specialtyId - string
+ * @returns A list of specialties
+ */
 export async function listById(specialtyId: string): Promise<object> {
   try {
     if (!specialtyId) throw new Error('You must provide a specialty id');

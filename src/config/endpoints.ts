@@ -8,7 +8,8 @@ const endpoints = {
         list: '/integrations/appointments/inmediate'
     },
     blocks: {
-        query: '/blocks/query'
+        query: '/blocks/query',
+        blockedDays: '/blocks/blocked-days'
     },
     medicalSpecialties: {
         list: '/common/medical-specialties'

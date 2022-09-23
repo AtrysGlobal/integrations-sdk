@@ -5,6 +5,10 @@ import endpoints from '../config/endpoints'
 
 const sharedData = SharedData.getInstance();
 
+/**
+ * It makes a request to the API and returns the response
+ * @returns A list of medical specialties
+ */
 export async function list(): Promise<object> {
     try {
         const _request = new ClientRequest('ATRYS');

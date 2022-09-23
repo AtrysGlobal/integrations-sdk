@@ -3,6 +3,10 @@ import { ClientRequest } from '../helpers/request.helper';
 import { ERROR_TYPES, MitError } from '../handlers/mit-error';
 import endpoints from '../config/endpoints'
 
+/**
+ * It logs in a patient and returns a promise with the response
+ * @returns The access token
+ */
 export async function login(): Promise<any> {
   return new Promise(async (resolve, reject) => {
     try {

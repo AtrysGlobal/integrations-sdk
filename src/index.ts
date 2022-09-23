@@ -19,7 +19,15 @@ import { MitError } from './handlers/mit-error';
 
 namespace MIT {
 
+  /* The Configuration class is used to store the configuration of the application */
   export class Configuration {
+    /**
+     * @param {string} stage - This is the stage of the application. It can be either "dev" or "prod".
+     * @param {string} setup - This is the setup that you want to use. You can find the setup name in
+     * the URL of the setup page.
+     * @param {string} clinicId - The clinic ID of the clinic you want to use.
+     * @param {string} mode - This is the mode of the application. It can be either 'dev' or 'prod'.
+     */
     constructor(public stage: string, public setup: string, public clinicId: string, public mode: string) {
       this.stage = stage;
       this.setup = setup;
@@ -28,13 +36,22 @@ namespace MIT {
     }
   }
 
+  /* It's a class that holds the public key of the account you want to use to sign the transaction */
   export class Credentials {
     protected _publicKey: string = '';
 
+    /**
+     * @param {string} publicKey - The public key of the account you want to use to sign the
+     * transaction.
+     */
     constructor(publicKey: string) {
       this._publicKey = publicKey
     }
 
+    /**
+     * It returns the public key.
+     * @returns The public key of the wallet.
+     */
     public get publicKey(): string {
       return this._publicKey
     }
@@ -43,6 +60,14 @@ namespace MIT {
   export abstract class SDK implements MitInterface {
     protected sharedData: SharedData;
 
+    /**
+     * The constructor function is used to initialize the sharedData object with the values from the
+     * configuration object
+     * @param {Configuration} config - Configuration - This is the configuration object that is passed
+     * to the constructor of the base class.
+     * @param {Credentials} credentials - Credentials - This is the object that contains the user's
+     * credentials.
+     */
     constructor(protected config: Configuration, protected credentials: Credentials) {
       this.sharedData = SharedData.getInstance();
       this.sharedData.mode = this.config.mode;
@@ -51,6 +76,11 @@ namespace MIT {
       this.sharedData.clinicId = this.config.clinicId;
     }
 
+
+    /**
+     * > This function is used to get a session token from the MIT server
+     * @returns The token is being returned.
+     */
     protected session = async (): Promise<SessionInterface> => {
       const _request = new ClientRequest('MIT_SESSION');
       const publicKey = this.credentials.publicKey
@@ -68,6 +98,13 @@ namespace MIT {
       };
     }
 
+    /**
+     * > This function takes a clientPatientModel object and returns a normalized clientPatientModel
+     * object
+     * @param {any} clientPatientModel - This is the patient model that you will be sending to the MIT
+     * Rule Engine.
+     * @returns The response from the server.
+     */
     protected normalizeModel = async (clientPatientModel: any): Promise<any> => {
       try {
         const _request = new ClientRequest('MIT_RULE_ENGINE');
@@ -92,6 +129,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It creates a patient
+     * @param {any} patientModel - This is the patient model that you want to create.
+     * @returns the result of the Patient.register function.
+     */
     protected createPatient = async (patientModel: any): Promise<any> => {
       try {
         const req: any = await Patient.register(patientModel);
@@ -106,6 +148,10 @@ namespace MIT {
       }
     }
 
+    /**
+     * It logs in the user.
+     * @returns The user's credentials.
+     */
     protected login = async (): Promise<any> => {
       try {
         return await Auth.login()
@@ -114,6 +160,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It resets the password of a patient.
+     * @param {any} patientModel - This is the patient model that is passed to the function.
+     * @returns a promise that resolves to the result of the changePassword function.
+     */
     protected resetCredentials = async (patientModel: any): Promise<any> => {
       try {
         return await Patient.changePassword({
@@ -125,6 +176,10 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a list of medical specialties
+     * @returns A list of medical specialties
+     */
     protected listMedicalSpecialties = async (): Promise<any> => {
       try {
         return await MedicalSpecialties.list();
@@ -133,6 +188,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a list of specialties by medical specialty id
+     * @param {string} specialtyId - string
+     * @returns A list of specialties by medical specialty id
+     */
     protected listSpecialtiesByMedicalSpecialtyId = async (specialtyId: string): Promise<any> => {
       try {
         return await Specialty.listById(specialtyId);
@@ -141,6 +201,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a list of professionals by specialty id
+     * @param {string} specialtyId - string
+     * @returns A list of professionals
+     */
     protected listProfessionalsBySpecialtyId = async (specialtyId: string): Promise<any> => {
       try {
         return await Professionals.listBySpecialty(specialtyId);
@@ -149,6 +214,10 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a list of all the professionals in the database.
+     * @returns A list of professionals
+     */
     protected listProfessionals = async (): Promise<any> => {
       try {
         return await Professionals.list();
@@ -157,6 +226,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a list of blocks.
+     * @param {any} queryBlock - The query block is a JSON object that contains the query parameters.
+     * @returns A list of blocks
+     */
     protected listBlocks = async (queryBlock: any): Promise<any> => {
       try {
         return await Blocks.list(queryBlock);
@@ -165,6 +239,25 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a promise that resolves to an array of blocked days
+     * @returns An array of blocked days
+     */
+    protected getBlockedDays = async (): Promise<any> => {
+      try {
+        return await Blocks.blockedDays();
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    /**
+     * It reserves an appointment for a patient.
+     * @param {AppointmentType} appointmentType - This is the type of appointment you want to reserve.
+     * @param {any} dateDetails - {
+     * @param {any} patientDetails - {
+     * @returns The return value is a promise that resolves to an object with the following properties:
+     */
     protected reserve = async (appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<any> => {
       try {
         return await Appopintment.reserve(appointmentType, dateDetails, patientDetails);
@@ -173,6 +266,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It takes an array of strings, and returns a promise that resolves to an array of objects
+     * @param {string[]} symptoms - string[]
+     * @returns the consolidated data from the database.
+     */
     protected consolidate = async (symptoms: string[]): Promise<any> => {
       try {
         return await Appopintment.consolidate(symptoms);
@@ -181,6 +279,10 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a promise that resolves to the result of the `getSymptoms` function in the
+     * `Appointment` class
+     */
     protected getSymptoms = async (): Promise<any> => {
       try {
         return await Appopintment.getSymptoms();
@@ -189,6 +291,10 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a list of objectives.
+     * @returns The list of objectives
+     */
     protected getObjetives = async (): Promise<any> => {
       try {
         return await Availability.listObjectives()
@@ -197,6 +303,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It returns a list of availabilities for a given professional
+     * @param {string} professionalId - string
+     * @returns An array of availabilities
+     */
     protected getAvailabilities = async (professionalId: string): Promise<any> => {
       try {
         return await Availability.list(professionalId)
@@ -205,30 +316,14 @@ namespace MIT {
       }
     }
 
-    // { "administrativeDetails": 
-    //     { 
-    //         "objective": "6213e19cc2a6c02a6ac79328", 
-    //         "appointmentDuration": 10 
-    //     }, 
-    //     "professionalDetails": { 
-    //         "specialtyId": "6213e196c2a6c02a6ac792b1" 
-    //     }, 
-    //     "dateDetails": { 
-    //         "startDate": { 
-    //             "year": 2022, 
-    //             "month": 9, 
-    //             "day": 20 
-    //         }, 
-    //         "endDate": { 
-    //             "year": 2023, 
-    //             "month": 9, 
-    //             "day": 7 
-    //         }, 
-    //         "days": ["lunes", "martes", "miercoles", "jueves", "viernes"], 
-    //         "dailyRanges": [{ "start": "09:00", "end": "19:00" }] 
-    //     } 
-    // }
-
+    /**
+     * It creates an availability for a professional
+     * @param {IAvailability} availability - IAvailability - This is the availability object that you
+     * want to create.
+     * @param {string} professionalId - The id of the professional that the availability is being
+     * created for.
+     * @returns The availability object
+     */
     protected createAvailability = async (availability: IAvailability, professionalId: string): Promise<any> => {
       try {
         return await Availability.create(availability, professionalId)
@@ -237,30 +332,14 @@ namespace MIT {
       }
     }
 
-    // { "administrativeDetails": { 
-    //     "objective": "6213e19cc2a6c02a6ac79328", 
-    //     "appointmentDuration": 10 
-    //   }, 
-    //  "professionalDetails": 
-    //   { 
-    //     "specialtyId": "6213e196c2a6c02a6ac792b1" 
-    //   }, 
-    //   "dateDetails": { 
-    //     "startDate": { 
-    //       "day": 20, 
-    //       "month": 9, 
-    //       "year": 2022 
-    //     }, 
-    //     "endDate": { 
-    //       "day": 30, 
-    //       "month": 11, 
-    //       "year": 2022 
-    //     }, 
-    //     "days": ["sabado", "domingo"], 
-    //     "dailyRanges": [{ "start": "17:00", "end": "18:00" }] 
-    //   } 
-    // }
-
+    /**
+     * It updates the availability of a professional
+     * @param {IAvailability} availability - IAvailability - This is the availability object that you
+     * want to update.
+     * @param {string} availabilityId - The id of the availability you want to update
+     * @param {string} professionalId - The id of the professional that the availability belongs to.
+     * @returns The updated availability
+     */
     protected updateAvailability = async (availability: IAvailability, availabilityId: string, professionalId: string): Promise<any> => {
       try {
         return await Availability.update(availability, availabilityId, professionalId)
@@ -269,6 +348,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It disables an availability
+     * @param {string} availabilityId - The id of the availability you want to disable.
+     * @returns The availability object
+     */
     protected disableAvailability = async (availabilityId: string): Promise<any> => {
       try {
         return await Availability.toggle(availabilityId, false)
@@ -277,6 +361,11 @@ namespace MIT {
       }
     }
 
+    /**
+     * It enables an availability by toggling the availability's `isActive` property to `true`
+     * @param {string} availabilityId - The id of the availability you want to enable.
+     * @returns The availability object
+     */
     protected enableAvailability = async (availabilityId: string): Promise<any> => {
       try {
         return await Availability.toggle(availabilityId, true)
@@ -285,10 +374,11 @@ namespace MIT {
       }
     }
 
-    protected getBlockedDays = async (): Promise<any> => {
-
-    }
-
+    /**
+     * It takes the patient's username, password, and appointment ID, encrypts them, and returns a URL
+     * that contains the encrypted data
+     * @returns A string with the magic link
+     */
     protected magicLink = (): string => {
       const crypto = new Crypto();
 
@@ -307,6 +397,9 @@ namespace MIT {
       return this.sharedData.environment.frontend + '/integration-client?token=' + encodeURIComponent(dataEncrypted);
     }
 
+    /**
+     * It returns the appointment id by external id.
+     */
     protected getAppointmentIdByExternalId = async (): Promise<any> => {
       try {
         return await Appopintment.getAppointmentIdByExternalId();

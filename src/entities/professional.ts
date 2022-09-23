@@ -5,6 +5,11 @@ import endpoints from '../config/endpoints'
 
 const sharedData = SharedData.getInstance();
 
+/**
+ * It returns a list of professionals by specialty
+ * @param {string} specialtyId - string
+ * @returns A list of professionals
+ */
 export async function listBySpecialty(specialtyId: string): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS');
@@ -18,6 +23,10 @@ export async function listBySpecialty(specialtyId: string): Promise<object> {
   }
 }
 
+/**
+ * It makes a request to the server to get a list of professionals
+ * @returns A list of professionals
+ */
 export async function list(): Promise<object> {
   try {
     const _request = new ClientRequest('ATRYS');
