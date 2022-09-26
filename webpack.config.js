@@ -22,7 +22,7 @@ module.exports = {
   },
   module: {
     rules: [
-      { 
+      {
         test: /\.tsx?$/,
         loader: "ts-loader",
         exclude: [
@@ -33,7 +33,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-        Buffer: ['buffer', 'Buffer']
+      Buffer: ['buffer', 'Buffer']
     }),
 
     new webpack.BannerPlugin({

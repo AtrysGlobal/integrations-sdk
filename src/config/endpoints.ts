@@ -1,41 +1,36 @@
 const endpoints = {
     appointments: {
         consolidate: '/appointments/action/create/consolidate',
-        reserve: '/appointments/action/create/reserve'
+        reserve: '/appointments/action/create/reserve',
+        symptoms: '/common/symptoms'
     },
     integrations: {
         list: '/integrations/appointments/inmediate'
     },
     blocks: {
-        query: '/blocks/query'
+        query: '/blocks/query',
+        blockedDays: '/blocks/blocked-days'
     },
     medicalSpecialties: {
-        list: '/medical-specialties'
+        list: '/common/medical-specialties'
     },
     patient: {
-
+        updateById: '/patient'
     },
     professional: {
-
+        listBySpecialtyId: '/professionals/list/specialty',
+        list: '/professionals/list'
     },
     specialty: {
-        list: '/list/specialties'
-    },
-    user: {
-
+        listBySpecialtyId: '/administrative/list/specialties'
     },
     account: {
         register: '/account/register',
         changePasswordSdk: '/account/credentials/sdk'
     },
     availability: {
-
-    },
-    symptoms: {
-
-    },
-    diagnostics: {
-
+        objetives: '/objetives',
+        path: '/availability',
     },
     access: {
         login: '/auth/login',
