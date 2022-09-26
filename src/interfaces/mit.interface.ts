@@ -1,5 +1,6 @@
 import { SessionInterface } from './session.interface';
 import { IAvailability } from './availability.inteface'
+import { AppointmentType } from '../enum/appointment.enum';
 
 export interface MitInterface {
   availability: {
@@ -11,7 +12,7 @@ export interface MitInterface {
     disable: (availabilityId: string) => Promise<any>;
   };
   appointment: {
-    reserve: (reservePayload: any) => Promise<any>;
+    reserve: (appointmentType: AppointmentType, dateDetails: any, patientDetails: any) => Promise<any>;
     consolidate: (symptoms: string[]) => Promise<any>;
     symptoms: () => Promise<any>;
     byExternalId: () => Promise<any>;
@@ -25,6 +26,7 @@ export interface MitInterface {
     create: (clientPatientModel: any) => Promise<any>;
     login: () => Promise<any>;
     resetCredentials: (patientModel: any) => Promise<any>
+    update: (patientModel: any, userId: string) => Promise<any>
   };
   specialty: {
     list: () => Promise<any>;

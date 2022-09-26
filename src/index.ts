@@ -26,13 +26,15 @@ namespace MIT {
      * @param {string} setup - This is the setup that you want to use. You can find the setup name in
      * the URL of the setup page.
      * @param {string} clinicId - The clinic ID of the clinic you want to use.
+     * @param {string} locale - This is the language expected to be returned, 'es_ES', 'es_CL', es_CO', 'pr_BR'
      * @param {string} mode - This is the mode of the application. It can be either 'dev' or 'prod'.
      */
-    constructor(public stage: string, public setup: string, public clinicId: string, public mode: string) {
+    constructor(public stage: string, public setup: string, public clinicId: string, public mode: string, public locale: string) {
       this.stage = stage;
       this.setup = setup;
       this.clinicId = clinicId
       this.mode = mode;
+      this.locale = locale
     }
   }
 
@@ -74,6 +76,7 @@ namespace MIT {
       this.sharedData.stage = this.config.stage;
       this.sharedData.setup = this.config.setup;
       this.sharedData.clinicId = this.config.clinicId;
+      this.sharedData.locale = this.config.locale;
     }
 
 
@@ -141,6 +144,22 @@ namespace MIT {
         if (req.data.statusCode === 422) {
           return this.resetCredentials(patientModel);
         }
+
+        return req;
+      } catch (error: any) {
+        throw new MitError(error)
+      }
+    }
+
+    /**
+     * It updates the patient profile
+     * @param {any} patientModel - This is the model that you want to update.
+     * @param {string} patientId - The id of the patient you want to update
+     * @returns The patient profile is being returned.
+     */
+    protected updatePatientProfile = async (patientModel: any, userId: string): Promise<any> => {
+      try {
+        const req: any = await Patient.updatePatientProfile(patientModel, userId);
 
         return req;
       } catch (error: any) {
@@ -411,7 +430,8 @@ namespace MIT {
     public patient = {
       create: this.createPatient,
       login: this.login,
-      resetCredentials: this.resetCredentials
+      resetCredentials: this.resetCredentials,
+      update: this.updatePatientProfile
     }
 
     public appointment = {

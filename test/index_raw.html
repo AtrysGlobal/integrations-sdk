@@ -9,8 +9,8 @@
                 const sdkMode = 'SDK_ADMIN'
                 // const sdkMode = 'SDK_PATIENT'
 
-                const config = new MIT.Configuration('DEV', 'CL', clinicId, sdkMode)
-                const credentials = new MIT.Credentials('-----BEGIN RSA PUBLIC KEY-----MIIBCgKCAQEAhQ6LOrh7aR0Ayj5qTCDQ4G4KdONIj4JVQ7/b8uPDXC8o7EPc1wE77cu6hvLT4jfoEI0jmZJ3st7M9ioGj3idSBFDrIIL3vk6TNcHDoqokozWf7VoqlTY/Ex+SViL0pHhZwofLECawEHnjjfRRg03+QBPs1MZdgAOp4o/UMygkIiEaK0q5Nqy1z1BJdvmEdKxqTeoJ/5zyq8udL+KnrA60c0nT6YYb2ifugzoC35Z2Vdqcyk3YK6ilGpTIUtK9FRgniI8UiNdQqhWk11rsZwS30a9EA0oKM7ZUYaPe/rhwaIAEZMUTL8aqHgrcp6f6LKLwP7k8b8PBszldNlzj9R5bQIDAQAB-----END RSA PUBLIC KEY-----')
+                const config = new MIT.Configuration('DEV', 'CL', clinicId, sdkMode, 'pt_BR')
+                const credentials = new MIT.Credentials('')
 
                 const mit = new MIT.SDK(config, credentials);
 
@@ -59,6 +59,38 @@
                 //     }
                 // )
                 // console.log('patient normalized', req.data);
+
+                /*
+                    Actualización de paciente
+                */
+
+                const updatePatient = {
+                    "identificationData": {
+                        "isForeign": false,
+                        "run": "15625779-5"
+                    },
+                    "personalData": {
+                        "name": "Pedro",
+                        "lastName": "Switzer",
+                        "secondLastName": "Hassen",
+                        "gender": "male",
+                        "phoneNumber": "998571769",
+                        "email": "cad-paciente@yopmail.com",
+                        "birthdate": "18/09/1981",
+                        "healthInsurance": "62eab00c8941928e4b27c691",
+                        "nacionality": "6001fd6deb69bb33a2ae41ec",
+                    },
+                    "addressData": {
+                        "uf": "5fb5865cd9a0435aed3999c6",
+                        "city": "5fb58603d9a0435ad738a9d9",
+                        "zipcode": "1111111",
+                        "street": "Sauce",
+                        "streetNumber": 5589,
+                    }
+                }
+
+                const updatedPatient = await mit.patient.update(updatePatient, '632dc191a3aaa70009c56f2e')
+                console.log('updatedPatient', updatedPatient)
 
                 /*
                     Gestión de agenda

@@ -43,4 +43,15 @@ export async function changePassword(credentials: any): Promise<object> {
   }
 }
 
+export async function updatePatientProfile(patientModel: any, userId: string): Promise<object> {
+  try {
+
+    const _request = new ClientRequest('ATRYS');
+    return _request.put(`${endpoints.patient.updateById}/${userId}`, { ...patientModel });
+
+  } catch (error: any) {
+    throw new MitError(error);
+  }
+}
+
 export default { register, changePassword };

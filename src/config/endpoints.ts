@@ -15,7 +15,7 @@ const endpoints = {
         list: '/common/medical-specialties'
     },
     patient: {
-
+        updateById: '/patient'
     },
     professional: {
         listBySpecialtyId: '/professionals/list/specialty',
@@ -24,9 +24,6 @@ const endpoints = {
     specialty: {
         listBySpecialtyId: '/administrative/list/specialties'
     },
-    user: {
-
-    },
     account: {
         register: '/account/register',
         changePasswordSdk: '/account/credentials/sdk'
@@ -34,9 +31,6 @@ const endpoints = {
     availability: {
         objetives: '/objetives',
         path: '/availability',
-    },
-    diagnostics: {
-
     },
     access: {
         login: '/auth/login',

@@ -28,7 +28,7 @@ export class SharedData {
   public stage: string = '';
   public errors: IErrors[] = [];
   public clinicId: string = '';
-  public loginToken: string = '';
+  public locale: string = '';
 
   /**
    * If an instance of the class already exists, throw an error. Otherwise, create an instance of the

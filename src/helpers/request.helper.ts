@@ -19,6 +19,7 @@ export class ClientRequest {
       headers: {
         Authorization: 'Bearer ' + this.sdkMode(env),
         Setup: this.sharedData.setup,
+        Locale: this.sharedData.locale,
         "Atrys-Product": "SDK"
       },
     });
