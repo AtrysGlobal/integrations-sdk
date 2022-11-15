@@ -59,8 +59,8 @@ namespace MIT {
     }
   }
 
-  export abstract class SDK implements MitInterface {
-    protected sharedData: SharedData;
+  export class SDK implements MitInterface {
+    public sharedData: SharedData;
 
     /**
      * The constructor function is used to initialize the sharedData object with the values from the

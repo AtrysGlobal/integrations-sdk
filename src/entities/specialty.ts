@@ -2,6 +2,7 @@ import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
 import { ERROR_TYPES, MitError } from '../handlers/mit-error';
 import endpoints from '../config/endpoints'
+import { RBAC } from '../helpers/rbac.helper';
 
 const sharedData = SharedData.getInstance();
 
@@ -12,6 +13,8 @@ const sharedData = SharedData.getInstance();
  */
 export async function listById(specialtyId: string): Promise<object> {
   try {
+    RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
+
     if (!specialtyId) throw new Error('You must provide a specialty id');
 
     const _request = new ClientRequest('ATRYS');

@@ -3,6 +3,7 @@ import { ClientRequest } from '../helpers/request.helper';
 import { ERROR_TYPES, MitError } from '../handlers/mit-error';
 import endpoints from '../config/endpoints';
 import { IAvailability } from '../interfaces/availability.inteface';
+import { RBAC } from '../helpers/rbac.helper';
 
 const sharedData = SharedData.getInstance();
 
@@ -12,6 +13,8 @@ const sharedData = SharedData.getInstance();
  */
 export async function listObjectives(): Promise<object> {
     try {
+        RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
+
         const _request = new ClientRequest('ATRYS');
         const _req = await _request.get(endpoints.availability.objetives);
         if (_req.data.message !== 'OK') {
@@ -38,6 +41,8 @@ export async function listObjectives(): Promise<object> {
  */
 export async function create(availability: IAvailability, professionalId: string): Promise<object> {
     try {
+        RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
+
         const _request = new ClientRequest('ATRYS');
         const _req = await _request.post(`${endpoints.availability.path}?professionalId=${professionalId}`, { ...availability });
         if (_req.data.message !== 'OK') {
@@ -57,6 +62,8 @@ export async function create(availability: IAvailability, professionalId: string
  */
 export async function list(professionalId: string): Promise<object> {
     try {
+        RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
+
         const _request = new ClientRequest('ATRYS');
         const _req = await _request.get(endpoints.availability.path, { professionalId });
         if (_req.data.message !== 'OK') {
@@ -78,6 +85,8 @@ export async function list(professionalId: string): Promise<object> {
  */
 export async function update(availability: IAvailability, availabilityId: string, professionalId: string): Promise<object> {
     try {
+        RBAC(['SDK_ADMIN']);
+
         const _request = new ClientRequest('ATRYS');
         const _req = await _request.put(`${endpoints.availability.path}/${availabilityId}?professionalId=${professionalId}`, { ...availability });
         if (_req.data.message !== 'OK') {
@@ -98,6 +107,8 @@ export async function update(availability: IAvailability, availabilityId: string
  */
 export async function toggle(availabilityId: string, state: boolean): Promise<object> {
     try {
+        RBAC(['SDK_ADMIN']);
+
         const _request = new ClientRequest('ATRYS');
         const _req = await _request.put(`${endpoints.availability.path}/${availabilityId}/state`, { isActive: state });
         if (_req.data.message !== 'OK') {

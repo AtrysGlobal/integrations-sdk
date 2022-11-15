@@ -3,6 +3,7 @@ import { ClientRequest } from '../helpers/request.helper';
 import { ERROR_TYPES, MitError } from '../handlers/mit-error';
 import endpoints from '../config/endpoints'
 import { AppointmentType } from '../enum/appointment.enum';
+import { RBAC } from '../helpers/rbac.helper';
 
 const sharedData = SharedData.getInstance();
 
@@ -21,6 +22,8 @@ const sharedData = SharedData.getInstance();
  */
 export const consolidate = async (symptoms: string[]): Promise<object> => {
   try {
+    RBAC(['SDK_PATIENT']);
+
     const _request = new ClientRequest('ATRYS');
 
     if (!sharedData.appopintmentReservedId)
@@ -54,6 +57,8 @@ export const consolidate = async (symptoms: string[]): Promise<object> => {
  */
 export async function reserve(appointmentType: AppointmentType, dateDetails: any = {}, professionalDetails: any = {}): Promise<object> {
   try {
+    RBAC(['SDK_PATIENT']);
+
     const _request = new ClientRequest('ATRYS');
 
     if (!sharedData.integrationClientIdentificator) throw new MitError('The integrationClientIdentificator property is mandatory, must set in sharedData')
@@ -85,6 +90,8 @@ export async function reserve(appointmentType: AppointmentType, dateDetails: any
  */
 export async function getAppointmentIdByExternalId(): Promise<object> {
   try {
+    RBAC(['SDK_PATIENT']);
+
     const externalId = sharedData.integrationExternalId
 
     if (!externalId) throw new MitError('The externalId argument is mandatory')
