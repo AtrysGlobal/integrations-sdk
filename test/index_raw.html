@@ -10,7 +10,7 @@
                 // const sdkMode = 'SDK_PATIENT'
 
                 const config = new MIT.Configuration('DEV', 'CL', clinicId, sdkMode, 'pt_BR')
-                const credentials = new MIT.Credentials('')
+                const credentials = new MIT.Credentials('-----BEGIN RSA PUBLIC KEY-----MIIBCgKCAQEAhQ6LOrh7aR0Ayj5qTCDQ4G4KdONIj4JVQ7/b8uPDXC8o7EPc1wE77cu6hvLT4jfoEI0jmZJ3st7M9ioGj3idSBFDrIIL3vk6TNcHDoqokozWf7VoqlTY/Ex+SViL0pHhZwofLECawEHnjjfRRg03+QBPs1MZdgAOp4o/UMygkIiEaK0q5Nqy1z1BJdvmEdKxqTeoJ/5zyq8udL+KnrA60c0nT6YYb2ifugzoC35Z2Vdqcyk3YK6ilGpTIUtK9FRgniI8UiNdQqhWk11rsZwS30a9EA0oKM7ZUYaPe/rhwaIAEZMUTL8aqHgrcp6f6LKLwP7k8b8PBszldNlzj9R5bQIDAQAB-----END RSA PUBLIC KEY-----')
 
                 const mit = new MIT.SDK(config, credentials);
 
@@ -27,38 +27,38 @@
                     Creación de paciente
                 */
 
-                // const req = await mit.common.normalize(
-                //     {
-                //         "from": integrationClientIdentificator,
-                //         "payload": {
-                //             "GeolocationData": {
-                //                 "Country": "AR",
-                //                 "State": "Buenos Aires",
-                //                 "City": "DHJ",
-                //                 "Latitude": "-34.5618913",
-                //                 "Longitude": "-58.4617484",
-                //                 "Address": "Test 123",
-                //                 "Extra": ""
-                //             },
-                //             "BeneficiaryData": {
-                //                 "IdType": "DNI",
-                //                 "IdNumber": "198298827",
-                //                 "FirstName": "José",
-                //                 "LastName": "Abarca",
-                //                 "IntPhoneCode": "54",
-                //                 "PhoneNumber": "12345678",
-                //                 "Email": "jose.abc@yopmail.com",
-                //                 "DateOfBirth": "2001-01-01",
-                //                 "Language": "ES"
-                //             },
-                //             "CaseData": {
-                //                 "CaseId": "OIO-998493",
-                //                 "CaseNum": "UA-99883235-OK87"
-                //             }
-                //         }
-                //     }
-                // )
-                // console.log('patient normalized', req.data);
+                const req = await mit.common.normalize(
+                    {
+                        "from": integrationClientIdentificator,
+                        "payload": {
+                            "GeolocationData": {
+                                "Country": "AR",
+                                "State": "Buenos Aires",
+                                "City": "DHJ",
+                                "Latitude": "-34.5618913",
+                                "Longitude": "-58.4617484",
+                                "Address": "Test 123",
+                                "Extra": ""
+                            },
+                            "BeneficiaryData": {
+                                "IdType": "DNI",
+                                "IdNumber": "198298827",
+                                "FirstName": "José",
+                                "LastName": "Abarca",
+                                "IntPhoneCode": "54",
+                                "PhoneNumber": "12345678",
+                                "Email": "jose.abc@yopmail.com",
+                                "DateOfBirth": "2001-01-01",
+                                "Language": "ES"
+                            },
+                            "CaseData": {
+                                "CaseId": "OIO-998493",
+                                "CaseNum": "UA-99883235-OK87"
+                            }
+                        }
+                    }
+                )
+                console.log('patient normalized', req.data);
 
                 /*
                     Actualización de paciente
@@ -96,18 +96,24 @@
                     Gestión de agenda
                 */
 
-                // const objetives = await mit.getObjetives()
-                // console.log('objetives', objetives)
+                const availabilityId = '636e6cbbff3e59000863c190'
+                const professionlaId = '62143e9076f0e0556808b2e7'
 
-                // const listSpecialties = await mit.listMedicalSpecialties()
-                // console.log('list Medical Specialties', listSpecialties.data);
+                const objetives = await mit.availability.objetives()
+                console.log('objetives', objetives)
 
-                // const specialties = await mit.listSpecialtiesByMedicalSpecialtyId('5f35e707127b082ccd516c1b')
-                // console.log('list specialties', specialties.data);
+                const listSpecialties = await mit.specialty.list()
+                console.log('list Medical Specialties', listSpecialties.data);
+
+                const specialties = await mit.specialty.byId('5f35e707127b082ccd516c1b')
+                console.log('list specialties', specialties.data);
 
                 // const newAvailability = {
                 //     "administrativeDetails":
                 //     {
+                //         "clinicId": [
+                //             clinicId
+                //         ],
                 //         "objective": "6213e19cc2a6c02a6ac79328",
                 //         "appointmentDuration": 10
                 //     },
@@ -130,7 +136,7 @@
                 //     }
                 // }
 
-                // const availability = await mit.createAvailability(newAvailability, '62143e9076f0e0556808b2e7');
+                // const availability = await mit.availability.create(newAvailability, '62143e9076f0e0556808b2e7');
                 // console.log('availability', availability)
 
                 // listar availabilities
@@ -141,6 +147,9 @@
                 // const updateAvailabilityPayload = {
                 //     "administrativeDetails":
                 //     {
+                //         "clinicId": [
+                //             clinicId
+                //         ],
                 //         "objective": "6213e19cc2a6c02a6ac79328",
                 //         "appointmentDuration": 10
                 //     },
@@ -158,12 +167,12 @@
                 //             "month": 11,
                 //             "day": 30
                 //         },
-                //         "days": ["lunes", "martes", "sabado", "domingo"],
+                //         "days": ["sabado"],
                 //         "dailyRanges": [{ "start": "15:00", "end": "17:00" }]
                 //     }
                 // }
 
-                // const updateAvailability = await mit.availability.update(updateAvailabilityPayload, '632b6553ff12ea00092fbbcf', '62143e9076f0e0556808b2e7');
+                // const updateAvailability = await mit.availability.update(updateAvailabilityPayload, availabilityId, professionlaId);
                 // console.log('updated availability', updateAvailability)
 
                 /*
@@ -171,10 +180,10 @@
                     Al desabilitar una disponibilidad las citas asociadas se cancelarán de forma recursiva.
                 */
 
-                // const enableAvailability = await mit.availability.enable('632b6553ff12ea00092fbbcf');
+                // const enableAvailability = await mit.availability.enable(availabilityId);
                 // console.log('enableAvailability', enableAvailability)
 
-                // const disabledvailability = await mit.availability.disable('632b6553ff12ea00092fbbcf');
+                // const disabledvailability = await mit.availability.disable(availabilityId);
                 // console.log('disabledvailability', disabledvailability)
 
                 // const magicLink = mit.magicLink()
@@ -184,20 +193,20 @@
                     Cita inmediata
                 */
 
-                // const newPatient = await mit.patient.create(req.data)
-                // console.log('patient created', newPatient.data);
+                const newPatient = await mit.patient.create(req.data)
+                console.log('patient created', newPatient.data);
 
-                // const login = await mit.login()
-                // console.log('login', login.data);
+                const login = await mit.login()
+                console.log('login', login.data);
 
-                // const inmediate = await mit.appointment.reserve('IMMEDIATE')
-                // console.log('inmediate reserve', inmediate.data);
+                const inmediate = await mit.appointment.reserve('IMMEDIATE')
+                console.log('inmediate reserve', inmediate.data);
 
-                // const consolidate = await mit.appointment.consolidate([])
-                // console.log('inmediate consolidate', consolidate.data);
+                const consolidate = await mit.appointment.consolidate([])
+                console.log('inmediate consolidate', consolidate.data);
 
-                // const appointmentPayload = await mit.appointment.byExternalId()
-                // console.log("Get appointment by caseId OK", appointmentPayload);
+                const appointmentPayload = await mit.appointment.byExternalId()
+                console.log("Get appointment by caseId OK", appointmentPayload);
 
                 /*    
                     Cita Agendada

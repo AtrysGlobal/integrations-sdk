@@ -5,14 +5,19 @@ describe('shared data helper tests', () => {
         const result: SharedData = SharedData.getInstance();
         const expected = {
             environment: { frontend: '', backend: '' },
-            tokens: { mit: '', atrysBackend: '', atrysFrontEnd: '' },
+            tokens: { mit: '', accessToken: '', atrysFrontEnd: '' },
             patientId: '',
             patientUsername: '',
             patientPassword: '',
             appopintmentReservedId: '',
             integrationClientIdentificator: "",
             integrationExternalId: "",
-            mode: ''
+            mode: '',
+            setup: '',
+            stage: '',
+            errors: [],
+            clinicId: '',
+            locale: ''
         }
         expect(result).toEqual(expected)
     })

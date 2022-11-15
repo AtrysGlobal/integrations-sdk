@@ -2,6 +2,7 @@ import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
 import { ERROR_TYPES, MitError } from '../handlers/mit-error';
 import endpoints from '../config/endpoints'
+import { RBAC } from '../helpers/rbac.helper';
 
 const sharedData = SharedData.getInstance();
 
@@ -12,6 +13,8 @@ const sharedData = SharedData.getInstance();
  */
 export async function listBySpecialty(specialtyId: string): Promise<object> {
   try {
+    RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
+
     const _request = new ClientRequest('ATRYS');
     const _req = await _request.get(`${endpoints.professional.listBySpecialtyId}/${specialtyId}`);
     if (_req.data.message !== 'OK') {
@@ -29,6 +32,8 @@ export async function listBySpecialty(specialtyId: string): Promise<object> {
  */
 export async function list(): Promise<object> {
   try {
+    RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
+
     const _request = new ClientRequest('ATRYS');
     const _req = await _request.get(endpoints.professional.list);
     if (_req.data.message !== 'OK') {

@@ -2,6 +2,7 @@ import { SharedData } from '../helpers/shared_data.helper';
 import { ClientRequest } from '../helpers/request.helper';
 import { MitError } from '../handlers/mit-error';
 import endpoints from '../config/endpoints'
+import { RBAC } from '../helpers/rbac.helper';
 
 const sharedData = SharedData.getInstance();
 
@@ -12,6 +13,8 @@ const sharedData = SharedData.getInstance();
  */
 export async function register(patientModel: any): Promise<object> {
   try {
+    RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
+
     if (!patientModel) throw new Error('Yoy must provide a model for register a new patient');
 
     patientModel.newUserFromSDK = true;
@@ -33,6 +36,8 @@ export async function register(patientModel: any): Promise<object> {
  */
 export async function changePassword(credentials: any): Promise<object> {
   try {
+    RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
+
     if (!credentials) throw new Error('Yoy must provide a credentials for patient operations');
 
     const _request = new ClientRequest('SDK');
@@ -45,6 +50,7 @@ export async function changePassword(credentials: any): Promise<object> {
 
 export async function updatePatientProfile(patientModel: any, userId: string): Promise<object> {
   try {
+    RBAC(['SDK_PATIENT', 'SDK_ADMIN']);
 
     const _request = new ClientRequest('ATRYS');
     return _request.put(`${endpoints.patient.updateById}/${userId}`, { ...patientModel });
