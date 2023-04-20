@@ -6,7 +6,12 @@
 
 The following values are of utmost importance for the configuration of your MIT SDK client or the authentication of your API access credentials. For security reasons it is recommended that you keep these values secret.
 
-> NOTE 1: These values will be also specified in the postman specification attached to this repository as mit-sdk-api-spec.postman_collection.json
+> NOTE 1: These values will be also specified in the postman specification attached to this repository as:
+
+- `mit-sdk-api-spec.postman_collection.json`
+- `EXAMPLE_SDK_ENVIRONMENT.postman_environment.json`
+
+---
 
 - **Environment**: To be understood as the implementation stage. Separate your pre-production environments from your production environments.
 - **MIT API**: API rest that will manage the negotiation of your access tokens as an integration client. You will need a public RSA key to complete your authentication process.
