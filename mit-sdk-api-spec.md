@@ -1008,11 +1008,13 @@ curl --location 'https://develop.dservices.telemedicina.com/appointments/action/
 {
   "id": "appointmentId",
   "patientDetails": {
-    "symptoms": ["Headache", "Stomachache", "Fever"],
+    "symptoms": [],
     "description": "I'm not feeling good"
   }
 }
 ```
+
+> NOTE: Symptoms should be specified as an array of identifiers. The identifiers of the symptoms already registered in the system can be obtained in _List Symptoms Section_.
 
 **Example**:
 
@@ -1025,7 +1027,7 @@ curl --location 'https://<API>.telemedicina.com/appointments/action/create/conso
 --data '{
     "id": "644163531c9e000008e80f90",
     "patientDetails": {
-        "symptoms": ["Headache", "Stomachache", "Fever"],
+        "symptoms": ["638a603db19dd76b1c9d01f0", "638a603db19dd76b1c9d01f1", "638a603db19dd76b1c9d01f3"],
         "description": "I'\''m not feeling good"
     }
 }'
@@ -1092,11 +1094,13 @@ curl --location 'https://<API>.telemedicina.com/appointments/action/create/reser
 {
   "id": "appointmentId",
   "patientDetails": {
-    "symptoms": ["Headache", "Stomachache", "Fever"],
+    "symptoms": [],
     "description": "I'm not feeling good"
   }
 }
 ```
+
+> NOTE: Symptoms should be specified as an array of identifiers. The identifiers of the symptoms already registered in the system can be obtained in _List Symptoms Section_.
 
 **Example**:
 
@@ -1109,8 +1113,10 @@ curl --location 'https://<API>.telemedicina.com/appointments/action/create/conso
 --data '{
     "id": "644163531c9e000008e80f90",
     "patientDetails": {
-        "symptoms": ["Headache", "Stomachache", "Fever"],
+        "symptoms": ["638a603db19dd76b1c9d01f0", "638a603db19dd76b1c9d01f1", "638a603db19dd76b1c9d01f3"],
         "description": "I'\''m not feeling good"
     }
 }'
 ```
+
+---
