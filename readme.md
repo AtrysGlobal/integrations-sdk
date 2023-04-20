@@ -4,9 +4,25 @@
 
 ## Purpose
 
-The purpose of this project is to deliver a SDK to consume the resources present in the Atrys teleconsultation platform (Inmediate and Sheduled Appointments), exposing a series of methods to perform the necessary requests to the several backends.
+---
+
+The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
 
 ## Patient model
+
+---
+
+At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
+
+## API REST Docs
+
+---
+
+In case you want to consume the API REST solution here you can consult the [MIT API REST technical specification here](./mit-sdk-api-spec.md).
+
+## Patient model
+
+---
 
 At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model into Atrys patient model, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
@@ -119,6 +135,7 @@ This SDK has been published in the following link so that it is available for us
 https://cdn.mit.telemedicina.com/atrys-sdk.js
 ```
 
+
 ## NPM Module
 
 The npm site of the module can be found [here](https://www.npmjs.com/package/@atrysglobal/integrations-sdk)
@@ -136,7 +153,7 @@ Our SDL has 2 workng modes:
 ## MIT.Configuration
 
  * stage (String) - This is the stage of the application. It can be either "DEV", "STAGING" or "PROD".
- * setup (String) - This is the setup that you want to use. Only for custom behaviour, logic or costumer custom environment
+ * setup (String) - This is the setup that you want to use. Only for custom behaviour, logic or costumer custom environment (e.g: CO, ES, CL, BR)
  * clinicId (String) - The clinic ID of the clinic you want to use.
  * locale (String) - This is the language expected to be returned, 'es_ES', 'es_CL', es_CO', 'pr_BR'
  * mode (String) - This is the mode of the application. It can be either 'dev' or 'prod'.
@@ -303,18 +320,6 @@ MitInterface {
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ```
 common.session(): Promise<SessionInterface>;
 ```
@@ -325,9 +330,10 @@ common.session(): Promise<SessionInterface>;
 ```
 normalizeModel(clientPatientModel: any): Promise<any>;
 ```
+
 > Method for normalize the patient model for work with Atrys Backend
-> 
->**@clientPatientModel**: Object with the patient data
+>
+> **@clientPatientModel**: Object with the patient data
 
 ## Client Integration Model
 Note: The previously set integrationClientIdentificator variable must be used here.
@@ -418,37 +424,38 @@ The service returns internal model parsed for ready to use in Atrys backends.
 ```
 patient.create(normalizedPatientModel: any): Promise<any>;
 ```
+
 > Method for create a new patient in the Atrys Backend.
-> 
->**@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine. Normalized model must look like Atrys patient model exposed below.
+>
+> **@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine. Normalized model must look like Atrys patient model exposed below.
 
 ```
 patient.login(): Promise<any>;
 ```
->Login method for authenticate the user in Atrys Backend
 
+> Login method for authenticate the user in Atrys Backend
 
 ```
 professionals.list(): Promise<any>;
 ```
 
->List all professional present in the selected backend by setup variable in session method.
-
+> List all professional present in the selected backend by setup variable in session method.
 
 ```
 specialty.byId(specialtyId: string): Promise<any>;
 ```
-> Method for list the specialties derived by a main specialty id. Ex: In medicine have general, family, cardiology, etc
-> 
->**@specialtyId**: id of the main medical specialty
 
+> Method for list the specialties derived by a main specialty id. Ex: In medicine have general, family, cardiology, etc
+>
+> **@specialtyId**: id of the main medical specialty
 
 ```
 professionals.blocks(queryBlock: any): Promise<any>;
 ```
+
 > Method for list all available blocks for the selected professional.
-> 
->**@queryBlock**:
+>
+> **@queryBlock**:
 
 ```
 {
@@ -479,8 +486,8 @@ appointment.reserve(appointmentType: AppointmentType): Promise<any>;
 ```
 
 > Method for reserve a new scheduled appointment.
-> 
->**@reservePayload**:
+>
+> **@reservePayload**:
 
 ```
 {
@@ -488,11 +495,12 @@ appointment.reserve(appointmentType: AppointmentType): Promise<any>;
 }
 ```
 
+
 #### Scheduled Appointment Reserve
 
->**@type**: String value 'SCHEDULED'
->**@ dateDetails**: String value 'SCHEDULED'
->**@ patientDetails**: String value 'SCHEDULED'
+**@type**: String value 'SCHEDULED'
+**@dateDetails**: String value 'SCHEDULED'
+**@patientDetails**: String value 'SCHEDULED'
 
 ```
 appointment.reserve(appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<any>;
@@ -524,15 +532,16 @@ appointment.reserve(appointmentType: AppointmentType, dateDetails: any = {}, pat
 appointment.consolidate(symptoms: string[]): Promise<any>;
 ```
 
-> Method for consolidate previous reserved appointment. 
->**@symptoms**: array of symptoms
-
+> Method for consolidate previous reserved appointment.
+>
+> **@symptoms**: array of symptoms
 
 ```
 common.ssoLink(): string;
 ```
 
 > Method for create the magic link for deliver to clients for passwordless login acces to Atrys platform.
+
 
 ```
 appointment.byExternalId(): Promise<any>;
@@ -634,15 +643,16 @@ mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
 
 ## Build
 
+
 The project can be built to run as SDK in the browser or to be used in BackEnd in a nodejs microservice for example.
 
-To build the SDK for the browser, after build the SDK is available in **dist** folder   
+To build the SDK for the browser, after build the SDK is available in **dist** folder
 
 ```
 npm run build
 ```
 
-To build the SDK for backend, after build the SDK is available in **lib** folder.   
+To build the SDK for backend, after build the SDK is available in **lib** folder.
 
 ```
 npm run build-package
