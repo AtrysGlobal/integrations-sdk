@@ -1,31 +1,41 @@
 # Atrys SDK for integrations
 
 ## Purpose
-***
+
+---
+
 The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
 
 ## Patient model
-***
+
+---
+
 At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
+## API REST Docs
+
+In case you want to consume the API REST solution here you can consult the [MIT API REST technical specification here](./mit-sdk-api-spec.md).
 
 ## API
-***
+
+---
+
 ```
 session(setup: string, publicKey: string): Promise<SessionInterface>;
 ```
+
 > Create a new session in our session service ang get a MIT Token
 >
->**@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR.  
->**@publicKey**: String of the public key for validate the origin of the request
-
+> **@setup**: String identificator for country of origin. Ex: CO, ES, CL, BR.  
+> **@publicKey**: String of the public key for validate the origin of the request
 
 ```
 normalizeModel(clientPatientModel: any): Promise<any>;
 ```
+
 > Method for normalize the patient model for work with Atrys Backend
-> 
->**@clientPatientModel**: Object with the patient data
+>
+> **@clientPatientModel**: Object with the patient data
 
 **Atrys Patient Model.**
 
@@ -64,37 +74,38 @@ normalizeModel(clientPatientModel: any): Promise<any>;
 ```
   createPatient(normalizedPatientModel: any): Promise<any>;
 ```
+
 > Method for create a new patient in the Atrys Backend.
-> 
->**@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine. Normalized model must look like Atrys patient model exposed below.
+>
+> **@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine. Normalized model must look like Atrys patient model exposed below.
 
 ```
 login(): Promise<any>;
 ```
->Login method for authenticate the user in Atrys Backend
 
+> Login method for authenticate the user in Atrys Backend
 
 ```
 listProfessionals(): Promise<any>;
 ```
 
->List all professional present in the selected backend by setup variable in session method.
-
+> List all professional present in the selected backend by setup variable in session method.
 
 ```
 listSpecialties(specialtyId: string): Promise<any>;
 ```
-> Method for list the specialties derived by a main specialty id. Ex: In medicine have general, family, cardiology, etc
-> 
->**@specialtyId**: id of the main medical specialty
 
+> Method for list the specialties derived by a main specialty id. Ex: In medicine have general, family, cardiology, etc
+>
+> **@specialtyId**: id of the main medical specialty
 
 ```
 listBlocks(queryBlock: any): Promise<any>;
 ```
+
 > Method for list all available blocks for the selected professional.
-> 
->**@queryBlock**:
+>
+> **@queryBlock**:
 
 ```
 {
@@ -110,9 +121,10 @@ listBlocks(queryBlock: any): Promise<any>;
 ```
 reserveSheduledAppointment(reservePayload: any): Promise<any>;
 ```
+
 > Method for reserve a new scheduled appointment.
-> 
->**@reservePayload**:
+>
+> **@reservePayload**:
 
 ```
 {
@@ -135,44 +147,45 @@ reserveSheduledAppointment(reservePayload: any): Promise<any>;
 }
 ```
 
-
 ```
 consolidateSheduledAppointment(symptoms: string[]): Promise<any>;
 ```
-> Method for consolidate previous reserved appointment.
-> 
->**@symptoms**: array of symptoms
 
+> Method for consolidate previous reserved appointment.
+>
+> **@symptoms**: array of symptoms
 
 ```
 reserveInmediateAppointment(): Promise<any>;
 ```
-> Method for reserve a new inmediate appointment.
 
+> Method for reserve a new inmediate appointment.
 
 ```
 consolidateInmediateAppointment(symptoms: string[]): Promise<any>;
 ```
+
 > Method for consolidate previous inmediate appointment.
 
 ```
 magicLink(): string;
 ```
+
 > Method for create the magic link for deliver to clients for no login acces to Atrys platform.
 
-
 ## Build
-***
+
+---
 
 The project can be built to run as SDK in the browser or to be used in BackEnd in a nodejs microservice for example.
 
-To build the SDK for the browser, after build the SDK is available in **dist** folder   
+To build the SDK for the browser, after build the SDK is available in **dist** folder
 
 ```
 npm run build
 ```
 
-To build the SDK for backend, after build the SDK is available in **lib** folder.   
+To build the SDK for backend, after build the SDK is available in **lib** folder.
 
 ```
 npm run build-package
