@@ -5,18 +5,16 @@ async function reserveImmediateAppointment() {
         const immediateResponse = await mit.reserveInmediateAppointment()
         return immediateResponse.data;
     } catch (error) {
-        console.log('error', error)
-        throw new Error(error.message)
+        throw error;
     }
 }
 
-async function consolidateInmediateAppointment() { 
+async function consolidateInmediateAppointment() {
     try {
         const consolidateResponse = await mit.consolidateInmediateAppointment([])
         return consolidateResponse.data;
     } catch (error) {
-        console.log('error', error)
-        throw new Error(error.message)
+        throw error;
     }
 }
 
@@ -25,8 +23,7 @@ async function reserveSheduledAppointment(data) {
         const reservedSheduledResponse = await mit.reserveSheduledAppointment(data)
         return reservedSheduledResponse.data;
     } catch (error) {
-        console.log('error', error)
-        throw new Error(error.message)
+        throw error;
     }
 }
 
@@ -35,8 +32,16 @@ async function consolidateSheduledAppointment() {
         const consolidateResponse = await mit.consolidateSheduledAppointment([])
         return consolidateResponse.data;
     } catch (error) {
-        console.log('error', error)
-        throw new Error(error.message)
+        throw error;
+    }
+}
+
+async function getMagicLink() {
+    try {
+        const magicLink = mit.magicLink();
+        return magicLink;
+    } catch (error) {
+        throw error;
     }
 }
 
@@ -44,5 +49,6 @@ module.exports = {
     reserveImmediateAppointment,
     consolidateInmediateAppointment,
     reserveSheduledAppointment,
-    consolidateSheduledAppointment
+    consolidateSheduledAppointment,
+    getMagicLink
 }

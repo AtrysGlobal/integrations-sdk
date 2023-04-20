@@ -5,8 +5,7 @@ async function normalizeModel(data) {
         const normalizeResponse = await mit.normalizeModel(data);
         return normalizeResponse.data;
     } catch (error) {
-        console.log('error normalizeModelService', error)
-        throw new Error(error.message)
+        throw error;
     }
 }
 

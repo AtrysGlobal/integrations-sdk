@@ -5,7 +5,7 @@ require('dotenv').config();
 const mit = require('./utils/config');
 
 const app = express();
-const port = process.env.PORT || 3031;
+const port = process.env.PORT || 3030;
 
 app.use(bodyparser.json());
 const sessionRoutes = require('./routes/session.route');
@@ -25,14 +25,6 @@ appointmentRoutes(app);
 professionalRoutes(app);
 specialtyRoutes(app);
 blockRoutes(app);
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.post('/hola', (req, res) => {
-  res.send(mit);
-})
 
 app.listen(port, () => {
   console.log(`ms-atrys-boilerplate listening at http://localhost:${port}`)

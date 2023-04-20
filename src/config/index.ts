@@ -1,24 +1,17 @@
-const config: any = {
-  backend: {
-    BR: '',
-    ES: 'https://b1qa.atrys-espana.telemedicina.com/api/v1',
-    CO: '',
-    CL: '',
-    LOCAL: 'http://caprica.com:3000/api/v1',
-    TEST: 'http://mit-env.eba-2czyhyfy.us-east-1.elasticbeanstalk.com/api/v1',
-  },
-  frontend: {
-    BR: '',
-    ES: 'https://www.atrys-espana.telemedicina.com',
-    CO: '',
-    CL: '',
-    LOCAL: 'http://caprica.com',
-    TEST: 'http://mit-frontend-cl.s3-website-us-east-1.amazonaws.com',
-  },
-  MIT_URL: '',
-  MIT_SESSION_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/auth/session',
-  MIT_RULE_ENGINE_SERVICE: 'https://ucholf7l5b.execute-api.us-east-1.amazonaws.com/develop/rules',
-  CRYPTO_SEED: 'V-pQ%S+Pv8HE&8Ag',
-};
-
-export default config;
+export default (setup: string): any => {
+  return {
+    backend: {
+      'DEV': 'https://dev.services.telemedicina.com',
+      'STAGING': 'https://qa.services.telemedicina.com',
+      'PROD': 'https://prod.services.telemedicina.com',
+      'LOCAL': 'http://caprica.com:3000/api/v1'
+    },
+    frontend: {
+      'DEV': `https://dev-${setup}.auth.telemedicina.com/`,
+      'STAGING': `https://staging-${setup}.auth.telemedicina.com/`,
+      'PROD': 'https://prod.services.telemedicina.com',
+      'LOCAL': 'http://caprica.com:3000/api/v1'
+    },
+    CRYPTO_SEED: 'V-pQ%S+Pv8HE&8Ag',
+  }
+}
