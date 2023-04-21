@@ -14,7 +14,7 @@ At the moment of making an integration with the teleconsultation platform, the p
 
 ## API REST Docs
 
-In case you want to consume the API REST solution here you can consult the [MIT API REST technical specification here](./mit-sdk-api-spec.md).
+In case you want to consume the API REST solution here you can consult the [MIT API REST technical specification here](./api-rest/mit-sdk-api-spec.md).
 
 ## API
 

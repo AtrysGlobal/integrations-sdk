@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "abd5cf8b-859c-4e69-8617-d5491c77f7e0",
 		"name": "MIT-SDK-API",
+		"description": "REST api technical specification detail for MIT services and regional teleconsult system integration. To obtain additional information or specifications that are not found here, please contact the Atrys team.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "19403664"
 	},
@@ -184,7 +185,96 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "List Professionals By SpecialtyId Responds OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Setup",
+										"value": "{{COUNTRY_CODE}}",
+										"type": "text"
+									},
+									{
+										"key": "locale",
+										"value": "{{LOCALE_CODE}}",
+										"type": "text"
+									},
+									{
+										"key": "Atrys-Product",
+										"value": "{{ATRYS_PRODUCT}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{TELEMEDICINE_API}}/professionals/list/specialty/:specialtyId",
+									"host": [
+										"{{TELEMEDICINE_API}}"
+									],
+									"path": [
+										"professionals",
+										"list",
+										"specialty",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId",
+											"value": "6213e196c2a6c02a6ac792b1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 20 Apr 2023 14:14:57 GMT"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "public, max-age=0"
+								},
+								{
+									"key": "Apigw-Requestid",
+									"value": "DrhTNgCYoAMEaTQ="
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 9c86b4f2a2d6823205170deeb68b1f10.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "SCL51-P2"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "VO3DRm8hr2ge1OJ5_mNBWEJs0IHXf0wV-jkbRdDjFch1i1md4JVGcw=="
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"OK\",\n    \"payload\": []\n}"
+						}
+					]
 				}
 			]
 		},
@@ -879,7 +969,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"administrativeDetails\": {\n        \"objective\": \"6213e19cc2a6c02a6ac79328\",\n        \"appointmentDuration\": 5,\n        \"clinicId\": \"{{CLINIC_ID}}\"\n    },\n    \"professionalDetails\": {\n        \"specialtyId\": \"6213e196c2a6c02a6ac792ad\"\n    },\n    \"dateDetails\": {\n        \"startDate\": {\n            \"year\": \"2023\",\n            \"month\": \"04\",\n            \"day\": \"20\"\n        },\n        \"endDate\": {\n            \"year\": \"2023\",\n            \"month\": \"04\",\n            \"day\": \"21\"\n        },\n        \"days\": [\n            \"domingo\"\n        ],\n        \"dailyRanges\": [\n            {\n                \"start\": \"10:00\",\n                \"end\": \"18:59\"\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"administrativeDetails\": {\n        \"objective\": \"6213e19cc2a6c02a6ac79328\",\n        \"appointmentDuration\": 5,\n        \"clinicId\": \"{{CLINIC_ID}}\"\n    },\n    \"professionalDetails\": {\n        \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n    },\n    \"dateDetails\": {\n        \"startDate\": {\n            \"year\": \"2023\",\n            \"month\": \"04\",\n            \"day\": \"21\"\n        },\n        \"endDate\": {\n            \"year\": \"2027\",\n            \"month\": \"04\",\n            \"day\": \"21\"\n        }\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -887,7 +977,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{TELEMEDICINE_API}}/availability/:availabilityId?professionalId=62143e9076f0e0556808b2e7",
+							"raw": "{{TELEMEDICINE_API}}/availability/:availabilityId?professionalId=6217758f76f0e0556808c435",
 							"host": [
 								"{{TELEMEDICINE_API}}"
 							],
@@ -898,7 +988,7 @@
 							"query": [
 								{
 									"key": "professionalId",
-									"value": "62143e9076f0e0556808b2e7"
+									"value": "6217758f76f0e0556808c435"
 								},
 								{
 									"key": "",
@@ -909,7 +999,7 @@
 							"variable": [
 								{
 									"key": "availabilityId",
-									"value": "64416a28559d3e0008cec33f"
+									"value": "636d8db3efd27b0008943b16"
 								}
 							]
 						}
@@ -1208,7 +1298,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n   \"from\":\"{{CLIENT_PUBLIC_ID}}\",\n   \"payload\":{\n      \"CaseData\":{\n         \"CaseId\":\"1-C6A0OUU\",\n         \"CaseNum\":\"1-26501013462\"\n      },\n      \"GeolocationData\":{\n         \"Address\":\"Calle prueba 1234\",\n         \"Extra\":\"Piso 6\",\n         \"State\":\"CAPITAL FEDERAL\",\n         \"Country\":\"AR\",\n         \"Latitude\":\"-34.64424\",\n         \"City\":\"CAPITAL FEDERAL\",\n         \"Longitude\":\"-58.55662\"\n      },\n      \"BeneficiaryData\":{\n         \"DateOfBirth\":\"987-07-22\",\n         \"Email\":\"patient-sd222k@yopmail.com\",\n         \"Language\":\"ES\",\n         \"IntPhoneCode\":\"54\",\n         \"IdNumber\":\"33182287\",\n         \"FirstName\":\"GONZALO EZEQUIEL\",\n         \"PhoneNumber\":\"1161711401\",\n         \"LastName\":\"DAUD\",\n         \"IdType\":\"DNI\"\n      }\n   },\n   \"setup\":\"INT-BR\"\n}",
+							"raw": "{\n   \"from\":\"{{CLIENT_PUBLIC_ID}}\",\n   \"payload\":{\n      \"CaseData\":{\n         \"CaseId\":\"1-C6A0OUU\",\n         \"CaseNum\":\"1-26501013462\"\n      },\n      \"GeolocationData\":{\n         \"Address\":\"Calle prueba 1234\",\n         \"Extra\":\"Piso 6\",\n         \"State\":\"CAPITAL FEDERAL\",\n         \"Country\":\"AR\",\n         \"Latitude\":\"-34.64424\",\n         \"City\":\"CAPITAL FEDERAL\",\n         \"Longitude\":\"-58.55662\"\n      },\n      \"BeneficiaryData\":{\n         \"DateOfBirth\":\"987-07-22\",\n         \"Email\":\"{{PATIENT_EMAIL_CONTAINER}}\",\n         \"Language\":\"ES\",\n         \"IntPhoneCode\":\"54\",\n         \"IdNumber\":\"33182287\",\n         \"FirstName\":\"GONZALO EZEQUIEL\",\n         \"PhoneNumber\":\"1161711401\",\n         \"LastName\":\"DAUD\",\n         \"IdType\":\"DNI\"\n      }\n   },\n   \"setup\":\"INT-BR\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1370,7 +1460,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"patient-sd222k@yopmail.com\",\n    \"password\": \"qeH)3gfVf\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
+							"raw": "{\n    \"username\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1532,6 +1622,18 @@
 				},
 				{
 					"name": "Register Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"PATIENT_ID_CONTAINER\", jsonData.payload.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1563,7 +1665,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"patient-sd222k@yopmail.com\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"qeH)3gfVf\",\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
+							"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2272,6 +2374,23 @@
 			"item": [
 				{
 					"name": "List Symptoms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"let symptoms = jsonData.payload;",
+									"",
+									"if(symptoms.length > 0){",
+									"    postman.setEnvironmentVariable(\"TARGET_SYMPTOM_1\", symptoms[0]._id);",
+									"    postman.setEnvironmentVariable(\"TARGET_SYMPTOM_2\", symptoms[1]._id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2558,6 +2677,61 @@
 				},
 				{
 					"name": "Reserve Scheduled Appointment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');",
+									"",
+									"let currentDay = moment().date();",
+									"let currentMonth = moment().month() + 1;  // jan=0, dec=11",
+									"let currentYear = moment().year();",
+									"",
+									"let date = moment.utc().format('YYYY-MM-DD HH:mm:ss');",
+									"var localTime  = moment.utc(date).toDate();",
+									"",
+									"var currentHour = moment(localTime).format('HH');",
+									"let currentMinute = moment(localTime).format('mm');",
+									"",
+									"var targetMinute = Number(currentMinute) + 5;",
+									"",
+									"if(targetMinute >= 60){",
+									" currentHour = (Number(currentHour) + 1).toString()",
+									" targetMinute = \"00\"",
+									"}",
+									"",
+									"",
+									"console.log('currentDay: ', currentDay)",
+									"console.log('currentMonth: ', currentMonth)",
+									"console.log('currentYear: ', currentYear)",
+									"console.log('localTime: ', localTime)",
+									"",
+									"pm.environment.set(\"currentDay\", currentDay);",
+									"pm.environment.set(\"currentMonth\", currentMonth);",
+									"pm.environment.set(\"currentYear\", currentYear);",
+									"",
+									"",
+									"/* Set current date manually",
+									"pm.environment.set(\"currentHour\", currentHour);",
+									"pm.environment.set(\"currentMinute\", currentMinute);",
+									"pm.environment.set(\"targetMinute\", targetMinute);",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"RESERVED_APPOINTMENT_ID\", jsonData.payload.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2589,7 +2763,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"64414a4778894d00082ec9e6\"\n    },\n    \"professionalDetails\":{\n        \"userId\": \"6217758f76f0e0556808c435\",\n        \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n    },\n    \"dateDetails\":{\n        \"date\": {\n            \"year\": 2023,\n            \"month\": 4,\n            \"day\": 20\n        },\n        \"start\": \"12:10\"\n    },\n    \"appointmentType\": \"SCHEDULED\"\n}",
+							"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"professionalDetails\":{\n        \"userId\": \"62143e9076f0e0556808b2e7\",\n        \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n    },\n    \"dateDetails\":{\n        \"date\": {\n            \"year\": {{currentYear}},\n            \"month\": {{currentMonth}},\n            \"day\": {{currentDay}}\n        },\n        \"start\": \"{{currentHour}}:{{targetMinute}}\"\n    },\n    \"appointmentType\": \"SCHEDULED\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2750,7 +2924,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"644163531c9e000008e80f90\",\n    \"patientDetails\": {\n        \"symptoms\": [\"Headache\", \"Stomachache\", \"Fever\"],\n        \"description\": \"I'm not feeling good\"\n    }\n}",
+							"raw": "{\n    \"id\": \"{{RESERVED_APPOINTMENT_ID}}\",\n    \"patientDetails\": {\n        \"symptoms\": [\"{{TARGET_SYMPTOM_1}}\", \"{{TARGET_SYMPTOM_2}}\"],\n        \"description\": \"I'm not feeling good\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
