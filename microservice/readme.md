@@ -4,7 +4,25 @@ This micro service consumes the Atrys SDK for integrations.
 
 ## Prerequisites
 
-The SDK must be as a dependency on the node_modules, meantime the package muste be requested and installed manually in the node_modules folder, until the package is released an published in npm.
+The Atrys SDK must be a dependency of node_modules, so you need to install this package:
+#### https://www.npmjs.com/package/@atrysglobal/mit-sdk
+
+To make it a dependency in our package.json, use the following command
+
+```
+npm i -S @atrysglobal/mit-sdk
+```
+
+The public key delivered by Atrys must be configured in the following file, following this example:
+
+```
+// file path: src/utils/config.js
+...
+
+const publicKey = `-----BEGIN RSA PRIVATE KEY----- XXXXXX -----END RSA PRIVATE KEY-----`
+
+...
+```
 
 In the environment variables you must indicate the setup and the service port
 

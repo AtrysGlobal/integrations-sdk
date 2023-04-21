@@ -4,8 +4,7 @@ async function listProfessionals() {
         const listResponse = await mit.listProfessionals();
         return listResponse.data;
     } catch (error) {
-        console.log('error', error)
-        throw new Error(error.message)
+        throw error;
     }
 }
 

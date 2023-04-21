@@ -1,5 +1,8 @@
 //webpack.config.js
+var PACKAGE = require('./package.json');
+const LicenseWebpackPlugin = require('license-webpack-plugin').LicenseWebpackPlugin;
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: "production",
@@ -19,10 +22,31 @@ module.exports = {
   },
   module: {
     rules: [
-      { 
+      {
         test: /\.tsx?$/,
-        loader: "ts-loader"
+        loader: "ts-loader",
+        exclude: [
+          path.resolve(__dirname, 'jest.config.ts')
+        ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer']
+    }),
+
+    new webpack.BannerPlugin({
+      banner: (config) => {
+        return `/*!
+        Build: ${new Date()},
+        Version: ${PACKAGE.version},
+        Licensed under the ${PACKAGE.license} License,
+        Author: ${PACKAGE.author}
+        */`
+      },
+      raw: true,
+      entryOnly: false
+    })
+  ]
 };

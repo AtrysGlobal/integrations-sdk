@@ -1,16 +1,21 @@
 {
-  "name": "@atrysglobal/mit-sdk",
-  "version": "1.0.6",
+  "name": "@atrysglobal/integrations-sdk",
+  "version": "1.1.3",
   "description": "Web SDK for Atrys Integrations",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@vercel/ncc": "^0.29.0",
     "axios": "^0.21.1",
+    "buffer": "^6.0.3",
     "crypto-js": "^4.1.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.19.4",
+    "@babel/preset-typescript": "^7.18.6",
     "@types/crypto-js": "^4.0.2",
+    "@types/jest": "^27.0.1",
+    "babel-jest": "^29.2.2",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -19,8 +24,12 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "jest": "^27.2.0",
+    "license-webpack-plugin": "^4.0.0",
     "prettier": "^2.3.2",
+    "ts-jest": "^27.0.5",
     "ts-loader": "^9.2.5",
+    "ts-node": "^10.2.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.3.5",
@@ -29,14 +38,20 @@
   },
   "scripts": {
     "build": "webpack",
+    "serve": "docker run --rm -p 4200:80 -v /Users/server/ITMS/MIT/SDK:/usr/share/nginx/html:ro nginx",
     "build-package": "tsc && cp ./package.json ./lib",
+    "publish": "npm run build-package && npm publish --access=public",
+    "build-test": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build-package",
     "prepublishOnly": "npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "test:coverage": "jest --coverage --verbose",
+    "test:runInBand": "jest --runInBand",
+    "test": "jest "
   },
   "keywords": [
     "SDK",
