@@ -2,6 +2,12 @@
 
 ---
 
+## Step by Step Example
+
+You can refer to the attached [Postman collection](api-rest/mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single sign-on via magic link provider.
+
+---
+
 ## Integration Values
 
 The following values are of utmost importance for the configuration of your MIT SDK client or the authentication of your API access credentials. For security reasons it is recommended that you keep these values secret.
