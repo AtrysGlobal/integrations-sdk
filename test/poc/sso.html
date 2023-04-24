@@ -1,0 +1,80 @@
+<body>
+
+    <head>
+        <script src="http://192.168.0.156:4200/dist/atrys-sdk.js" type="module"></script>
+        <script type="module">
+
+            try {
+                // const clinicId = '5f236fc966fbb0054894b780' //CL DEV
+                const clinicId = '63f7b6b3a004a7000878da1f' //BR STAGING
+                const sdkMode = 'SDK_ADMIN'
+                // const sdkMode = 'SDK_PATIENT'
+
+                const config = new MIT.Configuration('DEV', 'BR', clinicId, sdkMode, 'pt_BR')
+                const credentials = new MIT.Credentials('-----BEGIN RSA PUBLIC KEY-----MIIBCgKCAQEAhQ6LOrh7aR0Ayj5qTCDQ4G4KdONIj4JVQ7/b8uPDXC8o7EPc1wE77cu6hvLT4jfoEI0jmZJ3st7M9ioGj3idSBFDrIIL3vk6TNcHDoqokozWf7VoqlTY/Ex+SViL0pHhZwofLECawEHnjjfRRg03+QBPs1MZdgAOp4o/UMygkIiEaK0q5Nqy1z1BJdvmEdKxqTeoJ/5zyq8udL+KnrA60c0nT6YYb2ifugzoC35Z2Vdqcyk3YK6ilGpTIUtK9FRgniI8UiNdQqhWk11rsZwS30a9EA0oKM7ZUYaPe/rhwaIAEZMUTL8aqHgrcp6f6LKLwP7k8b8PBszldNlzj9R5bQIDAQAB-----END RSA PUBLIC KEY-----')
+
+                const mit = new MIT.SDK(config, credentials);
+
+                const integrationClientIdentificator = 'cassi_poc';
+                mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
+
+                console.log(new Date())
+                console.log('MIT', mit);
+
+                const session = await mit.common.session()
+                console.log('SESSION', session);
+
+                /*
+                    Creación de paciente
+                */
+
+                const req = await mit.common.normalize(
+                    {
+                        "from": integrationClientIdentificator,
+                        "payload": {
+                            "GeolocationData": {
+                                "Country": "AR",
+                                "State": "Buenos Aires",
+                                "City": "DHJ",
+                                "Latitude": "-34.5618913",
+                                "Longitude": "-58.4617484",
+                                "Address": "Test 123",
+                                "Extra": ""
+                            },
+                            "BeneficiaryData": {
+                                "IdType": "DNI",
+                                "IdNumber": "198298827",
+                                "FirstName": "Peter",
+                                "LastName": "Jackson BR",
+                                "IntPhoneCode": "54",
+                                "PhoneNumber": "12345678",
+                                "Email": "peter.jackson.br@yopmail.com",
+                                "DateOfBirth": "2001-01-01",
+                                "Language": "BR"
+                            },
+                            "CaseData": {
+                                "CaseId": "OIO-998493",
+                                "CaseNum": "UA-99883235-778323BR"
+                            },
+                            "password": "POCBrasil2023!"
+                        }
+                    }
+                )
+                console.log('patient normalized', req.data);
+
+                const newPatient = await mit.patient.create(req.data)
+                console.log('patient created', newPatient.data);
+
+                const login = await mit.login()
+                console.log('login', login.data);
+
+                const magicLink = mit.magicLink()
+                console.log('maic link', magicLink);
+
+            } catch (error) {
+                console.error('Mit Error', error);
+            }
+
+        </script>
+    </head>
+</body>

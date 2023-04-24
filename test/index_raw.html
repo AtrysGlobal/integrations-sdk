@@ -43,17 +43,17 @@
                             "BeneficiaryData": {
                                 "IdType": "DNI",
                                 "IdNumber": "198298827",
-                                "FirstName": "José",
-                                "LastName": "Abarca",
+                                "FirstName": "Alejandro",
+                                "LastName": "Salinas",
                                 "IntPhoneCode": "54",
                                 "PhoneNumber": "12345678",
-                                "Email": "jose.abc@yopmail.com",
+                                "Email": "ale.salinas@yopmail.com",
                                 "DateOfBirth": "2001-01-01",
                                 "Language": "ES"
                             },
                             "CaseData": {
                                 "CaseId": "OIO-998493",
-                                "CaseNum": "UA-99883235-OK87"
+                                "CaseNum": "UA-99883235-98O892"
                             }
                         }
                     }
@@ -64,6 +64,7 @@
                     Actualización de paciente
                 */
 
+                /*
                 const updatePatient = {
                     "identificationData": {
                         "isForeign": false,
@@ -91,22 +92,23 @@
 
                 const updatedPatient = await mit.patient.update(updatePatient, '632dc191a3aaa70009c56f2e')
                 console.log('updatedPatient', updatedPatient)
+                */
 
                 /*
                     Gestión de agenda
                 */
 
-                const availabilityId = '636e6cbbff3e59000863c190'
-                const professionlaId = '62143e9076f0e0556808b2e7'
+                // const availabilityId = '636e6cbbff3e59000863c190'
+                // const professionlaId = '62143e9076f0e0556808b2e7'
 
-                const objetives = await mit.availability.objetives()
-                console.log('objetives', objetives)
+                // const objetives = await mit.availability.objetives()
+                // console.log('objetives', objetives)
 
-                const listSpecialties = await mit.specialty.list()
-                console.log('list Medical Specialties', listSpecialties.data);
+                // const listSpecialties = await mit.specialty.list()
+                // console.log('list Medical Specialties', listSpecialties.data);
 
-                const specialties = await mit.specialty.byId('5f35e707127b082ccd516c1b')
-                console.log('list specialties', specialties.data);
+                // const specialties = await mit.specialty.byId('5f35e707127b082ccd516c1b')
+                // console.log('list specialties', specialties.data);
 
                 // const newAvailability = {
                 //     "administrativeDetails":
@@ -186,12 +188,6 @@
                 // const disabledvailability = await mit.availability.disable(availabilityId);
                 // console.log('disabledvailability', disabledvailability)
 
-                // const magicLink = mit.magicLink()
-                // console.log('maic link', magicLink);
-
-                /*    
-                    Cita inmediata
-                */
 
                 const newPatient = await mit.patient.create(req.data)
                 console.log('patient created', newPatient.data);
@@ -199,14 +195,27 @@
                 const login = await mit.login()
                 console.log('login', login.data);
 
-                const inmediate = await mit.appointment.reserve('IMMEDIATE')
-                console.log('inmediate reserve', inmediate.data);
+                const magicLink = mit.magicLink()
+                console.log('maic link', magicLink);
 
-                const consolidate = await mit.appointment.consolidate([])
-                console.log('inmediate consolidate', consolidate.data);
+                /*    
+                    Cita inmediata
+                */
 
-                const appointmentPayload = await mit.appointment.byExternalId()
-                console.log("Get appointment by caseId OK", appointmentPayload);
+                // const newPatient = await mit.patient.create(req.data)
+                // console.log('patient created', newPatient.data);
+
+                // const login = await mit.login()
+                // console.log('login', login.data);
+
+                // const inmediate = await mit.appointment.reserve('IMMEDIATE')
+                // console.log('inmediate reserve', inmediate.data);
+
+                // const consolidate = await mit.appointment.consolidate([])
+                // console.log('inmediate consolidate', consolidate.data);
+
+                // const appointmentPayload = await mit.appointment.byExternalId()
+                // console.log("Get appointment by caseId OK", appointmentPayload);
 
                 /*    
                     Cita Agendada
