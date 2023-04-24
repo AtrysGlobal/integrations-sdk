@@ -344,6 +344,158 @@
 			]
 		},
 		{
+			"name": "3.5 Change Password SDK (In case of 422 error case at step 3)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Setup",
+						"value": "{{COUNTRY_CODE}}",
+						"type": "text"
+					},
+					{
+						"key": "locale",
+						"value": "{{LOCALE_CODE}}",
+						"type": "text"
+					},
+					{
+						"key": "Atrys-Product",
+						"value": "{{ATRYS_PRODUCT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n    \"password\": \"qeH)3gfVf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{TELEMEDICINE_API}}/account/credentials/sdk",
+					"host": [
+						"{{TELEMEDICINE_API}}"
+					],
+					"path": [
+						"account",
+						"credentials",
+						"sdk"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Change Password SDK (In case of 422 error case at step 3) Responds OK",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Setup",
+								"value": "{{COUNTRY_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "locale",
+								"value": "{{LOCALE_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "Atrys-Product",
+								"value": "{{ATRYS_PRODUCT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n    \"password\": \"qeH)3gfVf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{TELEMEDICINE_API}}/account/credentials/sdk",
+							"host": [
+								"{{TELEMEDICINE_API}}"
+							],
+							"path": [
+								"account",
+								"credentials",
+								"sdk"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "61"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Apr 2023 21:28:32 GMT"
+						},
+						{
+							"key": "Apigw-Requestid",
+							"value": "D5sj_geYIAMEPiQ="
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 5a50c92d4f694d646a3783edf957bc74.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SCL51-P2"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "fPJWTiLbqd91nxxsfDJwaO48VeJxKOhU80Nu1l64abiJLNeyGv0_7A=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 200,\n    \"message\": \"Senha atualizada!\",\n    \"payload\": {}\n}"
+				}
+			]
+		},
+		{
 			"name": "4. Patient Login",
 			"event": [
 				{
