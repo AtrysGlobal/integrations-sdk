@@ -20,6 +20,9 @@ export async function register(patientModel: any): Promise<object> {
     patientModel.newUserFromSDK = true;
 
     const _request = new ClientRequest('ATRYS');
+
+    patientModel.clinicId = sharedData.clinicId
+
     const _req = await _request.post(endpoints.account.register, { ...patientModel });
     sharedData.patientId = _req.data.id;
 
