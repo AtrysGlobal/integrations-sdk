@@ -1384,10 +1384,26 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Setup",
+								"value": "{{COUNTRY_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "locale",
+								"value": "{{LOCALE_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "Atrys-Product",
+								"value": "{{ATRYS_PRODUCT}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"user\",\n  \"password\": \"password\",\n  \"reservedAppointmentId\": \"reservedAppointmentId\"\n}",
+							"raw": "{\n  \"username\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n  \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n  \"reservedAppointmentId\": \"{{RESERVED_APPOINTMENT_ID}}\",\n  \"clinicId\": \"{{CLINIC_ID}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1395,12 +1411,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{TELEMEDICINE_API}}/tools/sso",
+							"raw": "{{TELEMEDICINE_API}}/integrations/sso",
 							"host": [
 								"{{TELEMEDICINE_API}}"
 							],
 							"path": [
-								"tools",
+								"integrations",
 								"sso"
 							]
 						}
@@ -2894,16 +2910,6 @@
 				{
 					"name": "Consolidate Scheduled Appointment",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ACCESS_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -2941,13 +2947,6 @@
 								"action",
 								"create",
 								"consolidate"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
 							]
 						}
 					},
@@ -3054,6 +3053,18 @@
 				},
 				{
 					"name": "Reserve Immediate Appointment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"RESERVED_APPOINTMENT_ID\", jsonData.payload.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -3085,7 +3096,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"64414a4778894d00082ec9e6\"\n    },\n    \"appointmentType\": \"IMMEDIATE\"\n}",
+							"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"appointmentType\": \"IMMEDIATE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3246,7 +3257,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"644164c11c9e000008e80fd9\",\n    \"patientDetails\": {\n        \"symptoms\": [\"Headache\", \"Stomachache\", \"Fever\"],\n        \"description\": \"I'm not feeling good\"\n    }\n}",
+							"raw": "{\n    \"id\": \"{{RESERVED_APPOINTMENT_ID}}\",\n    \"patientDetails\": {\n        \"symptoms\": [\"{{TARGET_SYMPTOM_1}}\", \"{{TARGET_SYMPTOM_2}}\"],\n        \"description\": \"I'm not feeling good\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
