@@ -4,9 +4,23 @@
 
 ## Purpose
 
-The purpose of this project is to deliver a SDK to consume the resources present in the Atrys teleconsultation platform (Inmediate and Sheduled Appointments), exposing a series of methods to perform the necessary requests to the several backends.
+---
+
+The purpose of this project is to deliver a tool to consume the resources present in the Atrys teleconsultation platform, exposing a series of methods to perform the necessary requests to backend.
 
 ## Patient model
+
+---
+
+At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model to ours, this process is one of the initial ones at the beginning of the commercial/technical relationship.
+
+## API REST Docs
+
+In case you want to consume the API REST solution here you can consult the [MIT API REST technical specification here](./api-rest/mit-sdk-api-spec.md).
+
+## Patient model
+
+---
 
 At the moment of making an integration with the teleconsultation platform, the patient model with which you work must be clearly exposed, so that our rules engine can "translate" your model into Atrys patient model, this process is one of the initial ones at the beginning of the commercial/technical relationship.
 
@@ -128,24 +142,25 @@ npm i @atrysglobal/integrations-sdk
 ```
 
 ## SDK Modes
+
 Our SDL has 2 workng modes:
 
-* SDK_ADMIN: Used in operations like, Patient CRUD and Availability CRUD
-* SDK_PATIENT: Used in operations that require main target in patient, like Appointment and SSOLink
+- SDK_ADMIN: Used in operations like, Patient CRUD and Availability CRUD
+- SDK_PATIENT: Used in operations that require main target in patient, like Appointment and SSOLink
 
 ## MIT.Configuration
 
- * stage (String) - This is the stage of the application. It can be either "DEV", "STAGING" or "PROD".
- * setup (String) - This is the setup that you want to use. Only for custom behaviour, logic or costumer custom environment
- * clinicId (String) - The clinic ID of the clinic you want to use.
- * locale (String) - This is the language expected to be returned, 'es_ES', 'es_CL', es_CO', 'pr_BR'
- * mode (String) - This is the mode of the application. It can be either 'dev' or 'prod'.
-
+- stage (String) - This is the stage of the application. It can be either "DEV", "STAGING" or "PROD".
+- setup (String) - This is the setup that you want to use. Only for custom behaviour, logic or costumer custom environment (e.g: CO, ES, CL, BR)
+- clinicId (String) - The clinic ID of the clinic you want to use.
+- locale (String) - This is the language expected to be returned, 'es_ES', 'es_CL', es_CO', 'pr_BR'
+- mode (String) - This is the mode of the application. It can be either 'dev' or 'prod'.
 
 For integration yo need to replace the PROD string for STAGING
 
 ## MIT.Credentials
-* publicKey (String) - Key pair given by AtrysHealth at the moment of integration. Used to authenticate the request of the current client.
+
+- publicKey (String) - Key pair given by AtrysHealth at the moment of integration. Used to authenticate the request of the current client.
 
 ## SharedData
 
@@ -180,34 +195,33 @@ public clinicId: string = '';
 public loginToken: string = '';
 ```
 
->**@patientId:** String patient id, this will be used when access is granted at login and the value will be set to sharedData.patientId. 
+> **@patientId:** String patient id, this will be used when access is granted at login and the value will be set to sharedData.patientId.
 >
->**@patientUsername:** String patient's username, the value will be stored in the variable sharedData.patientUsername when the model is normalized and will also be used to generate the magic link.
+> **@patientUsername:** String patient's username, the value will be stored in the variable sharedData.patientUsername when the model is normalized and will also be used to generate the magic link.
 >
->**@patientPassword:** String patient's password, the value will be stored when normalizing the model in the variable sharedData.patientPassword and will be used during login.
+> **@patientPassword:** String patient's password, the value will be stored when normalizing the model in the variable sharedData.patientPassword and will be used during login.
 >
->**@appopinmentReservedId:** String Id of the reserved schedule, which will be stored in sharedData.appopintmentReservedId and will be used when the appointment is consolidated.
+> **@appopinmentReservedId:** String Id of the reserved schedule, which will be stored in sharedData.appopintmentReservedId and will be used when the appointment is consolidated.
 >
->**@mode:** String integration mode. The value is defined in the constructor in the variable sharedData.mode, currently only SDK_PATIENT is enabled.
+> **@mode:** String integration mode. The value is defined in the constructor in the variable sharedData.mode, currently only SDK_PATIENT is enabled.
 >
->**@publicKey:** String public access key, which is defined in the constructor in the variable sharedData.publicKey and this is used when a request is made to obtain the session token.
+> **@publicKey:** String public access key, which is defined in the constructor in the variable sharedData.publicKey and this is used when a request is made to obtain the session token.
 >
->**@integrationClientIdentificator:** String Unique identificator for integrated client, must be used in the payload.source when normelize patient endpoint is called.
+> **@integrationClientIdentificator:** String Unique identificator for integrated client, must be used in the payload.source when normelize patient endpoint is called.
 >
->**@environment:** Instance of Environmentss where the frontend and backend endpoints will be stored.
+> **@environment:** Instance of Environmentss where the frontend and backend endpoints will be stored.
 >
->**@tokens:** Tokens instance that will be used to store the necessary tokens for the use of different methods.
+> **@tokens:** Tokens instance that will be used to store the necessary tokens for the use of different methods.
 >
->**@errors:** Array of runtime errors catched by the SDK
+> **@errors:** Array of runtime errors catched by the SDK
 >
->**@ stage:** String of the desired stage to be consumed, current posibilities are: DEV, STAGING and PROD
+> **@ stage:** String of the desired stage to be consumed, current posibilities are: DEV, STAGING and PROD
 >
->**@ setup:** String of the deseired setup to be performed in backend behaviour, current posibilities are mentioned in Environment Setups below.
+> **@ setup:** String of the deseired setup to be performed in backend behaviour, current posibilities are mentioned in Environment Setups below.
 >
->**@ clinicId:** String given by AtrysHealth at the moment of integration, its UUID of the clinic to be used in the SDK operations.
+> **@ clinicId:** String given by AtrysHealth at the moment of integration, its UUID of the clinic to be used in the SDK operations.
 >
->**@ loginToken:** String of backend token to authenticate request operations.
-
+> **@ loginToken:** String of backend token to authenticate request operations.
 
 # API
 
@@ -256,6 +270,7 @@ MitInterface {
 ## Payloads
 
 #### Availability
+
 ```
 {
 "administrativeDetails":{
@@ -282,7 +297,9 @@ MitInterface {
 ```
 
 ## Appointment
+
 #### Date Details
+
 ```
 {
     date: {
@@ -295,6 +312,7 @@ MitInterface {
 ```
 
 #### Professional Details
+
 ```
 {
     specialtyId: "6213e196c2a6c02a6ac792b1",
@@ -302,34 +320,22 @@ MitInterface {
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ```
 common.session(): Promise<SessionInterface>;
 ```
+
 > Create a new session in our session service ang get a MIT Token
->
->
 
 ```
 normalizeModel(clientPatientModel: any): Promise<any>;
 ```
+
 > Method for normalize the patient model for work with Atrys Backend
-> 
->**@clientPatientModel**: Object with the patient data
+>
+> **@clientPatientModel**: Object with the patient data
 
 ## Client Integration Model
+
 Note: The previously set integrationClientIdentificator variable must be used here.
 
 ```
@@ -372,7 +378,7 @@ Here is an **example** of a payload model for integration:
 ```
 
 **Atrys Normalized Patient Model (normalizedPatientModel).**
-Example: 
+Example:
 
 ```
 const normalizedPatientModel = await mit.normalizeModel(clientPatientModel)
@@ -418,37 +424,38 @@ The service returns internal model parsed for ready to use in Atrys backends.
 ```
 patient.create(normalizedPatientModel: any): Promise<any>;
 ```
+
 > Method for create a new patient in the Atrys Backend.
-> 
->**@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine. Normalized model must look like Atrys patient model exposed below.
+>
+> **@normalizedPatientModel**: Object with the patient data model normalized by our RuleEngine. Normalized model must look like Atrys patient model exposed below.
 
 ```
 patient.login(): Promise<any>;
 ```
->Login method for authenticate the user in Atrys Backend
 
+> Login method for authenticate the user in Atrys Backend
 
 ```
 professionals.list(): Promise<any>;
 ```
 
->List all professional present in the selected backend by setup variable in session method.
-
+> List all professional present in the selected backend by setup variable in session method.
 
 ```
 specialty.byId(specialtyId: string): Promise<any>;
 ```
-> Method for list the specialties derived by a main specialty id. Ex: In medicine have general, family, cardiology, etc
-> 
->**@specialtyId**: id of the main medical specialty
 
+> Method for list the specialties derived by a main specialty id. Ex: In medicine have general, family, cardiology, etc
+>
+> **@specialtyId**: id of the main medical specialty
 
 ```
 professionals.blocks(queryBlock: any): Promise<any>;
 ```
+
 > Method for list all available blocks for the selected professional.
-> 
->**@queryBlock**:
+>
+> **@queryBlock**:
 
 ```
 {
@@ -472,15 +479,15 @@ export enum AppointmentType {
 
 #### Inmediate Appointment Reserve
 
->**@type**: String value 'IMMEDIATE'
+> **@type**: String value 'IMMEDIATE'
 
 ```
 appointment.reserve(appointmentType: AppointmentType): Promise<any>;
 ```
 
 > Method for reserve a new scheduled appointment.
-> 
->**@reservePayload**:
+>
+> **@reservePayload**:
 
 ```
 {
@@ -490,17 +497,17 @@ appointment.reserve(appointmentType: AppointmentType): Promise<any>;
 
 #### Scheduled Appointment Reserve
 
->**@type**: String value 'SCHEDULED'
->**@ dateDetails**: String value 'SCHEDULED'
->**@ patientDetails**: String value 'SCHEDULED'
+**@type**: String value 'SCHEDULED'
+**@dateDetails**: String value 'SCHEDULED'
+**@patientDetails**: String value 'SCHEDULED'
 
 ```
 appointment.reserve(appointmentType: AppointmentType, dateDetails: any = {}, patientDetails: any = {}): Promise<any>;
 ```
 
 > Method for reserve a new scheduled appointment.
-> 
->**@reservePayload**:
+>
+> **@reservePayload**:
 
 ```
 {
@@ -524,9 +531,9 @@ appointment.reserve(appointmentType: AppointmentType, dateDetails: any = {}, pat
 appointment.consolidate(symptoms: string[]): Promise<any>;
 ```
 
-> Method for consolidate previous reserved appointment. 
->**@symptoms**: array of symptoms
-
+> Method for consolidate previous reserved appointment.
+>
+> **@symptoms**: array of symptoms
 
 ```
 common.ssoLink(): string;
@@ -540,8 +547,8 @@ appointment.byExternalId(): Promise<any>;
 
 > Method that gets the id of an appointment by the external id of the patient. (or get appointment id by external integration id)
 
-
 ### Javscript Basic Example
+
 #### Inmediate medical apppointment.
 
 One of the necessary variables that the client must set is integrationClientIdentificator.
@@ -553,7 +560,7 @@ Example:
 ```
 const integrationClientIdentificator = 'clientName';
 mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
-``` 
+```
 
 ```
 <script src="https://cdn.mit.telemedicina.com/atrys-sdk.js" type="module"></script>
@@ -566,7 +573,7 @@ mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
         const credentials = new MIT.Credentials('')
 
         const mit = new MIT.SDK(config, credentials);
-    
+
         const integrationClientIdentificator = 'EXAMPLE';
         mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
 
@@ -624,25 +631,25 @@ mit.sharedData.integrationClientIdentificator = integrationClientIdentificator
 
         const magicLink = mit.magicLink()
         console.log('magic link', magicLink);
-        
+
     } catch (error) {
         console.log(error);
     }
-    
+
 </script>
-```                
+```
 
 ## Build
 
 The project can be built to run as SDK in the browser or to be used in BackEnd in a nodejs microservice for example.
 
-To build the SDK for the browser, after build the SDK is available in **dist** folder   
+To build the SDK for the browser, after build the SDK is available in **dist** folder
 
 ```
 npm run build
 ```
 
-To build the SDK for backend, after build the SDK is available in **lib** folder.   
+To build the SDK for backend, after build the SDK is available in **lib** folder.
 
 ```
 npm run build-package
