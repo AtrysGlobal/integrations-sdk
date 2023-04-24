@@ -4,7 +4,7 @@
 
 ## Step by Step Example
 
-You can refer to the attached [Postman collection](api-rest/mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single sign-on via magic link provider.
+You can refer to the attached [Postman collection](mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single sign-on via magic link provider.
 
 ---
 
