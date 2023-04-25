@@ -200,7 +200,10 @@
 					"script": {
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
-							"postman.setEnvironmentVariable(\"PATIENT_ID_CONTAINER\", jsonData.payload.id);"
+							"",
+							"if(jsonData.statusCode === 201){",
+							"    postman.setEnvironmentVariable(\"PATIENT_ID_CONTAINER\", jsonData.payload.id);",
+							"}"
 						],
 						"type": "text/javascript"
 					}
