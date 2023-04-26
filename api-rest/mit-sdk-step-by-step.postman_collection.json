@@ -105,6 +105,18 @@
 		},
 		{
 			"name": "2. Normalize Patient (Rule Engine)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"INTEGRATION_EXTERNAL_ID\", jsonData.externalId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -240,7 +252,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
+					"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -706,7 +718,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"appointmentType\": \"IMMEDIATE\"\n}",
+					"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"integrationClientIdentificator\": \"{{CLIENT_PUBLIC_ID}}\",\n    \"integrationExternalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"appointmentType\": \"IMMEDIATE\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -835,7 +847,7 @@
 			]
 		},
 		{
-			"name": "6. Consolidate Scheduled Appointment Copy",
+			"name": "6. Consolidate Immediate Appointment",
 			"request": {
 				"auth": {
 					"type": "bearer",

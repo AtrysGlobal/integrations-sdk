@@ -1283,6 +1283,18 @@
 			"item": [
 				{
 					"name": "Normalize Patient (Rule Engine)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"INTEGRATION_EXTERNAL_ID\", jsonData.externalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1681,7 +1693,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
+							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1820,7 +1832,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"qeH)3gfVf\",\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
+							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"qeH)3gfVf\",\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2779,7 +2791,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"professionalDetails\":{\n        \"userId\": \"62143e9076f0e0556808b2e7\",\n        \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n    },\n    \"dateDetails\":{\n        \"date\": {\n            \"year\": {{currentYear}},\n            \"month\": {{currentMonth}},\n            \"day\": {{currentDay}}\n        },\n        \"start\": \"{{currentHour}}:{{targetMinute}}\"\n    },\n    \"appointmentType\": \"SCHEDULED\"\n}",
+							"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"professionalDetails\":{\n        \"userId\": \"62143e9076f0e0556808b2e7\",\n        \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n    },\n    \"dateDetails\":{\n        \"date\": {\n            \"year\": {{currentYear}},\n            \"month\": {{currentMonth}},\n            \"day\": {{currentDay}}\n        },\n        \"start\": \"14:15\"\n    },\n    \"integrationClientIdentificator\": \"{{CLIENT_PUBLIC_ID}}\",\n    \"integrationExternalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"appointmentType\": \"SCHEDULED\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2830,7 +2842,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"64414a4778894d00082ec9e6\"\n    },\n    \"professionalDetails\":{\n        \"userId\": \"6217758f76f0e0556808c435\",\n        \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n    },\n    \"dateDetails\":{\n        \"date\": {\n            \"year\": 2023,\n            \"month\": 4,\n            \"day\": 20\n        },\n        \"start\": \"12:10\"\n    },\n    \"appointmentType\": \"SCHEDULED\"\n}",
+									"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"professionalDetails\":{\n        \"userId\": \"62143e9076f0e0556808b2e7\",\n        \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n    },\n    \"dateDetails\":{\n        \"date\": {\n            \"year\": {{currentYear}},\n            \"month\": {{currentMonth}},\n            \"day\": {{currentDay}}\n        },\n        \"start\": \"14:15\"\n    },\n    \"integrationClientIdentificator\": \"{{CLIENT_PUBLIC_ID}}\",\n    \"integrationExternalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"appointmentType\": \"SCHEDULED\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2867,7 +2879,7 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "1958"
+									"value": "1969"
 								},
 								{
 									"key": "Connection",
@@ -2875,7 +2887,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 20 Apr 2023 16:07:47 GMT"
+									"value": "Tue, 25 Apr 2023 18:09:43 GMT"
 								},
 								{
 									"key": "cache-control",
@@ -2883,7 +2895,7 @@
 								},
 								{
 									"key": "Apigw-Requestid",
-									"value": "Drx1ChXEoAMEPgQ="
+									"value": "D8iYPjmfoAMEa6w="
 								},
 								{
 									"key": "X-Cache",
@@ -2891,7 +2903,7 @@
 								},
 								{
 									"key": "Via",
-									"value": "1.1 9abfac995be8877354152083f94befe0.cloudfront.net (CloudFront)"
+									"value": "1.1 c5ff917d2e5c954d84a7b9d6201c50d6.cloudfront.net (CloudFront)"
 								},
 								{
 									"key": "X-Amz-Cf-Pop",
@@ -2899,11 +2911,11 @@
 								},
 								{
 									"key": "X-Amz-Cf-Id",
-									"value": "wFnD6MfeAE_dmTRnFZLLWaAaT945jP5_Rycpl-hqDXM1fEWxXuwqvg=="
+									"value": "lEZf_Nn0BeVrb0gt8BxobyLMv4zUswZ64qkfsvXAzQWzglZJ0hk33w=="
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"statusCode\": 201,\n    \"message\": \"Recurso criado\",\n    \"payload\": {\n        \"administrativeDetails\": {\n            \"availabilityId\": \"636d772c4eec8d000810690f\",\n            \"waitingRoomId\": null,\n            \"appointmentDuration\": 5,\n            \"participants\": [\n                \"64414a4778894d00082ec9e6\",\n                \"6217758f76f0e0556808c435\"\n            ],\n            \"sessionId\": \"315c4f1575a94f12b30ba138189d8e97\",\n            \"cancellationReason\": null,\n            \"isImmediate\": false,\n            \"attendedByChatbot\": false,\n            \"integrationClientIdentificator\": null,\n            \"integrationExternalId\": null,\n            \"isTriage\": false,\n            \"appointmentType\": \"SCHEDULED\",\n            \"clinicId\": \"5f236fc966fbb0054894b780\",\n            \"status\": \"reserved\"\n        },\n        \"eventDetails\": {\n            \"patientInRoom\": false,\n            \"professionalInRoom\": false,\n            \"reminderSentToPatient\": false\n        },\n        \"paymentDetails\": {\n            \"paymentState\": \"free\",\n            \"isPaid\": false,\n            \"paymentHash\": null,\n            \"price\": 0,\n            \"provider\": null,\n            \"externalIdentifier\": null\n        },\n        \"professionalDetails\": {\n            \"userId\": \"6217758f76f0e0556808c435\",\n            \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n        },\n        \"patientDetails\": {\n            \"documentIds\": [],\n            \"symptoms\": [],\n            \"description\": null,\n            \"userId\": \"64414a4778894d00082ec9e6\",\n            \"mediktorSymptoms\": [],\n            \"vitalSigns\": {\n                \"PAS\": null,\n                \"PAD\": null,\n                \"PAmedia\": null,\n                \"FC\": null,\n                \"FR\": null,\n                \"Temp\": null,\n                \"Sat\": null\n            },\n            \"nutritionalState\": {\n                \"weight\": null,\n                \"height\": null,\n                \"imc\": null,\n                \"imcClassification\": null\n            }\n        },\n        \"appointmentDetails\": {\n            \"diagnosticDetails\": {\n                \"mediktorDiagnostics\": [],\n                \"comments\": null,\n                \"indications\": null,\n                \"diagnostics\": []\n            },\n            \"urgencyLabel\": null,\n            \"urgencyTier\": 0,\n            \"motive\": null,\n            \"anamnesis\": null,\n            \"physicalExam\": null,\n            \"examHighlights\": null,\n            \"plan\": null,\n            \"patientDestinies\": [],\n            \"mediktorDestinies\": [],\n            \"notes\": [],\n            \"objective\": \"6213e19cc2a6c02a6ac79328\",\n            \"mediktorAnswers\": [],\n            \"notifiableDiseases\": []\n        },\n        \"isDeleted\": false,\n        \"_id\": \"644163531c9e000008e80f90\",\n        \"dateDetails\": {\n            \"scheduledAt\": \"2023-04-20T12:10:00.000Z\",\n            \"scheduledAtUTC\": \"2023-04-20T16:10:00.000Z\",\n            \"end\": \"12:15\",\n            \"date\": \"2023-04-20T04:00:00.000Z\",\n            \"start\": \"12:10\"\n        },\n        \"milestones\": [\n            {\n                \"status\": \"reserved\",\n                \"timestamp\": \"2023-04-20T16:07:47.483Z\"\n            }\n        ],\n        \"createdAt\": \"2023-04-20T16:07:47.525Z\",\n        \"updatedAt\": \"2023-04-20T16:07:47.525Z\",\n        \"__v\": 0,\n        \"id\": \"644163531c9e000008e80f90\"\n    }\n}"
+							"body": "{\n    \"statusCode\": 201,\n    \"message\": \"Recurso criado\",\n    \"payload\": {\n        \"administrativeDetails\": {\n            \"availabilityId\": \"637e6f942f2cfa0008f39270\",\n            \"waitingRoomId\": null,\n            \"appointmentDuration\": 5,\n            \"participants\": [\n                \"64481737c97c740008bcd0dd\",\n                \"62143e9076f0e0556808b2e7\"\n            ],\n            \"sessionId\": \"a7c1cf25ce1a4ca9ae0040e0e1311cab\",\n            \"cancellationReason\": null,\n            \"isImmediate\": false,\n            \"attendedByChatbot\": false,\n            \"integrationClientIdentificator\": \"zurich\",\n            \"integrationExternalId\": \"1-C6A0OUU\",\n            \"isTriage\": false,\n            \"appointmentType\": \"SCHEDULED\",\n            \"clinicId\": \"5f236fc966fbb0054894b780\",\n            \"status\": \"reserved\"\n        },\n        \"eventDetails\": {\n            \"patientInRoom\": false,\n            \"professionalInRoom\": false,\n            \"reminderSentToPatient\": false\n        },\n        \"paymentDetails\": {\n            \"paymentState\": \"free\",\n            \"isPaid\": false,\n            \"paymentHash\": null,\n            \"price\": 0,\n            \"provider\": null,\n            \"externalIdentifier\": null\n        },\n        \"professionalDetails\": {\n            \"userId\": \"62143e9076f0e0556808b2e7\",\n            \"specialtyId\": \"6213e196c2a6c02a6ac792b1\"\n        },\n        \"patientDetails\": {\n            \"documentIds\": [],\n            \"symptoms\": [],\n            \"description\": null,\n            \"userId\": \"64481737c97c740008bcd0dd\",\n            \"mediktorSymptoms\": [],\n            \"vitalSigns\": {\n                \"PAS\": null,\n                \"PAD\": null,\n                \"PAmedia\": null,\n                \"FC\": null,\n                \"FR\": null,\n                \"Temp\": null,\n                \"Sat\": null\n            },\n            \"nutritionalState\": {\n                \"weight\": null,\n                \"height\": null,\n                \"imc\": null,\n                \"imcClassification\": null\n            }\n        },\n        \"appointmentDetails\": {\n            \"diagnosticDetails\": {\n                \"mediktorDiagnostics\": [],\n                \"comments\": null,\n                \"indications\": null,\n                \"diagnostics\": []\n            },\n            \"urgencyLabel\": null,\n            \"urgencyTier\": 0,\n            \"motive\": null,\n            \"anamnesis\": null,\n            \"physicalExam\": null,\n            \"examHighlights\": null,\n            \"plan\": null,\n            \"patientDestinies\": [],\n            \"mediktorDestinies\": [],\n            \"notes\": [],\n            \"objective\": \"6213e19cc2a6c02a6ac7932a\",\n            \"mediktorAnswers\": [],\n            \"notifiableDiseases\": []\n        },\n        \"isDeleted\": false,\n        \"_id\": \"6448176704f98100087e1b48\",\n        \"dateDetails\": {\n            \"scheduledAt\": \"2023-04-25T14:15:00.000Z\",\n            \"scheduledAtUTC\": \"2023-04-25T18:15:00.000Z\",\n            \"end\": \"14:20\",\n            \"date\": \"2023-04-25T04:00:00.000Z\",\n            \"start\": \"14:15\"\n        },\n        \"milestones\": [\n            {\n                \"status\": \"reserved\",\n                \"timestamp\": \"2023-04-25T18:09:43.903Z\"\n            }\n        ],\n        \"createdAt\": \"2023-04-25T18:09:43.928Z\",\n        \"updatedAt\": \"2023-04-25T18:09:43.928Z\",\n        \"__v\": 0,\n        \"id\": \"6448176704f98100087e1b48\"\n    }\n}"
 						}
 					]
 				},
@@ -3096,7 +3108,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"appointmentType\": \"IMMEDIATE\"\n}",
+							"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"integrationClientIdentificator\": \"{{CLIENT_PUBLIC_ID}}\",\n    \"integrationExternalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"appointmentType\": \"IMMEDIATE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3147,7 +3159,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"64414a4778894d00082ec9e6\"\n    },\n    \"appointmentType\": \"IMMEDIATE\"\n}",
+									"raw": "{\n    \"patientDetails\": {\n        \"userId\": \"{{PATIENT_ID_CONTAINER}}\"\n    },\n    \"integrationClientIdentificator\": \"{{CLIENT_PUBLIC_ID}}\",\n    \"integrationExternalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"appointmentType\": \"IMMEDIATE\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3184,7 +3196,7 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "1778"
+									"value": "1789"
 								},
 								{
 									"key": "Connection",
@@ -3192,7 +3204,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 20 Apr 2023 16:13:53 GMT"
+									"value": "Tue, 25 Apr 2023 18:10:37 GMT"
 								},
 								{
 									"key": "cache-control",
@@ -3200,7 +3212,7 @@
 								},
 								{
 									"key": "Apigw-Requestid",
-									"value": "DryuMgbQIAMEMQA="
+									"value": "D8igdhBgoAMEaCQ="
 								},
 								{
 									"key": "X-Cache",
@@ -3208,7 +3220,7 @@
 								},
 								{
 									"key": "Via",
-									"value": "1.1 9abfac995be8877354152083f94befe0.cloudfront.net (CloudFront)"
+									"value": "1.1 c5ff917d2e5c954d84a7b9d6201c50d6.cloudfront.net (CloudFront)"
 								},
 								{
 									"key": "X-Amz-Cf-Pop",
@@ -3216,11 +3228,11 @@
 								},
 								{
 									"key": "X-Amz-Cf-Id",
-									"value": "IOoOpd2_jkSS_xEHwoG2jHUcGIxr_VQXVNIW9FnUarQvrYx5PYHAvA=="
+									"value": "uwNcm045gS5E06aQq-rCUTT4TR3TVr_OEbfAFeOI0iDVMzOskLr_1g=="
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"statusCode\": 201,\n    \"message\": \"Recurso criado\",\n    \"payload\": {\n        \"administrativeDetails\": {\n            \"availabilityId\": null,\n            \"waitingRoomId\": \"62f401073075310009c7d9fc\",\n            \"appointmentDuration\": null,\n            \"participants\": [\n                \"64414a4778894d00082ec9e6\"\n            ],\n            \"sessionId\": \"ce79d779dd8541f0a9bfd6e42acd5105\",\n            \"cancellationReason\": null,\n            \"isImmediate\": true,\n            \"attendedByChatbot\": false,\n            \"integrationClientIdentificator\": null,\n            \"integrationExternalId\": null,\n            \"isTriage\": true,\n            \"appointmentType\": \"IMMEDIATE\",\n            \"clinicId\": \"5f236fc966fbb0054894b780\",\n            \"status\": \"created\"\n        },\n        \"eventDetails\": {\n            \"patientInRoom\": false,\n            \"professionalInRoom\": false,\n            \"reminderSentToPatient\": false\n        },\n        \"paymentDetails\": {\n            \"paymentState\": \"free\",\n            \"isPaid\": false,\n            \"paymentHash\": null,\n            \"price\": 0,\n            \"provider\": null,\n            \"externalIdentifier\": null\n        },\n        \"professionalDetails\": {\n            \"userId\": null,\n            \"specialtyId\": null\n        },\n        \"patientDetails\": {\n            \"documentIds\": [],\n            \"symptoms\": [],\n            \"description\": null,\n            \"userId\": \"64414a4778894d00082ec9e6\",\n            \"mediktorSymptoms\": [],\n            \"vitalSigns\": {\n                \"PAS\": null,\n                \"PAD\": null,\n                \"PAmedia\": null,\n                \"FC\": null,\n                \"FR\": null,\n                \"Temp\": null,\n                \"Sat\": null\n            },\n            \"nutritionalState\": {\n                \"weight\": null,\n                \"height\": null,\n                \"imc\": null,\n                \"imcClassification\": null\n            }\n        },\n        \"appointmentDetails\": {\n            \"diagnosticDetails\": {\n                \"mediktorDiagnostics\": [],\n                \"comments\": null,\n                \"indications\": null,\n                \"diagnostics\": []\n            },\n            \"urgencyLabel\": null,\n            \"urgencyTier\": 0,\n            \"motive\": null,\n            \"anamnesis\": null,\n            \"physicalExam\": null,\n            \"examHighlights\": null,\n            \"plan\": null,\n            \"patientDestinies\": [],\n            \"mediktorDestinies\": [],\n            \"notes\": [],\n            \"mediktorAnswers\": [],\n            \"notifiableDiseases\": []\n        },\n        \"isDeleted\": false,\n        \"_id\": \"644164c11c9e000008e80fd9\",\n        \"dateDetails\": {\n            \"createdAt\": \"2023-04-20T16:13:53.069Z\",\n            \"scheduledAt\": \"2023-04-20T16:13:53.069Z\"\n        },\n        \"milestones\": [\n            {\n                \"status\": \"created\",\n                \"timestamp\": \"2023-04-20T16:13:53.080Z\"\n            }\n        ],\n        \"createdAt\": \"2023-04-20T16:13:53.090Z\",\n        \"updatedAt\": \"2023-04-20T16:13:53.090Z\",\n        \"__v\": 0,\n        \"id\": \"644164c11c9e000008e80fd9\"\n    }\n}"
+							"body": "{\n    \"statusCode\": 201,\n    \"message\": \"Recurso criado\",\n    \"payload\": {\n        \"administrativeDetails\": {\n            \"availabilityId\": null,\n            \"waitingRoomId\": \"62f401073075310009c7d9fc\",\n            \"appointmentDuration\": null,\n            \"participants\": [\n                \"64481737c97c740008bcd0dd\"\n            ],\n            \"sessionId\": \"bc95f804d71641d48cdb3fd08d3f3909\",\n            \"cancellationReason\": null,\n            \"isImmediate\": true,\n            \"attendedByChatbot\": false,\n            \"integrationClientIdentificator\": \"zurich\",\n            \"integrationExternalId\": \"1-C6A0OUU\",\n            \"isTriage\": true,\n            \"appointmentType\": \"IMMEDIATE\",\n            \"clinicId\": \"5f236fc966fbb0054894b780\",\n            \"status\": \"created\"\n        },\n        \"eventDetails\": {\n            \"patientInRoom\": false,\n            \"professionalInRoom\": false,\n            \"reminderSentToPatient\": false\n        },\n        \"paymentDetails\": {\n            \"paymentState\": \"free\",\n            \"isPaid\": false,\n            \"paymentHash\": null,\n            \"price\": 0,\n            \"provider\": null,\n            \"externalIdentifier\": null\n        },\n        \"professionalDetails\": {\n            \"userId\": null,\n            \"specialtyId\": null\n        },\n        \"patientDetails\": {\n            \"documentIds\": [],\n            \"symptoms\": [],\n            \"description\": null,\n            \"userId\": \"64481737c97c740008bcd0dd\",\n            \"mediktorSymptoms\": [],\n            \"vitalSigns\": {\n                \"PAS\": null,\n                \"PAD\": null,\n                \"PAmedia\": null,\n                \"FC\": null,\n                \"FR\": null,\n                \"Temp\": null,\n                \"Sat\": null\n            },\n            \"nutritionalState\": {\n                \"weight\": null,\n                \"height\": null,\n                \"imc\": null,\n                \"imcClassification\": null\n            }\n        },\n        \"appointmentDetails\": {\n            \"diagnosticDetails\": {\n                \"mediktorDiagnostics\": [],\n                \"comments\": null,\n                \"indications\": null,\n                \"diagnostics\": []\n            },\n            \"urgencyLabel\": null,\n            \"urgencyTier\": 0,\n            \"motive\": null,\n            \"anamnesis\": null,\n            \"physicalExam\": null,\n            \"examHighlights\": null,\n            \"plan\": null,\n            \"patientDestinies\": [],\n            \"mediktorDestinies\": [],\n            \"notes\": [],\n            \"mediktorAnswers\": [],\n            \"notifiableDiseases\": []\n        },\n        \"isDeleted\": false,\n        \"_id\": \"6448179d04f98100087e1b52\",\n        \"dateDetails\": {\n            \"createdAt\": \"2023-04-25T18:10:37.316Z\",\n            \"scheduledAt\": \"2023-04-25T18:10:37.316Z\"\n        },\n        \"milestones\": [\n            {\n                \"status\": \"created\",\n                \"timestamp\": \"2023-04-25T18:10:37.325Z\"\n            }\n        ],\n        \"createdAt\": \"2023-04-25T18:10:37.337Z\",\n        \"updatedAt\": \"2023-04-25T18:10:37.337Z\",\n        \"__v\": 0,\n        \"id\": \"6448179d04f98100087e1b52\"\n    }\n}"
 						}
 					]
 				},
