@@ -665,6 +665,145 @@
 			]
 		},
 		{
+			"name": "4.5 Generate SSO Magic Link (No appointment reservation)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Setup",
+						"value": "{{COUNTRY_CODE}}",
+						"type": "text"
+					},
+					{
+						"key": "locale",
+						"value": "{{LOCALE_CODE}}",
+						"type": "text"
+					},
+					{
+						"key": "Atrys-Product",
+						"value": "{{ATRYS_PRODUCT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n  \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n  \"clinicId\": \"{{CLINIC_ID}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{TELEMEDICINE_API}}/integrations/sso",
+					"host": [
+						"{{TELEMEDICINE_API}}"
+					],
+					"path": [
+						"integrations",
+						"sso"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Generate SSO Magic Link (No appointment reservation) Responds OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Setup",
+								"value": "{{COUNTRY_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "locale",
+								"value": "{{LOCALE_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "Atrys-Product",
+								"value": "{{ATRYS_PRODUCT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n  \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n  \"reservedAppointmentId\": \"{{RESERVED_APPOINTMENT_ID}}\",\n  \"clinicId\": \"{{CLINIC_ID}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{TELEMEDICINE_API}}/integrations/sso",
+							"host": [
+								"{{TELEMEDICINE_API}}"
+							],
+							"path": [
+								"integrations",
+								"sso"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "219"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Apr 2023 18:56:12 GMT"
+						},
+						{
+							"key": "Apigw-Requestid",
+							"value": "D5WP4hqpIAMEPfw="
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 9c86b4f2a2d6823205170deeb68b1f10.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SCL51-P2"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "G1TOe586YzxRtSRS-QA4FCOzq8x1KX8c_zdRRFVLJ_RpJ-GQvTs_vA=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 200,\n    \"message\": \"OK\",\n    \"payload\": {\n        \"ssoLink\": \"https://dev.patient.telemedicina.com/integration-client?token=dGVzdC5zZGswMTFAeW9wbWFpbC5jb207VHN0U0RLMDEhITs2NDQ2ZDA5YmM0YjEwOTAwMDgyNWZhN2U=\"\n    },\n    \"internalCode\": 400\n}"
+				}
+			]
+		},
+		{
 			"name": "5. Reserve Immediate Appointment",
 			"event": [
 				{
