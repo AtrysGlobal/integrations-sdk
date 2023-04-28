@@ -27,7 +27,7 @@ namespace MIT {
      * the URL of the setup page.
      * @param {string} clinicId - The clinic ID of the clinic you want to use.
      * @param {string} locale - This is the language expected to be returned, 'es_ES', 'es_CL', es_CO', 'pr_BR'
-     * @param {string} mode - This is the mode of the application. It can be either 'dev' or 'prod'.
+     * @param {string} mode - This is the mode of the application. It can be either 'SDK_ADMIN' or 'SDK_PATIENT'.
      */
     constructor(public stage: string, public setup: string, public clinicId: string, public mode: string, public locale: string) {
       this.stage = stage;
@@ -112,7 +112,7 @@ namespace MIT {
       try {
         const _request = new ClientRequest('MIT_RULE_ENGINE');
 
-        clientPatientModel.setup = this.sharedData.stage;
+        clientPatientModel.setup = this.sharedData.setup;
 
         const _req = await _request.post('', clientPatientModel);
 
