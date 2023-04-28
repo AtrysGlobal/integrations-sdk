@@ -540,75 +540,6 @@ curl --location 'https://<API_MIT>.telemedicina.com/rules' \
 
 ---
 
-### Generate SSO Magic Link
-
-**POST** `https://<API_MIT>.telemedicina.com/tools/sso`
-
-**Authorization**: Bearer Token
-
-**Body**:
-
-```json
-{
-  "username": "username",
-  "password": "password",
-  "reservedAppointmentId": "reservedAppointmentId"
-}
-```
-
-**Example**:
-
-```bash
-curl --location 'https://<API_MIT>.telemedicina.com/availability/636d772c4eec8d000810690f/state' \
---header 'Authorization: Bearer <ACCESS_TOKEN>' \
---data '{
-  "username": "username",
-  "password": "password",
-  "reservedAppointmentId": "reservedAppointmentId"
-}'
-```
-
----
-
-### Patient Login
-
-**POST** `https://<API>.telemedicina.com/auth/login`
-
-**Authorization**: Bearer Token
-
-**Headers**:
-
-- Setup: **_[COUNTRY_CODE]_**
-- locale: **_[LOCALE_CODE]_**
-- Atrys-Product: **_[ATRYS_PRODUCT]_**
-
-**Body**:
-
-```json
-{
-  "username": "username",
-  "password": "password",
-  "clinicId": "clinicId"
-}
-```
-
-**Example**:
-
-```bash
-curl --location 'https://<API>.telemedicina.com/auth/login' \
---header 'Setup: BR' \
---header 'locale: pt_BR' \
---header 'Atrys-Product: SDK' \
---header 'Authorization: Bearer <ACCESS_TOKEN>' \
---data-raw '{
-    "username": "patient-sd2@yopmail.com",
-    "password": "qeH)ss2XD",
-    "clinicId": "5f236fc966fbb0054894b780"
-}'
-```
-
----
-
 ### Register Patient
 
 **POST** `https://<API>.telemedicina.com/account/register`
@@ -695,6 +626,149 @@ curl --location 'https://<API>.telemedicina.com/account/register' \
     "password": "qeH)fpassword",
     "externalId": "1-C6A0OOOM",
     "newUserFromSDK": true
+}'
+```
+
+---
+
+### Patient Login
+
+**POST** `https://<API>.telemedicina.com/auth/login`
+
+**Authorization**: Bearer Token
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+- locale: **_[LOCALE_CODE]_**
+- Atrys-Product: **_[ATRYS_PRODUCT]_**
+
+**Body**:
+
+```json
+{
+  "username": "username",
+  "password": "password",
+  "clinicId": "clinicId"
+}
+```
+
+**Example**:
+
+```bash
+curl --location 'https://<API>.telemedicina.com/auth/login' \
+--header 'Setup: BR' \
+--header 'locale: pt_BR' \
+--header 'Atrys-Product: SDK' \
+--header 'Authorization: Bearer <ACCESS_TOKEN>' \
+--data-raw '{
+    "username": "patient-sd2@yopmail.com",
+    "password": "qeH)ss2XD",
+    "clinicId": "5f236fc966fbb0054894b780"
+}'
+```
+
+---
+
+### Validate Patient Login
+
+**POST** `https://<API>.telemedicina.com/auth/login/validate`
+
+**Authorization**: Bearer Token
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+- locale: **_[LOCALE_CODE]_**
+- Atrys-Product: **_[ATRYS_PRODUCT]_**
+
+**Body**:
+
+```json
+{
+  "loginToken": "loginToken"
+}
+```
+
+**Example**:
+
+```bash
+curl --location 'https://<API>.telemedicina.com/auth/login' \
+--header 'Setup: BR' \
+--header 'locale: pt_BR' \
+--header 'Atrys-Product: SDK' \
+--header 'Authorization: Bearer <ACCESS_TOKEN>' \
+--data-raw '{
+    "loginToken": "eyJhbGciOiJIUzI1NiCJ9.eyJpZCI6IjY0NGJlZmMwMWQ2ODRkMDNhMjgwMyIsImNyZWF0ZWRBdCI6IjIwMjMtMDQtMjhUMTg6NDM6NTMuNzgyWiIsImlhdCI6MTY4MjcwNzQzMywiZXhwIjoxNjgyNzA3NjEzfQ.D90k_8AcpvtCxpiViPYVa6qG8bskk"
+}'
+```
+
+---
+
+### Patient Login (For dependent)
+
+**POST** `https://<API>.telemedicina.com/auth/login/dependent`
+
+**Authorization**: Bearer Token
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+- locale: **_[LOCALE_CODE]_**
+- Atrys-Product: **_[ATRYS_PRODUCT]_**
+
+**Body**:
+
+```json
+{
+  "titularAccessToken": "jwtAccessToken",
+  "userId": "patientUserId",
+  "clinicId": "clinicId"
+}
+```
+
+**Example**:
+
+```bash
+curl --location 'https://<API>.telemedicina.com/auth/login/dependent' \
+--header 'Setup: BR' \
+--header 'locale: pt_BR' \
+--header 'Atrys-Product: SDK' \
+--header 'Authorization: Bearer <ACCESS_TOKEN>' \
+--data-raw '{
+    "titularAccessToken": "eyJhbGciOiJIUziIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiR09OWkFMTyBFWkVRVUlFTCAiLCJzdWIiOiI2NDRiZWZjMDFkNjg0ZDAwMDgzYTI4MDMiLCJhZG1pbmlzdHJhdGl2ZURhdGEiOnsiY2xpbmljSWQiOiI1ZjIzNmZjOTY2ZmJiMDA1NDg5NGI3wNjZlYThmYWE4NzNiY2M4ODllZWMiLyb2xlIjoicGF0aWVudCIsInRpbWV6b25lIjoiQW1lcmljYS9TYW50aWFnbyIsImNsaW5pY1Byb2ZpbGVJZCI6IjY0NGJlZmMwMWQ2ODRkMDAwODNhMjgwNCJ9LCJpYXQiOjE2ODI3MDU3MTQsImV4cCI6MTY4MjcwOTMxNH0.myJPxauVyTD39-_U6hGZqCEnkYTysnhbwvegY",
+    "userId": "644bf2f21d684d00083a282e",
+    "clinicId": "5f236fc966fbb0054894b780"
+}'
+```
+
+---
+
+### Generate SSO Magic Link
+
+**POST** `https://<API_MIT>.telemedicina.com/tools/sso`
+
+**Authorization**: Bearer Token
+
+**Body**:
+
+```json
+{
+  "username": "username",
+  "password": "password",
+  "reservedAppointmentId": "reservedAppointmentId"
+}
+```
+
+**Example**:
+
+```bash
+curl --location 'https://<API_MIT>.telemedicina.com/availability/636d772c4eec8d000810690f/state' \
+--header 'Authorization: Bearer <ACCESS_TOKEN>' \
+--data '{
+  "username": "username",
+  "password": "password",
+  "reservedAppointmentId": "reservedAppointmentId"
 }'
 ```
 
