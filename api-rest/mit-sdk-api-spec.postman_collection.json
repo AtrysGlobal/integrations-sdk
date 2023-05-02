@@ -1595,6 +1595,157 @@
 					]
 				},
 				{
+					"name": "Patient Login (For dependents)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Setup",
+								"value": "{{COUNTRY_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "locale",
+								"value": "{{LOCALE_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "Atrys-Product",
+								"value": "{{ATRYS_PRODUCT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titularAccessToken\":\"{{PATIENT_ACCESS_TOKEN}}\",\n    \"userId\": \"{{DEPENDENT_ID_CONTAINER}}\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{TELEMEDICINE_API}}/auth/login/dependent",
+							"host": [
+								"{{TELEMEDICINE_API}}"
+							],
+							"path": [
+								"auth",
+								"login",
+								"dependent"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Patient Login Responds OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Setup",
+										"value": "{{COUNTRY_CODE}}",
+										"type": "text"
+									},
+									{
+										"key": "locale",
+										"value": "{{LOCALE_CODE}}",
+										"type": "text"
+									},
+									{
+										"key": "Atrys-Product",
+										"value": "{{ATRYS_PRODUCT}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"patient-sd222k@yopmail.com\",\n    \"password\": \"qeH)3gfVf\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TELEMEDICINE_API}}/auth/login",
+									"host": [
+										"{{TELEMEDICINE_API}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "582"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 18 Apr 2023 22:56:46 GMT"
+								},
+								{
+									"key": "Apigw-Requestid",
+									"value": "DmH3QjMIIAMEJMw="
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 3ef4fc9b53d24f9747599ee4ae9ddc70.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "SCL51-P2"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "rf7qD6bigrTx49PbNMEwcto_IBuD-HEhyN0zyPasG3KOtDRSZbryQg=="
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"OK\",\n    \"payload\": {\n        \"loginToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2YyMDExNWZmMDhkMDAwODA0YzJmMiIsImNyZWF0ZWRBdCI6IjIwMjMtMDQtMThUMjI6NTY6NDYuMzIwWiIsImlhdCI6MTY4MTg1ODYwNiwiZXhwIjoxNjgxODU4Nzg2fQ._axhVh_DibB78wOIczn4fV4qV3Q98V_ZHYJi1oagIEM\",\n        \"administrativeData\": [\n            {\n                \"clinicProfileId\": \"643f20115ff08d000804c2f3\",\n                \"clinicId\": \"5f236fc966fbb0054894b780\",\n                \"timezone\": \"America/Santiago\",\n                \"profileId\": \"5f2066ea8faa873bcc889eec\",\n                \"role\": \"patient\",\n                \"clinicName\": \"Clínica Demo 1 CL\",\n                \"profileName\": \"default\",\n                \"setup\": \"CL\",\n                \"brand\": \"atrys\",\n                \"locale\": \"es_CL\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "Patient Login (For integrations)",
 					"request": {
 						"auth": {
@@ -1694,6 +1845,157 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{TELEMEDICINE_API}}/account/register",
+							"host": [
+								"{{TELEMEDICINE_API}}"
+							],
+							"path": [
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register Patient Responds OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Setup",
+										"value": "{{COUNTRY_CODE}}",
+										"type": "text"
+									},
+									{
+										"key": "locale",
+										"value": "{{LOCALE_CODE}}",
+										"type": "text"
+									},
+									{
+										"key": "Atrys-Product",
+										"value": "{{ATRYS_PRODUCT}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"patient-sd222k@yopmail.com\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"qeH)3gfVf\",\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TELEMEDICINE_API}}/account/register",
+									"host": [
+										"{{TELEMEDICINE_API}}"
+									],
+									"path": [
+										"account",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "90"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 18 Apr 2023 22:56:18 GMT"
+								},
+								{
+									"key": "Apigw-Requestid",
+									"value": "DmHyvg68IAMEJpg="
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 3ef4fc9b53d24f9747599ee4ae9ddc70.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "SCL51-P2"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "TCRVoQ9RdJYhnHa0_4ucLKUihvEuhtH6NwWchgV_8c3cpNYHI_e6CQ=="
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 201,\n    \"message\": \"Usuário criado\",\n    \"payload\": {\n        \"id\": \"643f20115ff08d000804c2f2\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Register Patient (Adult Dependent)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"PATIENT_ID_CONTAINER\", jsonData.payload.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Setup",
+								"value": "{{COUNTRY_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "locale",
+								"value": "{{LOCALE_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "Atrys-Product",
+								"value": "{{ATRYS_PRODUCT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"903.280.325-57\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"isTutor\": false,\n        \"tutorNationalId\": \"{{PATIENT_ID_CONTAINER}}\",\n        \"name\": \"CHRISTIAN EZEQUIEL\",\n        \"lastName\": \"RIVERA\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{DEPENDENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"1998-01-15\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{DEPENDENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2101,6 +2403,165 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"Senha atualizada!\",\n    \"payload\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Validate Patient Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"PATIENT_ACCESS_TOKEN\", jsonData.payload.accessToken);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Setup",
+								"value": "{{COUNTRY_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "locale",
+								"value": "{{LOCALE_CODE}}",
+								"type": "text"
+							},
+							{
+								"key": "Atrys-Product",
+								"value": "{{ATRYS_PRODUCT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginToken\": \"{{LOGIN_TOKEN}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{TELEMEDICINE_API}}/auth/login/validate",
+							"host": [
+								"{{TELEMEDICINE_API}}"
+							],
+							"path": [
+								"auth",
+								"login",
+								"validate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "5. Validate Patient Login Responds OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Setup",
+										"value": "{{COUNTRY_CODE}}",
+										"type": "text"
+									},
+									{
+										"key": "locale",
+										"value": "{{LOCALE_CODE}}",
+										"type": "text"
+									},
+									{
+										"key": "Atrys-Product",
+										"value": "{{ATRYS_PRODUCT}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loginToken\": \"{{LOGIN_TOKEN}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TELEMEDICINE_API}}/auth/login/validate",
+									"host": [
+										"{{TELEMEDICINE_API}}"
+									],
+									"path": [
+										"auth",
+										"login",
+										"validate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "541"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 28 Apr 2023 18:15:18 GMT"
+								},
+								{
+									"key": "cache-control",
+									"value": "public, max-age=0"
+								},
+								{
+									"key": "Apigw-Requestid",
+									"value": "EGcAlgZrIAMEMDw="
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 2ac78d0bdcfde63dad99100e18cd3f62.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "SCL51-P2"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "PYhQEi_26JiAot7Xx5B-33AdfqJxp81-o5PdilzSop-uXu5siiwNDA=="
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"OK\",\n    \"payload\": {\n        \"isValid\": true,\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiR09OWkFMTyBFWkVRVUlFTCAiLCJzdWIiOiI2NDRiZWZjMDFkNjg0ZDAwMDgzYTI4MDMiLCJhZG1pbmlzdHJhdGl2ZURhdGEiOnsiY2xpbmljSWQiOiI1ZjIzNmZjOTY2ZmJiMDA1NDg5NGI3ODAiLCJwcm9maWxlSWQiOiI1ZjIwNjZlYThmYWE4NzNiY2M4ODllZWMiLCJyb2xlIjoicGF0aWVudCIsInRpbWV6b25lIjoiQW1lcmljYS9TYW50aWFnbyIsImNsaW5pY1Byb2ZpbGVJZCI6IjY0NGJlZmMwMWQ2ODRkMDAwODNhMjgwNCJ9LCJpYXQiOjE2ODI3MDU3MTQsImV4cCI6MTY4MjcwOTMxNH0.myJPxaBlnl1puVyTD39-_U6hGZqCEnkYTysnhbwvegY\"\n    }\n}"
 						}
 					]
 				}
