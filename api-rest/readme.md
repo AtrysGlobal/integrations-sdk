@@ -65,7 +65,7 @@ Finally, you will be able to generate a single-use SSO link to allow your users 
 
 The following is a description of the process through a sequence diagram
 
-!["Step by step sequence diagram"](./media/mit-sdk-api-sd-steps-workflow.png)
+!["Step by step sequence diagram"](../media/mit-sdk-api-sd-steps-workflow.png)
 
 NOTE: You can refer to the attached [Postman collection](mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single SSO Link.
 
