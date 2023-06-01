@@ -53,7 +53,23 @@ export interface APIResponse {
 
 ## Step by Step Example
 
-You can refer to the attached [Postman collection](mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single sign-on via magic link provider.
+To get to the point of booking a consolidated medical appointment for a user of your system through the MIT API and Telemedicine API, you must go through a flow consisting of several steps. The following will describe what you need to do to get to this result.
+
+To begin with you will need to negotiate your federated identity token (henceforth called _session token_) through the MIT API REST (Sessioner service). This token will allow you to authenticate to the _Multiclinic services_ and complete all the necessary steps to get to the desired result.
+
+Since you already have the patient data, you will have to serialize your data in order to make them admissible by _Multiclinic services_ (Rule Engine).
+
+The next steps consist of registering a new patient, initiating or validating the patient's session and requesting a medical appointment and consolidating it.
+
+Finally, you will be able to generate a single-use SSO link to allow your users to log into multi clinica's systems and be seen by a healthcare professional through the scheduled medical appointment.
+
+The following is a description of the process through a sequence diagram
+
+!["Step by step sequence diagram"](./media/mit-sdk-api-sd-steps-workflow.png)
+
+NOTE: You can refer to the attached [Postman collection](mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single SSO Link.
+
+The following is a detailed description of what is required to complete each step.
 
 **First step: Get Session Token**
 
