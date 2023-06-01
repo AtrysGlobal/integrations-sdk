@@ -69,7 +69,7 @@ The following is a description of the process through a sequence diagram
 
 NOTE: You can refer to the attached [Postman collection](mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single SSO Link.
 
-The following is a detailed description of what is required to complete each step.
+---
 
 **First step: Get Session Token**
 
@@ -305,6 +305,8 @@ curl -X POST \
 }'
 "https://<MULTICLINIC_API>/appointments/action/create/reserve"
 ```
+
+---
 
 **Sixth Step: Consolidate Immediate Appointment**
 
