@@ -2,12 +2,6 @@
 
 ---
 
-## Step by Step Example
-
-You can refer to the attached [Postman collection](mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single sign-on via magic link provider.
-
----
-
 ## Integration Values
 
 The following values are of utmost importance for the configuration of your MIT SDK client or the authentication of your API access credentials. For security reasons it is recommended that you keep these values secret.
@@ -57,9 +51,345 @@ export interface APIResponse {
 }
 ```
 
-## Endpoints Specs
+## Step by Step Example
+
+To get to the point of booking a consolidated medical appointment for a user of your system through the MIT API and Telemedicine API, you must go through a flow consisting of several steps. The following will describe what you need to do to get to this result.
+
+To begin with you will need to negotiate your federated identity token (henceforth called _session token_) through the MIT API REST (Sessioner service). This token will allow you to authenticate to the _Multiclinic services_ and complete all the necessary steps to get to the desired result.
+
+Since you already have the patient data, you will have to serialize your data in order to make them admissible by _Multiclinic services_ (Rule Engine).
+
+The next steps consist of registering a new patient, initiating or validating the patient's session and requesting a medical appointment and consolidating it.
+
+Finally, you will be able to generate a single-use SSO link to allow your users to log into multi clinica's systems and be seen by a healthcare professional through the scheduled medical appointment.
+
+The following is a description of the process through a sequence diagram
+
+!["Step by step sequence diagram"](../media/mit-sdk-api-sd-steps-workflow.png)
+
+NOTE: You can refer to the attached [Postman collection](mit-sdk-step-by-step.postman_collection.json) for a step-by-step flow from patient creation to immediate appointment booking, including single SSO Link.
 
 ---
+
+**First step: Get Session Token**
+
+The MIT server will ask you for a client identifier, a country setting and a public key and in return will provide you with an encrypted session token to access the Multiclinic API services.
+
+**POST** `https://<API_MIT>/auth/session`
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+
+**Body**:
+
+- publicKey: **[PUBLIC CLIENT KEY]**
+- setup: **[CLIENT SETUP]**
+
+**Example**:
+
+```bash
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "Setup: BR" \
+-d '{"publicKey": "•••••••", "setup": "DEV"}' \
+"https://<API_MIT>/auth/session"
+```
+
+---
+
+**Second step: Serialize Patient Data (Rule Engine)**
+
+Rule Engine will provide you with the service of standardizing your data to make it admissible in the API Multiclinic registration process.
+
+**POST** `https://<MIT_API>/rules`
+
+**Headers**:
+
+- Authorization: **_[MIT ACCESS TOKEN]_**
+
+**Body**:
+
+- from: **_[CLIENT ID]_**
+- payload: **_[CLIENT DOCUMENT DATA]_**
+- setup: **_[RULE ENGINE SETUP IDENTIFIER]_**
+
+**Example**:
+
+```bash
+curl -X POST \
+-H "Authorization: Bearer <ACCESS_TOKEN>" \
+-H "Content-Type: application/json" \
+--data-raw '{
+   "from":"<CLIENT_ID>",
+   "payload":{
+      "CaseData":{
+         "CaseId":"1-XXXXXX",
+         "CaseNum":"1-XXXXXXXXXX"
+      },
+      "GeolocationData":{
+         "Address":"Calle prueba 1234",
+         "Extra":"Piso 6",
+         "State":"CAPITAL FEDERAL",
+         "Country":"AR",
+         "Latitude":"-34.64424",
+         "City":"CAPITAL FEDERAL",
+         "Longitude":"-58.55662"
+      },
+      "BeneficiaryData":{
+         "DateOfBirth":"1987-07-22",
+         "Email":"patient-sd222k@yopmail.com",
+         "Language":"ES",
+         "IntPhoneCode":"54",
+         "IdNumber":"33182287",
+         "FirstName":"PEDRO ESCALONA",
+         "PhoneNumber":"1161711401",
+         "LastName":"DAUD",
+         "IdType":"DNI"
+      }
+   },
+   "setup":"INT-BR"
+}'
+"https://<MIT_API>/rules"
+```
+
+---
+
+**Third Step: Register a Patient**
+
+Once you have the user data ready to be admitted by Multiclinic API you can register a new patient user in the system. It will be necessary to have complementary data and a token signed by MIT to perform this operation.
+
+**NOTE:** You must use the clinic identifier with which you have authenticated at MIT.
+**NOTE:** The externalId property is obtained once the patient data serialization process (Rule Engine) has been completed.
+
+**POST** `https://<MULTICLINIC_API>/account/register`
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+- locale: **_[LOCALE_CODE]_**
+- Atrys-Product: **_[ATRYS_PRODUCT]_**
+- Authorization: **_[MIT_ACCESS_TOKEN]_**
+
+**Body**:
+
+- clinicId: **_[AUTHENTICATED_CLINIC_ID]_**
+- identificationData: **_[PATIENT_IDENTIFICATION_DATA_OBJECT]_**
+- personalData: **_[PATIENT_PERSONAL_DATA_OBJECT]_**
+- addressData: **_[PATIENT_ADDRESS_DATA_OBJECT]_**
+- externalId: **_[ENTITY_EXTERNAL_ID]_**
+- newUserFromSDK: **_[NEW_USER_FROM_SDK]_**
+
+**Example**:
+
+```bash
+curl -X POST \
+-H "Setup: BR" \
+-H "locale: pt_BR" \
+-H "Atrys-Product: SDK" \
+-H "Authorization: Bearer <ACCESS_TOKEN>" \
+-H "Content-Type: application/json" \
+--data-raw '{
+    "clinicId": "xxxxxxxxxxxxxxxx",
+    "identificationData": {
+        "cpf": "XXXXXX",
+        "passport": "XXXXXXX",
+        "isForeign": false
+    },
+    "personalData": {
+        "name": "HUMBERTO CAMACHO",
+        "lastName": "DAUD",
+        "secondLastName": "",
+        "motherName": "",
+        "phoneNumber": "1161711401",
+        "email": "patient-sd2@yopmail.com",
+        "breed": "5f430c1248530c1de30ffa68",
+        "gender": "male",
+        "birthdate": "1987-07-22",
+        "nacionality": "5fdd4956d1d8135520fbbeeb"
+    },
+    "addressData": {
+        "cep": "",
+        "uf": "5f42ffcae6d4f516ed6dd8bf",
+        "city": "5f4300ebac8998f49d91b078",
+        "neighborhood": "",
+        "street": "Calle prueba 1234",
+        "streetNumber": 0
+    },
+    "externalId": "XXXXXXXXX",
+    "newUserFromSDK": true
+}'
+"https://<MULTICLINIC_API>/account/register"
+```
+
+---
+
+**Fourth Step: Integration Patient Login**
+
+You can authenticate on behalf of a specific user using a federated token. You must specify a clinic identifier and a user name. The username can be either an email or a CPF identifier.
+
+The result of this operation will be a single-use login token, which will allow you to perform certain operations on behalf of the authenticated user.
+
+**POST** `https://<MULTICLINIC_API>/integrations/auth/login`
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+- locale: **_[LOCALE_CODE]_**
+- Atrys-Product: **_[ATRYS_PRODUCT]_**
+- Authorization: **_[MIT_ACCESS_TOKEN]_**
+
+**Body**:
+
+- username: **_[PATIENT_USERNAME_REFERENCE]_**
+- clinicId: **_[AUTHENTICATED_CLINIC_ID]_**
+
+**Example**:
+
+```bash
+curl -X POST \
+-H "Setup: BR" \
+-H "locale: pt_BR" \
+-H "Atrys-Product: SDK" \
+-H "Authorization: Bearer <ACCESS_TOKEN>" \
+-H "Content-Type: application/json" \
+--data-raw '{
+    "username": "patient@example.com",
+    "clinicId": "xxxxxxxxxxxxxxx"
+}'
+"https://<MULTICLINIC_API>/integrations/auth/login"
+```
+
+---
+
+**Fifth Step: Reserve Immediate Appointment**
+
+Book a medical appointment for a patient. You must complete the process with the following step (consolidation).
+
+NOTE: if you provide the _SCHEDULED_ value for the `appointmentType` property you must specify extra information in the request payload. For more information consult the resource specification in this document.
+
+NOTE: you must request your integration identifiers to perform this operation.
+
+**POST** `https://<MULTICLINIC_API>/appointments/action/create/reserve`
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+- locale: **_[LOCALE_CODE]_**
+- Atrys-Product: **_[ATRYS_PRODUCT]_**
+- Authorization: **_[MIT_ACCESS_TOKEN]_**
+
+**Body**:
+
+- patientDetails: **_[PATIENT_DETAILS_OBJECT]_**
+- integrationClientIdentificator: **_[INTEGRATION_CLIENT_IDENTIFICATOR]_**
+- integrationExternalId: **_[INTEGRATION_EXTERNAL_ID]_**
+- appointmentType: **_[IMMEDIATE_OR_SCHEDULED]_**
+
+**Example**:
+
+```bash
+curl -X POST \
+-H "Setup: BR" \
+-H "locale: pt_BR" \
+-H "Atrys-Product: SDK" \
+-H "Authorization: Bearer <ACCESS_TOKEN>" \
+-H "Content-Type: application/json" \
+--data '{
+    "patientDetails": {
+        "userId": "xxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "integrationClientIdentificator": "xxxxxxxxx",
+    "integrationExternalId": "xxxxxx",
+    "appointmentType": "IMMEDIATE"
+}'
+"https://<MULTICLINIC_API>/appointments/action/create/reserve"
+```
+
+---
+
+**Sixth Step: Consolidate Immediate Appointment**
+
+Confirm the booking of a medical appointment for a patient.
+
+**POST** `https://<MULTICLINIC_API>/appointments/action/create/consolidate`
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+- locale: **_[LOCALE_CODE]_**
+- Atrys-Product: **_[ATRYS_PRODUCT]_**
+- Authorization: **_[MIT_ACCESS_TOKEN]_**
+
+**Body**:
+
+- id: **_[RESERVED_APPOINTMENT_ID]_**
+- patientDetails: **_[SYMPTOMS_AND_DESCRIPTION_OBJECT]_**
+
+**Example**:
+
+```bash
+curl -X POST \
+-H "Setup: BR" \
+-H "locale: pt_BR" \
+-H "Atrys-Product: SDK" \
+-H "Authorization: Bearer <ACCESS_TOKEN>" \
+-H "Content-Type: application/json" \
+--data '{
+    "patientDetails": {
+        "symptoms": ["symptom_id_1","symptom_id_2"],
+        "description": "Some description"
+    },
+    "id": "xxxxxxxxxxxxxxxxx"
+}'
+"https://<MULTICLINIC_API>/appointments/action/create/consolidate"
+```
+
+---
+
+**Seventh Step: Generate a SSO Link**
+
+Generate an SSO link so that the patient can access the telemedicine platform and view their active medical appointments.
+
+**NOTE**: Username parameter takes both email and CPF identifier values.
+
+**NOTE**: ReservedAppointmentId parameter is optional.
+
+**POST** `https://<MULTICLINIC_API>/integrations/sso`
+
+**Headers**:
+
+- Setup: **_[COUNTRY_CODE]_**
+- locale: **_[LOCALE_CODE]_**
+- Atrys-Product: **_[ATRYS_PRODUCT]_**
+- Authorization: **_[MIT_ACCESS_TOKEN]_**
+
+**Body**:
+
+- username: **_[RESERVED_APPOINTMENT_ID]_**
+- reservedAppointmentId: **_[RESERVED_APPOINTMENT_ID]_**
+- clinicId: **_[CLINIC_ID_TO_AUTHENTICATE]_**
+
+**Example**:
+
+```bash
+curl -X POST \
+-H "Setup: BR" \
+-H "locale: pt_BR" \
+-H "Atrys-Product: SDK" \
+-H "Authorization: Bearer <ACCESS_TOKEN>" \
+-H "Content-Type: application/json" \
+--data '{
+    "username": "xxxxxxxxxxxxxxxxx",
+    "reservedAppointmentId": "xxxxxxxxxxxxxxxxx",
+    "clinicId": "xxxxxxxxxxxxxxxxx",
+}'
+"https://<MULTICLINIC_API>/integrations/sso"
+```
+
+---
+
+## Endpoints Specs
 
 ### Consolidate Immediate Appointment
 
@@ -582,7 +912,6 @@ curl --location 'https://<API_MIT>.telemedicina.com/rules' \
     "street": "Calle prueba 1234",
     "streetNumber": 0
   },
-  "password": "qeH)fpassword",
   "externalId": "externalId",
   "newUserFromSDK": true
 }
@@ -597,9 +926,9 @@ curl --location 'https://<API>.telemedicina.com/account/register' \
 --header 'Atrys-Product: SDK' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --data-raw '{
-    "clinicId": "5f236fc966fbb0054894b780",
+    "clinicId": "xxxxxxxxxxxxxxxxxx",
     "identificationData": {
-        "cpf": "33182287",
+        "cpf": "xxxxxxxxx",
         "passport": "33182287",
         "isForeign": false
     },
@@ -609,7 +938,7 @@ curl --location 'https://<API>.telemedicina.com/account/register' \
         "secondLastName": "",
         "motherName": "",
         "phoneNumber": "1161711401",
-        "email": "patient-sd2@yopmail.com",
+        "email": "patient@example.com",
         "breed": "5f430c1248530c1de30ffa68",
         "gender": "male",
         "birthdate": "1987-07-22",
@@ -623,8 +952,7 @@ curl --location 'https://<API>.telemedicina.com/account/register' \
         "street": "Calle prueba 1234",
         "streetNumber": 0
     },
-    "password": "qeH)fpassword",
-    "externalId": "1-C6A0OOOM",
+    "externalId": "XXXXXXXX",
     "newUserFromSDK": true
 }'
 ```
@@ -633,7 +961,7 @@ curl --location 'https://<API>.telemedicina.com/account/register' \
 
 ### Patient Login
 
-**POST** `https://<API>.telemedicina.com/auth/login`
+**POST** `https://<API>.telemedicina.com/integrations/auth/login`
 
 **Authorization**: Bearer Token
 
@@ -648,7 +976,6 @@ curl --location 'https://<API>.telemedicina.com/account/register' \
 ```json
 {
   "username": "username",
-  "password": "password",
   "clinicId": "clinicId"
 }
 ```
@@ -656,15 +983,14 @@ curl --location 'https://<API>.telemedicina.com/account/register' \
 **Example**:
 
 ```bash
-curl --location 'https://<API>.telemedicina.com/auth/login' \
+curl --location 'https://<API>.telemedicina.com/integrations/auth/login' \
 --header 'Setup: BR' \
 --header 'locale: pt_BR' \
 --header 'Atrys-Product: SDK' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --data-raw '{
-    "username": "patient-sd2@yopmail.com",
-    "password": "qeH)ss2XD",
-    "clinicId": "5f236fc966fbb0054894b780"
+    "username": "patient@example.com",
+    "clinicId": "xxxxxxxxxxxxx"
 }'
 ```
 
@@ -693,13 +1019,13 @@ curl --location 'https://<API>.telemedicina.com/auth/login' \
 **Example**:
 
 ```bash
-curl --location 'https://<API>.telemedicina.com/auth/login' \
+curl --location 'https://<API>.telemedicina.com/integration/auth/login' \
 --header 'Setup: BR' \
 --header 'locale: pt_BR' \
 --header 'Atrys-Product: SDK' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --data-raw '{
-    "loginToken": "eyJhbGciOiJIUzI1NiCJ9.eyJpZCI6IjY0NGJlZmMwMWQ2ODRkMDNhMjgwMyIsImNyZWF0ZWRBdCI6IjIwMjMtMDQtMjhUMTg6NDM6NTMuNzgyWiIsImlhdCI6MTY4MjcwNzQzMywiZXhwIjoxNjgyNzA3NjEzfQ.D90k_8AcpvtCxpiViPYVa6qG8bskk"
+    "loginToken": "eyJhbGciOiJIUzI1NiCJ9.eyJpZCI6IjY0JSHJlZmMwMWQ2ODRkMDNhMjgwMyIsImNyZWFSO12WRBdCI6IjIwMjMtMDQtMjhUMTg6NDM6NTMuNzgyWiIsImlhdCI6MTY4MjcwNXQzMywiZXhwIjoxNjgyNzA3NjEzfQ.D90k_8AcpstCxpiVisYVa6qG8bskk"
 }'
 ```
 
@@ -736,9 +1062,9 @@ curl --location 'https://<API>.telemedicina.com/auth/login/dependent' \
 --header 'Atrys-Product: SDK' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --data-raw '{
-    "titularAccessToken": "eyJhbGciOiJIUziIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiR09OWkFMTyBFWkVRVUlFTCAiLCJzdWIiOiI2NDRiZWZjMDFkNjg0ZDAwMDgzYTI4MDMiLCJhZG1pbmlzdHJhdGl2ZURhdGEiOnsiY2xpbmljSWQiOiI1ZjIzNmZjOTY2ZmJiMDA1NDg5NGI3wNjZlYThmYWE4NzNiY2M4ODllZWMiLyb2xlIjoicGF0aWVudCIsInRpbWV6b25lIjoiQW1lcmljYS9TYW50aWFnbyIsImNsaW5pY1Byb2ZpbGVJZCI6IjY0NGJlZmMwMWQ2ODRkMDAwODNhMjgwNCJ9LCJpYXQiOjE2ODI3MDU3MTQsImV4cCI6MTY4MjcwOTMxNH0.myJPxauVyTD39-_U6hGZqCEnkYTysnhbwvegY",
-    "userId": "644bf2f21d684d00083a282e",
-    "clinicId": "5f236fc966fbb0054894b780"
+    "titularAccessToken": "eyJhbGciOiJIUziIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiR09OWkFMTyBSX2VRVUlFTCAiLCJzdWIiOiI2NDRiZWZjMDFkNjg0ZDAwMDgzYTI4MDMiLCJhZG1pbmlzdHJhdGl2ZURhdGEiOnsiY2xpbmljSWQiOiI1ZjIzNmZjOTY2ZmJiMDA1NDg5NGI3wNSjZlYThmYWE4NzNiY2M4ODllZWMiLyb2xlIjoicGF0aWVudCIsInRpbWV6b25lIjoiQW1lcmljYS9TYW50aWFnbyIsImNsaW5pY1Byb2ZpbGVJZCI6IjY0NGJlZmMwMWQ2ODRDDkMDAwODNhMjgwNCJ9LCJpYXQiOjE2ODI3MDU3MTQsImV4cCI6MTY4MjcwOTMxNH0.myJPxauVyTD39-_U6hGZqCEnkYTysnhbwvegY",
+    "userId": "xxxxxxxxxxxxxxxx",
+    "clinicId": "xxxxxxxxxxxxxxxx"
 }'
 ```
 
@@ -755,7 +1081,6 @@ curl --location 'https://<API>.telemedicina.com/auth/login/dependent' \
 ```json
 {
   "username": "username",
-  "password": "password",
   "reservedAppointmentId": "reservedAppointmentId"
 }
 ```
@@ -767,7 +1092,6 @@ curl --location 'https://<API_MIT>.telemedicina.com/availability/636d772c4eec8d0
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --data '{
   "username": "username",
-  "password": "password",
   "reservedAppointmentId": "reservedAppointmentId"
 }'
 ```
@@ -820,7 +1144,6 @@ curl --location 'https://<API_MIT>.telemedicina.com/availability/636d772c4eec8d0
     "street": "Calle prueba 1234",
     "streetNumber": 0
   },
-  "password": "password",
   "externalId": "externalId",
   "newUserFromSDK": true
 }
@@ -835,14 +1158,14 @@ curl --location --request PUT 'https://<API>.telemedicina.com/patient/643f20115f
 --header 'Atrys-Product: SDK' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --data-raw '{
-    "clinicId": "5f236fc966fbb0054894b780",
+    "clinicId": "xxxxxxxxxxxxx",
     "identificationData": {
-        "cpf": "33182287",
-        "passport": "33182287",
+        "cpf": "xxxxxxxxx",
+        "passport": "xxxxxxxx",
         "isForeign": false
     },
     "personalData": {
-        "name": "GONZALO EZEQUIEL",
+        "name": "HUMBERTO CAMACHO",
         "lastName": "DAUD",
         "secondLastName": "",
         "motherName": "",
@@ -861,46 +1184,8 @@ curl --location --request PUT 'https://<API>.telemedicina.com/patient/643f20115f
         "street": "Calle prueba 1234",
         "streetNumber": 0
     },
-    "password": "qeH)fpassword",
-    "externalId": "1-C6A0OOOM",
+    "externalId": "XXXXXXXXX",
     "newUserFromSDK": true
-}'
-```
-
----
-
-### Change Password SDK
-
-**PUT** `https://<API>.telemedicina.com/account/credentials/sdk`
-
-**Authorization**: Bearer Token
-
-**Headers**:
-
-- Setup: **_[COUNTRY_CODE]_**
-- locale: **_[LOCALE_CODE]_**
-- Atrys-Product: **_[ATRYS_PRODUCT]_**
-
-**Body**:
-
-```json
-{
-  "email": "patient-sd2@yopmail.com",
-  "password": "qeH)fpassword"
-}
-```
-
-**Example**:
-
-```bash
-curl --location --request PUT 'https://<API>.telemedicina.com/account/credentials/sdk' \
---header 'Setup: BR' \
---header 'locale: pt_BR' \
---header 'Atrys-Product: SDK' \
---header 'Authorization: Bearer <ACCESS_TOKEN>' \
---data-raw '{
-    "email": "patient-sd2@yopmail.com",
-    "password": "qeH)fpassword"
 }'
 ```
 
