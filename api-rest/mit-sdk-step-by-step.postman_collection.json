@@ -37,13 +37,8 @@
             },
             "url": {
               "raw": "{{MIT_API}}/auth/session",
-              "host": [
-                "{{MIT_API}}"
-              ],
-              "path": [
-                "auth",
-                "session"
-              ]
+              "host": ["{{MIT_API}}"],
+              "path": ["auth", "session"]
             }
           },
           "response": [
@@ -63,13 +58,8 @@
                 },
                 "url": {
                   "raw": "{{MIT_API}}/auth/session",
-                  "host": [
-                    "{{MIT_API}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "session"
-                  ]
+                  "host": ["{{MIT_API}}"],
+                  "path": ["auth", "session"]
                 }
               },
               "status": "OK",
@@ -144,12 +134,8 @@
             },
             "url": {
               "raw": "{{MIT_API}}/rules",
-              "host": [
-                "{{MIT_API}}"
-              ],
-              "path": [
-                "rules"
-              ]
+              "host": ["{{MIT_API}}"],
+              "path": ["rules"]
             }
           },
           "response": [
@@ -169,12 +155,8 @@
                 },
                 "url": {
                   "raw": "{{MIT_API}}/rules",
-                  "host": [
-                    "{{MIT_API}}"
-                  ],
-                  "path": [
-                    "rules"
-                  ]
+                  "host": ["{{MIT_API}}"],
+                  "path": ["rules"]
                 }
               },
               "status": "OK",
@@ -261,13 +243,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/account/register",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "account",
-                "register"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["account", "register"]
             }
           },
           "response": [
@@ -303,13 +280,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/account/register",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "account",
-                    "register"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["account", "register"]
                 }
               },
               "status": "Created",
@@ -364,9 +336,7 @@
             {
               "listen": "test",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -411,14 +381,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/account/credentials/sdk",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "account",
-                "credentials",
-                "sdk"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["account", "credentials", "sdk"]
             }
           },
           "response": [
@@ -454,14 +418,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/account/credentials/sdk",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "account",
-                    "credentials",
-                    "sdk"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["account", "credentials", "sdk"]
                 }
               },
               "status": "OK",
@@ -567,13 +525,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/auth/login",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["auth", "login"]
             }
           },
           "response": [
@@ -609,13 +562,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/auth/login",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "login"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["auth", "login"]
                 }
               },
               "status": "OK",
@@ -706,13 +654,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/integrations/sso",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "integrations",
-                "sso"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["integrations", "sso"]
             }
           },
           "response": [
@@ -748,13 +691,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/integrations/sso",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "integrations",
-                    "sso"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["integrations", "sso"]
                 }
               },
               "status": "OK",
@@ -809,9 +747,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             },
@@ -866,15 +802,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/appointments/action/create/reserve",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "appointments",
-                "action",
-                "create",
-                "reserve"
-              ],
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["appointments", "action", "create", "reserve"],
               "query": [
                 {
                   "key": "",
@@ -917,15 +846,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/appointments/action/create/reserve",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "appointments",
-                    "action",
-                    "create",
-                    "reserve"
-                  ],
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["appointments", "action", "create", "reserve"],
                   "query": [
                     {
                       "key": "",
@@ -1027,15 +949,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/appointments/action/create/consolidate",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "appointments",
-                "action",
-                "create",
-                "consolidate"
-              ],
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["appointments", "action", "create", "consolidate"],
               "query": [
                 {
                   "key": "",
@@ -1078,15 +993,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/appointments/action/create/consolidate",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "appointments",
-                    "action",
-                    "create",
-                    "consolidate"
-                  ],
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["appointments", "action", "create", "consolidate"],
                   "query": [
                     {
                       "key": "",
@@ -1188,13 +1096,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/integrations/sso",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "integrations",
-                "sso"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["integrations", "sso"]
             }
           },
           "response": [
@@ -1230,13 +1133,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/integrations/sso",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "integrations",
-                    "sso"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["integrations", "sso"]
                 }
               },
               "status": "OK",
@@ -1318,13 +1216,8 @@
             },
             "url": {
               "raw": "{{MIT_API}}/auth/session",
-              "host": [
-                "{{MIT_API}}"
-              ],
-              "path": [
-                "auth",
-                "session"
-              ]
+              "host": ["{{MIT_API}}"],
+              "path": ["auth", "session"]
             }
           },
           "response": [
@@ -1344,13 +1237,8 @@
                 },
                 "url": {
                   "raw": "{{MIT_API}}/auth/session",
-                  "host": [
-                    "{{MIT_API}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "session"
-                  ]
+                  "host": ["{{MIT_API}}"],
+                  "path": ["auth", "session"]
                 }
               },
               "status": "OK",
@@ -1425,12 +1313,8 @@
             },
             "url": {
               "raw": "{{MIT_API}}/rules",
-              "host": [
-                "{{MIT_API}}"
-              ],
-              "path": [
-                "rules"
-              ]
+              "host": ["{{MIT_API}}"],
+              "path": ["rules"]
             }
           },
           "response": [
@@ -1450,12 +1334,8 @@
                 },
                 "url": {
                   "raw": "{{MIT_API}}/rules",
-                  "host": [
-                    "{{MIT_API}}"
-                  ],
-                  "path": [
-                    "rules"
-                  ]
+                  "host": ["{{MIT_API}}"],
+                  "path": ["rules"]
                 }
               },
               "status": "OK",
@@ -1542,13 +1422,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/account/register",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "account",
-                "register"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["account", "register"]
             }
           },
           "response": [
@@ -1584,13 +1459,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/account/register",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "account",
-                    "register"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["account", "register"]
                 }
               },
               "status": "Created",
@@ -1645,9 +1515,7 @@
             {
               "listen": "test",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -1692,14 +1560,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/account/credentials/sdk",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "account",
-                "credentials",
-                "sdk"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["account", "credentials", "sdk"]
             }
           },
           "response": [
@@ -1735,14 +1597,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/account/credentials/sdk",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "account",
-                    "credentials",
-                    "sdk"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["account", "credentials", "sdk"]
                 }
               },
               "status": "OK",
@@ -1848,13 +1704,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/auth/login",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["auth", "login"]
             }
           },
           "response": [
@@ -1890,13 +1741,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/auth/login",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "login"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["auth", "login"]
                 }
               },
               "status": "OK",
@@ -2001,14 +1847,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/auth/login/validate",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "auth",
-                "login",
-                "validate"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["auth", "login", "validate"]
             }
           },
           "response": [
@@ -2044,14 +1884,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/auth/login/validate",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "login",
-                    "validate"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["auth", "login", "validate"]
                 }
               },
               "status": "OK",
@@ -2158,13 +1992,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/account/register",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "account",
-                "register"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["account", "register"]
             }
           },
           "response": [
@@ -2200,13 +2029,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/account/register",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "account",
-                    "register"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["account", "register"]
                 }
               },
               "status": "Created",
@@ -2261,9 +2085,7 @@
             {
               "listen": "test",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2308,14 +2130,8 @@
             },
             "url": {
               "raw": "{{TELEMEDICINE_API}}/auth/login/dependent",
-              "host": [
-                "{{TELEMEDICINE_API}}"
-              ],
-              "path": [
-                "auth",
-                "login",
-                "dependent"
-              ]
+              "host": ["{{TELEMEDICINE_API}}"],
+              "path": ["auth", "login", "dependent"]
             }
           },
           "response": [
@@ -2351,14 +2167,8 @@
                 },
                 "url": {
                   "raw": "{{TELEMEDICINE_API}}/auth/login/dependent",
-                  "host": [
-                    "{{TELEMEDICINE_API}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "login",
-                    "dependent"
-                  ]
+                  "host": ["{{TELEMEDICINE_API}}"],
+                  "path": ["auth", "login", "dependent"]
                 }
               },
               "status": "OK",

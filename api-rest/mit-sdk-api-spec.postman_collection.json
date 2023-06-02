@@ -1488,7 +1488,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
+							"raw": "{\n    \"username\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1530,7 +1530,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"patient-sd222k@yopmail.com\",\n    \"password\": \"qeH)3gfVf\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
+									"raw": "{\n    \"username\": \"patient-sd222k@yopmail.com\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1746,60 +1746,6 @@
 					]
 				},
 				{
-					"name": "Patient Login (For integrations)",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ACCESS_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Setup",
-								"value": "{{COUNTRY_CODE}}",
-								"type": "text"
-							},
-							{
-								"key": "locale",
-								"value": "{{LOCALE_CODE}}",
-								"type": "text"
-							},
-							{
-								"key": "Atrys-Product",
-								"value": "{{ATRYS_PRODUCT}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{TELEMEDICINE_API}}/auth/access/integrations",
-							"host": [
-								"{{TELEMEDICINE_API}}"
-							],
-							"path": [
-								"auth",
-								"access",
-								"integrations"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Register Patient",
 					"event": [
 						{
@@ -1844,7 +1790,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
+							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1886,7 +1832,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"patient-sd222k@yopmail.com\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"qeH)3gfVf\",\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
+									"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"patient-sd222k@yopmail.com\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1995,7 +1941,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"903.280.325-57\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"isTutor\": false,\n        \"tutorNationalId\": \"{{PATIENT_ID_CONTAINER}}\",\n        \"name\": \"CHRISTIAN EZEQUIEL\",\n        \"lastName\": \"RIVERA\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{DEPENDENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"1998-01-15\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"{{DEPENDENT_PASSWORD_CONTAINER}}\",\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
+							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"903.280.325-57\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"isTutor\": false,\n        \"tutorNationalId\": \"{{PATIENT_ID_CONTAINER}}\",\n        \"name\": \"CHRISTIAN EZEQUIEL\",\n        \"lastName\": \"RIVERA\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{DEPENDENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"1998-01-15\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2037,7 +1983,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"patient-sd222k@yopmail.com\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"qeH)3gfVf\",\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
+									"raw": "{\n    \"clinicId\": \"5f236fc966fbb0054894b780\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"patient-sd222k@yopmail.com\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"externalId\": \"1-C6A0OUU\",\n    \"newUserFromSDK\": true\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2134,7 +2080,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"password\": \"qeH)3gfVf\",\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
+							"raw": "{\n    \"clinicId\": \"{{CLINIC_ID}}\",\n    \"identificationData\": {\n        \"cpf\": \"33182287\",\n        \"passport\": \"33182287\",\n        \"isForeign\": false\n    },\n    \"personalData\": {\n        \"name\": \"GONZALO EZEQUIEL\",\n        \"lastName\": \"DAUD\",\n        \"secondLastName\": \"\",\n        \"motherName\": \"\",\n        \"phoneNumber\": \"1161711401\",\n        \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n        \"breed\": \"5f430c1248530c1de30ffa68\",\n        \"gender\": \"male\",\n        \"birthdate\": \"987-07-22\",\n        \"nacionality\": \"5fdd4956d1d8135520fbbeeb\"\n    },\n    \"addressData\": {\n        \"cep\": \"\",\n        \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n        \"city\": \"5f4300ebac8998f49d91b078\",\n        \"neighborhood\": \"\",\n        \"street\": \"Calle prueba 1234\",\n        \"streetNumber\": 0\n    },\n    \"externalId\": \"{{INTEGRATION_EXTERNAL_ID}}\",\n    \"newUserFromSDK\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2249,160 +2195,6 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"OK\",\n    \"payload\": {}\n}"
-						}
-					]
-				},
-				{
-					"name": "Change Password SDK",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ACCESS_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Setup",
-								"value": "{{COUNTRY_CODE}}",
-								"type": "text"
-							},
-							{
-								"key": "locale",
-								"value": "{{LOCALE_CODE}}",
-								"type": "text"
-							},
-							{
-								"key": "Atrys-Product",
-								"value": "{{ATRYS_PRODUCT}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n    \"password\": \"qeH)3gfVf\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{TELEMEDICINE_API}}/account/credentials/sdk",
-							"host": [
-								"{{TELEMEDICINE_API}}"
-							],
-							"path": [
-								"account",
-								"credentials",
-								"sdk"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Change Password SDK Responds OK",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Setup",
-										"value": "{{COUNTRY_CODE}}",
-										"type": "text"
-									},
-									{
-										"key": "locale",
-										"value": "{{LOCALE_CODE}}",
-										"type": "text"
-									},
-									{
-										"key": "Atrys-Product",
-										"value": "{{ATRYS_PRODUCT}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"patient-sd222k@yopmail.com\",\n    \"password\": \"qeH)3gfVf\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{TELEMEDICINE_API}}/account/credentials/sdk",
-									"host": [
-										"{{TELEMEDICINE_API}}"
-									],
-									"path": [
-										"account",
-										"credentials",
-										"sdk"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Content-Length",
-									"value": "61"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Date",
-									"value": "Thu, 20 Apr 2023 14:17:31 GMT"
-								},
-								{
-									"key": "Apigw-Requestid",
-									"value": "DrhrQg-TIAMEP-w="
-								},
-								{
-									"key": "X-Cache",
-									"value": "Miss from cloudfront"
-								},
-								{
-									"key": "Via",
-									"value": "1.1 9c86b4f2a2d6823205170deeb68b1f10.cloudfront.net (CloudFront)"
-								},
-								{
-									"key": "X-Amz-Cf-Pop",
-									"value": "SCL51-P2"
-								},
-								{
-									"key": "X-Amz-Cf-Id",
-									"value": "sWmhHXvydwX5yH39YKCd6Ld8zC79AX0BVG7oroYc6_LlIbc4yHCORA=="
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"Senha atualizada!\",\n    \"payload\": {}\n}"
 						}
 					]
 				},
