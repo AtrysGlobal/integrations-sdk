@@ -146,7 +146,7 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"postman.setEnvironmentVariable(\"INTEGRATION_EXTERNAL_ID\", jsonData.externalId);",
-									"",
+									"postman.setEnvironmentVariable(\"PATIENT_EMAIL_CONTAINER\", jsonData.personalData.email);",
 									"pm.test('checks for Content-Security-Policy header', function () {",
 									"  pm.expect(pm.response.headers.get('Content-Security-Policy')).not.equal(undefined);",
 									"});",
