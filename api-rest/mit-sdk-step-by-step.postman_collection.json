@@ -189,7 +189,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"from\": \"{{CLIENT_PUBLIC_ID}}\",\n    \"payload\": {\n        \"identificationData\": {\n            \"cpf\": \"616.829.326-48\",\n            \"isForeign\": false\n        },\n        \"personalData\": {\n            \"name\": \"Andreau\",\n            \"lastName\": \"Loureiro\",\n            \"secondLastName\": \"Perez\",\n            \"motherName\": \"Da Silva\",\n            \"phoneNumber\": \"4859485495894\",\n            \"email\": \"patient-dexample21@yopmail.com\",\n            \"breed\": \"\",\n            \"gender\": \"\",\n            \"birthdate\": \"22/12/1981\",\n            \"nacionality\": \"\"\n        },\n        \"addressData\": {\n            \"cep\": \"69921-401\",\n            \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n            \"city\": \"5f4300ebac8998f49d91b078\",\n            \"neighborhood\": \"Santa Rosa\",\n            \"street\": \"Samba St\",\n            \"streetNumber\": \"8893\"\n        }\n    },\n    \"setup\": \"INT-BR\"\n}",
+							"raw": "{\n    \"from\": \"{{CLIENT_PUBLIC_ID}}\",\n    \"payload\": {\n        \"clinicId\": \"{{CLINIC_ID}}\",\n        \"identificationData\": {\n            \"cpf\": \"616.829.326-48\",\n            \"isForeign\": false\n        },\n        \"personalData\": {\n            \"name\": \"Andreau\",\n            \"lastName\": \"Loureiro\",\n            \"secondLastName\": \"Perez\",\n            \"motherName\": \"Da Silva\",\n            \"phoneNumber\": \"4859485495894\",\n            \"email\": \"patient-dexample21@yopmail.com\",\n            \"breed\": \"\",\n            \"gender\": \"\",\n            \"birthdate\": \"22/12/1981\",\n            \"nacionality\": \"\"\n        },\n        \"addressData\": {\n            \"cep\": \"69921-401\",\n            \"uf\": \"5f42ffcae6d4f516ed6dd8bf\",\n            \"city\": \"5f4300ebac8998f49d91b078\",\n            \"neighborhood\": \"Santa Rosa\",\n            \"street\": \"Samba St\",\n            \"streetNumber\": \"8893\"\n        }\n    },\n    \"setup\": \"INT-BR\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -507,7 +507,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
+							"raw": "{\n    \"username\": \"{{PATIENT_EMAIL_CONTAINER}}\",\n    \"password\": \"{{PATIENT_PASSWORD_CONTAINER}}\",\n    \"clinicId\": \"{{CLINIC_ID}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
