@@ -121,34 +121,34 @@ curl -X POST \
 -H "Authorization: Bearer <ACCESS_TOKEN>" \
 -H "Content-Type: application/json" \
 --data-raw '{
-   "from":"<CLIENT_ID>",
-   "payload":{
-      "CaseData":{
-         "CaseId":"1-XXXXXX",
-         "CaseNum":"1-XXXXXXXXXX"
-      },
-      "GeolocationData":{
-         "Address":"Calle prueba 1234",
-         "Extra":"Piso 6",
-         "State":"CAPITAL FEDERAL",
-         "Country":"AR",
-         "Latitude":"-34.64424",
-         "City":"CAPITAL FEDERAL",
-         "Longitude":"-58.55662"
-      },
-      "BeneficiaryData":{
-         "DateOfBirth":"1987-07-22",
-         "Email":"patient-sd222k@yopmail.com",
-         "Language":"ES",
-         "IntPhoneCode":"54",
-         "IdNumber":"33182287",
-         "FirstName":"PEDRO ESCALONA",
-         "PhoneNumber":"1161711401",
-         "LastName":"DAUD",
-         "IdType":"DNI"
-      }
-   },
-   "setup":"INT-BR"
+    "from": "{{CLIENT_PUBLIC_ID}}",
+    "payload": {
+        "identificationData": {
+            "cpf": "616.829.326-48",
+            "isForeign": false
+        },
+        "personalData": {
+            "name": "Andreau",
+            "lastName": "Loureiro",
+            "secondLastName": "Perez",
+            "motherName": "Da Silva",
+            "phoneNumber": "4859485495894",
+            "email": "patient-dexample@yopmail.com",
+            "breed": "",
+            "gender": "",
+            "birthdate": "22/12/1981",
+            "nacionality": ""
+        },
+        "addressData": {
+            "cep": "99438939",
+            "uf": "893475938457",
+            "city": "98347984573",
+            "neighborhood": "",
+            "street": "Samba St",
+            "streetNumber": "8893"
+        }
+    },
+    "setup": "INT-BR"
 }'
 "https://<MIT_API>/rules"
 ```
@@ -837,34 +837,34 @@ curl --location --request PUT 'https://<API>.telemedicina.com/availability/636d7
 curl --location 'https://<API_MIT>.telemedicina.com/rules' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --data-raw '{
-   "from":"<CLIENT_ID>",
-   "payload":{
-      "CaseData":{
-         "CaseId":"1-C6A0OUU",
-         "CaseNum":"1-26501013462"
-      },
-      "GeolocationData":{
-         "Address":"Calle prueba 1234",
-         "Extra":"Piso 6",
-         "State":"CAPITAL FEDERAL",
-         "Country":"AR",
-         "Latitude":"-34.64424",
-         "City":"CAPITAL FEDERAL",
-         "Longitude":"-58.55662"
-      },
-      "BeneficiaryData":{
-         "DateOfBirth":"987-07-22",
-         "Email":"patient-sd222k@yopmail.com",
-         "Language":"ES",
-         "IntPhoneCode":"54",
-         "IdNumber":"33182287",
-         "FirstName":"GONZALO EZEQUIEL",
-         "PhoneNumber":"1161711401",
-         "LastName":"DAUD",
-         "IdType":"DNI"
-      }
-   },
-   "setup":"INT-BR"
+    "from": "{{CLIENT_PUBLIC_ID}}",
+    "payload": {
+        "identificationData": {
+            "cpf": "616.829.326-48",
+            "isForeign": false
+        },
+        "personalData": {
+            "name": "Andreau",
+            "lastName": "Loureiro",
+            "secondLastName": "Perez",
+            "motherName": "Da Silva",
+            "phoneNumber": "4859485495894",
+            "email": "patient-dexample@yopmail.com",
+            "breed": "",
+            "gender": "",
+            "birthdate": "22/12/1981",
+            "nacionality": ""
+        },
+        "addressData": {
+            "cep": "99438939",
+            "uf": "893475938457",
+            "city": "98347984573",
+            "neighborhood": "",
+            "street": "Samba St",
+            "streetNumber": "8893"
+        }
+    },
+    "setup": "INT-BR"
 }'
 ```
 
